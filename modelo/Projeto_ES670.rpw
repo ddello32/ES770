@@ -29,8 +29,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "StatechartDiagram";
 				- _id = GUID aa776211-9c65-42a9-91fb-77ff5204f176;
 			}
-			- _UpLeft = 1382 40 ;
-			- _DownRight = 1834 300 ;
+			- _UpLeft = 1381 39 ;
+			- _DownRight = 1836 301 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 0;
 		}
@@ -38,7 +38,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _placement = { CCommon_WINDOWPLACEMENT 
 				- m_nLength = 44;
 				- m_nFlags = 0;
-				- m_showCmd = 3;
+				- m_showCmd = 1;
 				- m_ptMinPositionX = -1;
 				- m_ptMinPositionY = -1;
 				- m_ptMaxPositionX = -4;
@@ -57,8 +57,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "diag_definicao_semana_04_05";
 				- _id = GUID f53d507c-79b1-4f7f-850a-0c96a124e9bd;
 			}
-			- _UpLeft = 134 0 ;
-			- _DownRight = 2475 1644 ;
+			- _UpLeft = 0 0 ;
+			- _DownRight = 3244 1618 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 3;
 		}
@@ -94,7 +94,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _placement = { CCommon_WINDOWPLACEMENT 
 				- m_nLength = 44;
 				- m_nFlags = 0;
-				- m_showCmd = 1;
+				- m_showCmd = 3;
 				- m_ptMinPositionX = -1;
 				- m_ptMinPositionY = -1;
 				- m_ptMaxPositionX = -4;
@@ -113,13 +113,13 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "diag_requisitos";
 				- _id = GUID b199a12f-d6a2-434c-8c28-e03ad146546a;
 			}
-			- _UpLeft = 0 0 ;
-			- _DownRight = 1282 639 ;
+			- _UpLeft = 0 140 ;
+			- _DownRight = 980 795 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 1;
 		}
 	}
-	- _fullName = "C:\\users\\dello\\Meus Documentos\\Workspace\\es670\\workspace.kds\\emb\\modelo\\Projeto_ES670";
+	- _fullName = "C:\\users\\dello\\Meus Documentos\\Workspace\\ES770\\modelo\\Projeto_ES670";
 	- m_SearchScopeList = { IRPYRawContainer 
 		- size = 0;
 	}

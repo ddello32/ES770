@@ -72,8 +72,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 		}
 	}
 	- _name = "Projeto_ES670";
-	- _objectCreation = "5223091672016202492765";
-	- _umlDependencyID = "2635";
+	- _objectCreation = "49219862120161728239949";
+	- _umlDependencyID = "2707";
 	- _lastID = 28;
 	- _UserColors = { IRPYRawContainer 
 		- size = 16;
@@ -368,8 +368,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 				}
 			}
 			- _name = "diag_requisitos";
-			- _objectCreation = "5223111672016202492565";
-			- _umlDependencyID = "3095";
+			- _objectCreation = "49222262120161728215949";
+			- _umlDependencyID = "3158";
 			- _description = { IDescription 
 				- _textRTF = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1046{\\fonttbl{\\f0\\fnil\\fcharset0 Arial;}}
 \\viewkind4\\uc1\\pard\\fs20 Diagrama de requisitos de sistema do projeto pr\\'e1tico da ES670 \\par
@@ -377,7 +377,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 }
 ";
 			}
-			- _lastModifiedTime = "4.13.2016::15:43:22";
+			- _lastModifiedTime = "9.6.2016::20:21:49";
 			- _graphicChart = { CGIClassChart 
 				- _id = GUID 2fe99eb3-10f9-42d0-adf7-80beaef157a7;
 				- m_type = 0;
@@ -600,12 +600,12 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- _filename = "_Requisitos.sbs";
 						- _subsystem = "_Requisitos";
 						- _class = "";
-						- _name = "Requisito TECLADO";
+						- _name = "Requisito AUTO-TESTE";
 						- _id = GUID 166aaab7-cf5c-4481-a4d3-665ede382195;
 					}
 					- m_pParent = GUID 21c3de7b-5b1e-4ece-8aeb-2d905c26c54f;
 					- m_name = { CGIText 
-						- m_str = "Requisito TECLADO";
+						- m_str = "Requisito AUTO-TESTE";
 						- m_style = "Arial" 10 0 0 0 1 ;
 						- m_color = { IColor 
 							- m_fgColor = 0;
@@ -618,7 +618,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- m_nOrientationCtrlPt = 5;
 					}
 					- m_drawBehavior = 4104;
-					- m_transform = 0.178967 0 0 0.112637 28 139.662 ;
+					- m_transform = 0.195572 0 0 0.189848 28 140.116 ;
 					- m_bIsPreferencesInitialized = 1;
 					- m_AdditionalLabel = { CGIText 
 						- m_str = "";
@@ -633,11 +633,10 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- m_bImplicitSetRectPoints = 0;
 						- m_nOrientationCtrlPt = 1;
 					}
-					- m_bFramesetModified = 1;
 					- m_polygon = 4 0 3  0 1095  1084 1095  1084 3  ;
 					- m_nNameFormat = 0;
 					- m_nIsNameFormat = 0;
-					- frameset = "<frameset rows=28%,72%>
+					- frameset = "<frameset rows=36%,64%>
 <frame name=IDTextCompartment>
 <frame name=SpecificationTextCompartment>";
 					- _iTempdisplayTextFlag = 2;
@@ -700,12 +699,12 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- _filename = "_Requisitos.sbs";
 						- _subsystem = "_Requisitos";
 						- _class = "";
-						- _name = "Requisito LED";
+						- _name = "Requisito DETECTAR COMANDOS";
 						- _id = GUID ac7c8af3-17dd-4d76-b0be-04c3795263c9;
 					}
 					- m_pParent = GUID 21c3de7b-5b1e-4ece-8aeb-2d905c26c54f;
 					- m_name = { CGIText 
-						- m_str = "Requisito LED";
+						- m_str = "Requisito DETECTAR COMANDOS";
 						- m_style = "Arial" 10 0 0 0 1 ;
 						- m_color = { IColor 
 							- m_fgColor = 0;
@@ -718,7 +717,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- m_nOrientationCtrlPt = 5;
 					}
 					- m_drawBehavior = 4104;
-					- m_transform = 0.178967 0 0 0.113553 232 138.659 ;
+					- m_transform = 0.199262 0 0 0.190769 264 144.107 ;
 					- m_bIsPreferencesInitialized = 1;
 					- m_AdditionalLabel = { CGIText 
 						- m_str = "";
@@ -819,12 +818,12 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- _filename = "_Requisitos.sbs";
 						- _subsystem = "_Requisitos";
 						- _class = "";
-						- _name = "Requisito PROTOCOLO";
+						- _name = "Requisito EXECUTAR COMANDOS";
 						- _id = GUID f955129c-5a6e-4c50-b3c4-a546def9576e;
 					}
 					- m_pParent = GUID 21c3de7b-5b1e-4ece-8aeb-2d905c26c54f;
 					- m_name = { CGIText 
-						- m_str = "Requisito PROTOCOLO";
+						- m_str = "Requisito EXECUTAR COMANDOS";
 						- m_style = "Arial" 10 0 0 0 1 ;
 						- m_color = { IColor 
 							- m_fgColor = 0;
@@ -837,7 +836,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- m_nOrientationCtrlPt = 5;
 					}
 					- m_drawBehavior = 4104;
-					- m_transform = 0.178967 0 0 0.152652 28 274.846 ;
+					- m_transform = 0.199262 0 0 0.176277 24 360.977 ;
 					- m_bIsPreferencesInitialized = 1;
 					- m_AdditionalLabel = { CGIText 
 						- m_str = "";
@@ -919,12 +918,12 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- _filename = "_Requisitos.sbs";
 						- _subsystem = "_Requisitos";
 						- _class = "";
-						- _name = "Requisito VELOCIDADE";
+						- _name = "Requisito CALIBRA\Ç\ÃO";
 						- _id = GUID 0b53c1e4-b7fc-476c-8788-696ee3c1a74c;
 					}
 					- m_pParent = GUID 21c3de7b-5b1e-4ece-8aeb-2d905c26c54f;
 					- m_name = { CGIText 
-						- m_str = "Requisito VELOCIDADE";
+						- m_str = "Requisito CALIBRA\Ç\ÃO";
 						- m_style = "Arial" 10 0 0 0 1 ;
 						- m_color = { IColor 
 							- m_fgColor = 0;
@@ -937,7 +936,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- m_nOrientationCtrlPt = 5;
 					}
 					- m_drawBehavior = 4104;
-					- m_transform = 0.178967 0 0 0.119048 437 277.643 ;
+					- m_transform = 0.210332 0 0 0.173574 504 360.938 ;
 					- m_bIsPreferencesInitialized = 1;
 					- m_AdditionalLabel = { CGIText 
 						- m_str = "";
@@ -1037,7 +1036,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- m_nOrientationCtrlPt = 5;
 					}
 					- m_drawBehavior = 4104;
-					- m_transform = 0.178967 0 0 0.121795 30 455.634 ;
+					- m_transform = 0.199262 0 0 0.174512 24 576.908 ;
 					- m_bIsPreferencesInitialized = 1;
 					- m_AdditionalLabel = { CGIText 
 						- m_str = "";
@@ -1119,12 +1118,12 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- _filename = "_Requisitos.sbs";
 						- _subsystem = "_Requisitos";
 						- _class = "";
-						- _name = "Requisito ADC";
+						- _name = "Requisito DETECTAR LINHA";
 						- _id = GUID f230e846-fc6a-4648-bf73-e3e8f72330e2;
 					}
 					- m_pParent = GUID 21c3de7b-5b1e-4ece-8aeb-2d905c26c54f;
 					- m_name = { CGIText 
-						- m_str = "Requisito ADC";
+						- m_str = "Requisito DETECTAR LINHA";
 						- m_style = "Arial" 10 0 0 0 1 ;
 						- m_color = { IColor 
 							- m_fgColor = 0;
@@ -1137,7 +1136,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- m_nOrientationCtrlPt = 5;
 					}
 					- m_drawBehavior = 4104;
-					- m_transform = 0.178967 0 0 0.148352 232 455.555 ;
+					- m_transform = 0.199262 0 0 0.174746 264 569.654 ;
 					- m_bIsPreferencesInitialized = 1;
 					- m_AdditionalLabel = { CGIText 
 						- m_str = "";
@@ -1219,12 +1218,12 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- _filename = "_Requisitos.sbs";
 						- _subsystem = "_Requisitos";
 						- _class = "";
-						- _name = "Requisito CONTROLE";
+						- _name = "Requisito SEGUIR LINHA";
 						- _id = GUID cdd89261-7335-4387-a028-44076154e2b1;
 					}
 					- m_pParent = GUID 21c3de7b-5b1e-4ece-8aeb-2d905c26c54f;
 					- m_name = { CGIText 
-						- m_str = "Requisito CONTROLE";
+						- m_str = "Requisito SEGUIR LINHA";
 						- m_style = "Arial" 10 0 0 0 1 ;
 						- m_color = { IColor 
 							- m_fgColor = 0;
@@ -1237,7 +1236,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- m_nOrientationCtrlPt = 5;
 					}
 					- m_drawBehavior = 4104;
-					- m_transform = 0.178967 0 0 0.148352 437 455.555 ;
+					- m_transform = 0.210332 0 0 0.174746 504 569.654 ;
 					- m_bIsPreferencesInitialized = 1;
 					- m_AdditionalLabel = { CGIText 
 						- m_str = "";
@@ -1314,12 +1313,12 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- _filename = "_Requisitos.sbs";
 						- _subsystem = "_Requisitos";
 						- _class = "";
-						- _name = "Requisito LCD";
+						- _name = "Requisito DETECTAR VELOCIDADE";
 						- _id = GUID 14f38fe2-4ee6-4a1e-950b-e3f37eef0a0a;
 					}
 					- m_pParent = GUID 21c3de7b-5b1e-4ece-8aeb-2d905c26c54f;
 					- m_name = { CGIText 
-						- m_str = "Requisito LCD";
+						- m_str = "Requisito DETECTAR VELOCIDADE";
 						- m_style = "Arial" 10 0 0 0 1 ;
 						- m_color = { IColor 
 							- m_fgColor = 0;
@@ -1332,7 +1331,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- m_nOrientationCtrlPt = 5;
 					}
 					- m_drawBehavior = 2056;
-					- m_transform = 0.178967 0 0 0.119963 232 274.64 ;
+					- m_transform = 0.199262 0 0 0.176309 264 360.941 ;
 					- m_bIsPreferencesInitialized = 1;
 					- m_AdditionalLabel = { CGIText 
 						- m_str = "";
@@ -1361,8 +1360,27 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 					- _id = GUID d663e66e-1a42-4ce1-ae6d-936a23238e61;
 					- _properties = { IPropertyContainer 
 						- Subjects = { IRPYRawContainer 
-							- size = 1;
+							- size = 2;
 							- value = 
+							{ IPropertySubject 
+								- _Name = "General";
+								- Metaclasses = { IRPYRawContainer 
+									- size = 1;
+									- value = 
+									{ IPropertyMetaclass 
+										- _Name = "Graphics";
+										- Properties = { IRPYRawContainer 
+											- size = 1;
+											- value = 
+											{ IProperty 
+												- _Name = "FitBoxToItsTextuals";
+												- _Value = "False";
+												- _Type = Bool;
+											}
+										}
+									}
+								}
+							}
 							{ IPropertySubject 
 								- _Name = "ObjectModelGe";
 								- Metaclasses = { IRPYRawContainer 
@@ -1390,12 +1408,12 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- _filename = "_Requisitos.sbs";
 						- _subsystem = "_Requisitos";
 						- _class = "";
-						- _name = "Requisito DISPLAY7SEG";
+						- _name = "Requisito CONTROLE DE VELOCIDADE";
 						- _id = GUID a4b54609-cfab-4ccc-9983-191f2968bcf3;
 					}
 					- m_pParent = GUID 21c3de7b-5b1e-4ece-8aeb-2d905c26c54f;
 					- m_name = { CGIText 
-						- m_str = "Requisito DISPLAY7SEG";
+						- m_str = "Requisito CONTROLE DE VELOCIDADE";
 						- m_style = "Arial" 10 0 0 0 1 ;
 						- m_color = { IColor 
 							- m_fgColor = 0;
@@ -1408,7 +1426,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- m_nOrientationCtrlPt = 5;
 					}
 					- m_drawBehavior = 2056;
-					- m_transform = 0.178967 0 0 0.113553 437 138.659 ;
+					- m_transform = 0.210332 0 0 0.190769 504 144.107 ;
 					- m_bIsPreferencesInitialized = 1;
 					- m_AdditionalLabel = { CGIText 
 						- m_str = "";
@@ -1603,8 +1621,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 				}
 			}
 			- _name = "diag_pacotes";
-			- _objectCreation = "5223131672016202492365";
-			- _umlDependencyID = "2734";
+			- _objectCreation = "49222462120161728213949";
+			- _umlDependencyID = "2797";
 			- _lastModifiedTime = "6.16.2016::23:3:43";
 			- _graphicChart = { CGIClassChart 
 				- _id = GUID 84c7ed09-6a53-4e4a-925b-6e70d2f9ea4a;
@@ -2833,8 +2851,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 				}
 			}
 			- _name = "diag_definicao_semana_04_05";
-			- _objectCreation = "5223151672016202492165";
-			- _umlDependencyID = "4028";
+			- _objectCreation = "49222662120161728211949";
+			- _umlDependencyID = "4091";
 			- _lastModifiedTime = "6.16.2016::23:5:30";
 			- _graphicChart = { CGIClassChart 
 				- _id = GUID 338e6526-0699-499c-b6b4-93ea64c72097;
