@@ -3,8 +3,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 	- _id = GUID 20246198-4c47-4bfe-9397-a7aa14ffd20f;
 	- _myState = 8192;
 	- _name = "_Projeto_Pratico";
-	- _objectCreation = "461312562020161728086946";
-	- _umlDependencyID = "3248";
+	- _objectCreation = "293332103220161711832929";
+	- _umlDependencyID = "3238";
 	- Annotations = { IRPYRawContainer 
 		- size = 7;
 		- value = 
@@ -12,8 +12,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 			- _id = GUID 28f0689a-ecff-4bb0-941d-4a8badc4b580;
 			- _myState = 2048;
 			- _name = "comment_0";
-			- _objectCreation = "461312762020161728084946";
-			- _umlDependencyID = "2495";
+			- _objectCreation = "293334103220161711830929";
+			- _umlDependencyID = "2485";
 			- _description = { IDescription 
 				- _textRTF = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1046{\\fonttbl{\\f0\\fnil\\fcharset0 Arial;}}
 \\viewkind4\\uc1\\pard\\b\\fs20 ES770 -  Laborat\\'f3rio de Sistemas Digitais\\par
@@ -29,12 +29,12 @@ Diagrama de Requisitos de Sistema\\par
 			- _id = GUID dec1f94f-1152-46e1-904d-55660096766c;
 			- _myState = 2048;
 			- _name = "comment_14";
-			- _objectCreation = "461312962020161728082946";
-			- _umlDependencyID = "2548";
+			- _objectCreation = "293336103220161711828929";
+			- _umlDependencyID = "2547";
 			- _description = { IDescription 
 				- _textRTF = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1046{\\fonttbl{\\f0\\fnil\\fcharset0 Arial;}}
-\\viewkind4\\uc1\\pard\\b\\fs20 ES670 -  Projeto de Sistemas Embarcados\\par
-\\b0 Projeto Pr\\'e1tico - 1o semestre/2016\\par
+\\viewkind4\\uc1\\pard\\b\\fs20 ES770 -  Laborat\\'f3rio de Sistemas Digitais\\par
+\\b0 Projeto Pr\\'e1tico - 2o semestre/2016\\par
 \\par
 Diagrama de Defini\\'e7\\'e3o de Blocos\\par
 \\par
@@ -47,12 +47,12 @@ Diagrama de Defini\\'e7\\'e3o de Blocos\\par
 			- _id = GUID ff49df2e-66b1-405c-9a1d-efad749c7d2c;
 			- _myState = 2048;
 			- _name = "comment_21";
-			- _objectCreation = "461313162020161728080946";
-			- _umlDependencyID = "2537";
+			- _objectCreation = "293338103220161711826929";
+			- _umlDependencyID = "2545";
 			- _description = { IDescription 
 				- _textRTF = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1046{\\fonttbl{\\f0\\fnil\\fcharset0 Arial;}}
-\\viewkind4\\uc1\\pard\\b\\fs20 ES670 -  Projeto de Sistemas Embarcados\\par
-\\b0 Projeto Pr\\'e1tico - 1o semestre/2016\\par
+\\viewkind4\\uc1\\pard\\b\\fs20 ES770 - Laborat\\'f3rio de Sistemas Digitais\\par
+\\b0 Projeto Pr\\'e1tico - 2o semestre/2016\\par
 \\par
 Diagrama de Pacotes\\par
 }
@@ -64,8 +64,8 @@ Diagrama de Pacotes\\par
 			- _id = GUID 5afd59e4-c604-4c4e-887e-b0d9ede1f18d;
 			- _myState = 2048;
 			- _name = "comment_23";
-			- _objectCreation = "461313362020161728078946";
-			- _umlDependencyID = "2548";
+			- _objectCreation = "293340103220161711824929";
+			- _umlDependencyID = "2538";
 			- _description = { IDescription 
 				- _textRTF = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1046{\\fonttbl{\\f0\\fnil\\fcharset0 Arial;}}
 \\viewkind4\\uc1\\pard\\b\\fs20 ES670 -  Projeto de Sistemas Embarcados\\par
@@ -82,8 +82,8 @@ Diagrama de Sequ\\'eancia - Interpretador de Comandos\\par
 			- _id = GUID 86830b65-a694-45fb-86b8-7d602387707b;
 			- _myState = 2048;
 			- _name = "comment_25";
-			- _objectCreation = "461313562020161728076946";
-			- _umlDependencyID = "2550";
+			- _objectCreation = "293342103220161711822929";
+			- _umlDependencyID = "2540";
 			- _description = { IDescription 
 				- _textRTF = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1046{\\fonttbl{\\f0\\fnil\\fcharset0 Arial;}}
 \\viewkind4\\uc1\\pard\\b\\fs20 ES670 -  Projeto de Sistemas Embarcados\\par
@@ -99,8 +99,8 @@ Diagrama de Defini\\'e7\\'e3o de Blocos - \\b <<Subsystem>> LCD\\par
 			- _id = GUID f332d7c4-9288-4bf0-afd9-03ed3f251a6b;
 			- _myState = 2048;
 			- _name = "comment_27";
-			- _objectCreation = "461313762020161728074946";
-			- _umlDependencyID = "2552";
+			- _objectCreation = "293344103220161711820929";
+			- _umlDependencyID = "2542";
 			- _description = { IDescription 
 				- _textRTF = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1046{\\fonttbl{\\f0\\fnil\\fcharset0 Arial;}}
 \\viewkind4\\uc1\\pard\\b\\fs20 ES670 -  Projeto de Sistemas Embarcados\\par
@@ -116,8 +116,8 @@ Bloco do ADC para ser integrado ao resto do sistema\\par
 			- _id = GUID 1c6aff64-4936-4d1f-a7e1-13ea01f4e0ae;
 			- _myState = 2048;
 			- _name = "comment_30";
-			- _objectCreation = "461313962020161728072946";
-			- _umlDependencyID = "2546";
+			- _objectCreation = "293346103220161711818929";
+			- _umlDependencyID = "2545";
 			- _description = { IDescription 
 				- _text = "Semanas 4 e 5";
 			}
@@ -140,15 +140,15 @@ Bloco do ADC para ser integrado ao resto do sistema\\par
 			- _id = GUID bdee0ab5-d5a0-4569-8f02-ac8f107b96c3;
 			- _myState = 8192;
 			- _name = "File";
-			- _objectCreation = "461314162020161728070946";
-			- _umlDependencyID = "1972";
+			- _objectCreation = "293348103220161711816929";
+			- _umlDependencyID = "1980";
 			- _m2Classes = { IRPYRawContainer 
 				- size = 1;
 				- value = "Class"; 
 			}
 		}
 	}
-	- weakCGTime = 9.6.2016::20:4:52;
+	- weakCGTime = 9.10.2016::20:11:52;
 	- strongCGTime = 1.21.2016::20:20:26;
 	- _defaultComposite = GUID 0d5184b0-4db2-4cdb-a85e-27b5b9b2898f;
 	- _eventsBaseID = 29601;
@@ -159,9 +159,9 @@ Bloco do ADC para ser integrado ao resto do sistema\\par
 			- _id = GUID 0d5184b0-4db2-4cdb-a85e-27b5b9b2898f;
 			- _myState = 40960;
 			- _name = "TopLevel";
-			- _objectCreation = "461314362020161728068946";
-			- _umlDependencyID = "2408";
-			- weakCGTime = 3.30.2016::20:28:45;
+			- _objectCreation = "293350103220161711814929";
+			- _umlDependencyID = "2398";
+			- weakCGTime = 9.10.2016::17:38:33;
 			- strongCGTime = 1.21.2016::20:20:26;
 			- _multiplicity = "";
 			- _itsStateChart = { IHandle 
@@ -173,8 +173,8 @@ Bloco do ADC para ser integrado ao resto do sistema\\par
 			- _id = GUID d32248dd-74d9-479b-b8a9-cc8ac7ccc303;
 			- _myState = 8192;
 			- _name = "MKL25Z4";
-			- _objectCreation = "461314562020161728066946";
-			- _umlDependencyID = "2070";
+			- _objectCreation = "293352103220161711812929";
+			- _umlDependencyID = "2060";
 			- Stereotypes = { IRPYRawContainer 
 				- size = 1;
 				- value = 
@@ -199,8 +199,8 @@ Bloco do ADC para ser integrado ao resto do sistema\\par
 			- _id = GUID 5c5570d9-ea15-49f5-8260-4d76de352f06;
 			- _myState = 8192;
 			- _name = "timeout_500ms";
-			- _objectCreation = "461314762020161728064946";
-			- _umlDependencyID = "2840";
+			- _objectCreation = "293354103220161711810929";
+			- _umlDependencyID = "2830";
 			- _virtual = 0;
 			- Args = { IRPYRawContainer 
 				- size = 0;

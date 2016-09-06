@@ -1,0 +1,40 @@
+I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
+{ ISubsystem 
+	- _id = GUID 2a7f21ec-1647-4894-84e2-727e076543d5;
+	- _myState = 8192;
+	- _name = "InfraredSensor";
+	- _objectCreation = "1823928104220161411481918";
+	- _umlDependencyID = "3087";
+	- _theMainDiagram = { IHandle 
+		- _m2Class = "IDiagram";
+		- _filename = "";
+		- _subsystem = "";
+		- _class = "";
+		- _name = "diag_pacotes";
+		- _id = GUID 604328de-2202-48b3-9d1a-353bbeb75331;
+	}
+	- weakCGTime = 9.10.2016::17:39:25;
+	- strongCGTime = 9.10.2016::17:37:47;
+	- _defaultComposite = GUID 35a1b4f1-f330-4a38-976e-f5fd7ac8e7ea;
+	- _eventsBaseID = -1;
+	- Classes = { IRPYRawContainer 
+		- size = 1;
+		- value = 
+		{ IClass 
+			- _id = GUID 35a1b4f1-f330-4a38-976e-f5fd7ac8e7ea;
+			- _myState = 40960;
+			- _name = "TopLevel";
+			- _objectCreation = "1823930104220161411479918";
+			- _umlDependencyID = "2453";
+			- weakCGTime = 12.31.1969::22:0:0;
+			- strongCGTime = 12.31.1969::22:0:0;
+			- _multiplicity = "";
+			- _itsStateChart = { IHandle 
+				- _m2Class = "";
+			}
+			- _classModifier = Unspecified;
+		}
+	}
+	- _configurationRelatedTime = 12.31.1969::22:0:0;
+}
+
