@@ -3,8 +3,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 	- _id = GUID 289d5afe-0e62-433c-9dc4-551d2814174f;
 	- _myState = 8192;
 	- _name = "Encoder";
-	- _objectCreation = "293426103220161711738929";
-	- _umlDependencyID = "2300";
+	- _objectCreation = "3176511243201621245693";
+	- _umlDependencyID = "2189";
 	- _theMainDiagram = { IHandle 
 		- _m2Class = "IDiagram";
 		- _filename = "";
@@ -14,7 +14,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 		- _id = GUID 604328de-2202-48b3-9d1a-353bbeb75331;
 	}
 	- _lastID = 1;
-	- weakCGTime = 9.10.2016::20:16:27;
+	- weakCGTime = 9.13.2016::0:33:51;
 	- strongCGTime = 9.10.2016::17:36:33;
 	- _defaultComposite = GUID af8c7fcf-857e-4730-ae93-6885bbc34ef2;
 	- _eventsBaseID = -1;
@@ -25,9 +25,9 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 			- _id = GUID af8c7fcf-857e-4730-ae93-6885bbc34ef2;
 			- _myState = 40960;
 			- _name = "TopLevel";
-			- _objectCreation = "293428103220161711736929";
-			- _umlDependencyID = "2407";
-			- weakCGTime = 9.10.2016::17:47:59;
+			- _objectCreation = "3176531243201621245493";
+			- _umlDependencyID = "2296";
+			- weakCGTime = 9.10.2016::20:16:27;
 			- strongCGTime = 9.10.2016::17:36:33;
 			- _multiplicity = "";
 			- _itsStateChart = { IHandle 
@@ -39,8 +39,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 			- _id = GUID 91378c9c-bf74-4402-8c4a-70997d7232dd;
 			- _myState = 8192;
 			- _name = "Encoder_hal";
-			- _objectCreation = "293430103220161711734929";
-			- _umlDependencyID = "2695";
+			- _objectCreation = "3176551243201621245293";
+			- _umlDependencyID = "2593";
 			- Dependencies = { IRPYRawContainer 
 				- size = 1;
 				- value = 
@@ -48,8 +48,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 					- _id = GUID 5b7d3bbe-54b0-478e-9134-7be2454c93fe;
 					- _myState = 2048;
 					- _name = "es770_peripheral_board";
-					- _objectCreation = "293432103220161711732929";
-					- _umlDependencyID = "3739";
+					- _objectCreation = "3176571243201621245093";
+					- _umlDependencyID = "3637";
 					- Stereotypes = { IRPYRawContainer 
 						- size = 1;
 						- value = 
@@ -77,21 +77,21 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 				- _filename = "";
 				- _subsystem = "";
 				- _class = "";
-				- _name = "diag_definicao_semana_04_05";
+				- _name = "diag_definicao_blocos";
 				- _id = GUID f53d507c-79b1-4f7f-850a-0c96a124e9bd;
 			}
 			- _lastID = 4;
-			- weakCGTime = 9.10.2016::20:16:57;
+			- weakCGTime = 9.13.2016::0:34:7;
 			- strongCGTime = 9.10.2016::17:51:52;
 			- Operations = { IRPYRawContainer 
-				- size = 3;
+				- size = 2;
 				- value = 
 				{ IPrimitiveOperation 
 					- _id = GUID 7775c7c6-04ea-473c-aa24-496a1518bd7f;
 					- _myState = 8192;
 					- _name = "init";
-					- _objectCreation = "293434103220161711730929";
-					- _umlDependencyID = "2023";
+					- _objectCreation = "3176591243201621244893";
+					- _umlDependencyID = "1930";
 					- _virtual = 0;
 					- Args = { IRPYRawContainer 
 						- size = 0;
@@ -114,9 +114,9 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 				{ IPrimitiveOperation 
 					- _id = GUID de934271-a67b-4418-9cc4-9fdebbbb580c;
 					- _myState = 8192;
-					- _name = "updateMeasures";
-					- _objectCreation = "293436103220161711728929";
-					- _umlDependencyID = "3076";
+					- _name = "getMeasure";
+					- _objectCreation = "3176611243201621244693";
+					- _umlDependencyID = "2527";
 					- _lastID = 2;
 					- _virtual = 0;
 					- Args = { IRPYRawContainer 
@@ -125,8 +125,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						{ IArgument 
 							- _id = GUID a1ce2eed-67a0-4bf8-8f25-e6669397e0d9;
 							- _name = "usEncoderNumber";
-							- _objectCreation = "293438103220161711726929";
-							- _umlDependencyID = "3149";
+							- _objectCreation = "3176631243201621244493";
+							- _umlDependencyID = "3038";
 							- _typeOf = { IHandle 
 								- _m2Class = "IType";
 								- _filename = "PredefinedTypesC++.sbs";
@@ -141,8 +141,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						{ IArgument 
 							- _id = GUID 3f85eec7-6780-4ae9-bc85-af9d1093fa4f;
 							- _name = "uiPeriod";
-							- _objectCreation = "293440103220161711724929";
-							- _umlDependencyID = "2420";
+							- _objectCreation = "3176651243201621244293";
+							- _umlDependencyID = "2318";
 							- _description = { IDescription 
 								- _text = "Time elapsed since last time this function was called (task period)";
 							}
@@ -153,49 +153,6 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 								- _class = "";
 								- _name = "unsigned int";
 								- _id = GUID 7688bde5-e3a0-4b4d-bcd7-cbfa35c3b811;
-							}
-							- _isOrdered = 0;
-							- _argumentDirection = In;
-						}
-					}
-					- _returnType = { IHandle 
-						- _m2Class = "IType";
-						- _filename = "PredefinedTypesC++.sbs";
-						- _subsystem = "PredefinedTypesCpp";
-						- _class = "";
-						- _name = "void";
-						- _id = GUID c6b70728-b655-45a0-abb7-8ea5d3da94be;
-					}
-					- _abstract = 0;
-					- _final = 0;
-					- _concurrency = Sequential;
-					- _protection = iPublic;
-					- _static = 0;
-					- _constant = 0;
-				}
-				{ IPrimitiveOperation 
-					- _id = GUID 4367fcbc-ffe3-4c2d-9b5b-006331f5b6b6;
-					- _myState = 8192;
-					- _name = "getCurrentMeasure";
-					- _objectCreation = "293442103220161711722929";
-					- _umlDependencyID = "3368";
-					- _lastID = 1;
-					- _virtual = 0;
-					- Args = { IRPYRawContainer 
-						- size = 1;
-						- value = 
-						{ IArgument 
-							- _id = GUID ebf0bee1-ffee-44d6-9844-fec358e9ede2;
-							- _name = "usEncoderNumber";
-							- _objectCreation = "293444103220161711720929";
-							- _umlDependencyID = "3140";
-							- _typeOf = { IHandle 
-								- _m2Class = "IType";
-								- _filename = "PredefinedTypesC++.sbs";
-								- _subsystem = "PredefinedTypesCpp";
-								- _class = "";
-								- _name = "unsigned short";
-								- _id = GUID 77bfd7dd-107e-4af2-a566-2d076f08e5c1;
 							}
 							- _isOrdered = 0;
 							- _argumentDirection = In;
