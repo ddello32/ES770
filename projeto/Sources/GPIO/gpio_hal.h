@@ -10,7 +10,7 @@
 #ifndef SOURCES_GPIO_GPIO_HAL_H_
 #define SOURCES_GPIO_GPIO_HAL_H_
 
-#include "KL25Z/es670_peripheral_board.h"
+#include "KL25Z/es770_peripheral_board.h"
 
 /**
  * Ungates the clock for a gpio port

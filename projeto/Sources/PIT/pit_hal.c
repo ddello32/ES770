@@ -10,7 +10,7 @@
 //Careful when handling PIT DOC! Bit endianness is inverted in relation to GPIO doc
 
 #include "pit_hal.h"
-#include "KL25Z/es670_peripheral_board.h"
+#include "KL25Z/es770_peripheral_board.h"
 #include "fsl_clock_manager.h"
 
 #define PIT_IRQ_NUMBER PIT_IRQn

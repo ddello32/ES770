@@ -8,7 +8,7 @@
 /* ***************************************************************** */
 
 #include "cooler_hal.h"
-#include "KL25Z/es670_peripheral_board.h"
+#include "KL25Z/es770_peripheral_board.h"
 #include "GPIO/gpio_hal.h"
 
 /**

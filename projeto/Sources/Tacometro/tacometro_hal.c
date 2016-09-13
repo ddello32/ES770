@@ -7,7 +7,7 @@
 /* Revision date:    13maio2016                                      */
 /* ***************************************************************** */
 #include "tacometro_hal.h"
-#include "KL25Z/es670_peripheral_board.h"
+#include "KL25Z/es770_peripheral_board.h"
 
 #define TACOMETRO_SCALER 7
 

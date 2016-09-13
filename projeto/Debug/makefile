@@ -9,21 +9,13 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include Sources/Util/subdir.mk
--include Sources/TempSensor/subdir.mk
 -include Sources/Tacometro/subdir.mk
--include Sources/SevenSeg/subdir.mk
--include Sources/Servo/subdir.mk
 -include Sources/Serial/subdir.mk
 -include Sources/Protocolo/subdir.mk
 -include Sources/PIT/subdir.mk
 -include Sources/Mcg/subdir.mk
 -include Sources/Main/subdir.mk
--include Sources/LedSwi/subdir.mk
--include Sources/LCD/subdir.mk
--include Sources/Heater/subdir.mk
 -include Sources/Cooler/subdir.mk
--include Sources/Buzzer/subdir.mk
--include Sources/ADC/subdir.mk
 -include Sources/subdir.mk
 -include Project_Settings/Startup_Code/subdir.mk
 -include subdir.mk
@@ -67,7 +59,7 @@ all: emb.elf secondary-outputs
 emb.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross ARM C++ Linker'
-	arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -T "MKL25Z128xxx4_flash.ld" -Xlinker --gc-sections -L"/home/dello/Workspace/ES770/projeto/Project_Settings/Linker_Files" -Wl,-Map,"emb.map" -specs=nosys.specs -specs=nano.specs -Xlinker -z -Xlinker muldefs -o "emb.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -T "MKL25Z128xxx4_flash.ld" -Xlinker --gc-sections -L"C:/cygwin64/home/ES770A/VINI-DELLO/ES770/projeto/Project_Settings/Linker_Files" -Wl,-Map,"emb.map" -specs=nosys.specs -specs=nano.specs -Xlinker -z -Xlinker muldefs -o "emb.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

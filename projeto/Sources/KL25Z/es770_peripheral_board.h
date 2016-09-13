@@ -1,14 +1,14 @@
 /* ***************************************************************** */
-/* File name:        es670_peripheral_board.h                        */
+/* File name:        es770_peripheral_board.h                        */
 /* File description: Header file containing the peripherals mapping  */
-/*                     of the peripheral board for the ES670 hardware*/
-/* Author name:      dloubach                                        */
-/* Creation date:    16out2015                                       */
+/*                     of the peripheral board for the ES770 hardware*/
+/* Author name:      ddello32                                        */
+/* Creation date:    13set2016                                       */
 /* Revision date:    25fev2016                                       */
 /* ***************************************************************** */
 
-#ifndef SOURCES_ES670_PERIPHERAL_BOARD_H_
-#define SOURCES_ES670_PERIPHERAL_BOARD_H_
+#ifndef SOURCES_ES770_PERIPHERAL_BOARD_H_
+#define SOURCES_ES770_PERIPHERAL_BOARD_H_
 
 /* system includes */
 #include <MKL25Z4.h>
@@ -244,4 +244,4 @@ typedef int E;
 /*					END OF ADC DEFINITIONS 					  */
 
 
-#endif /* SOURCES_ES670_PERIPHERAL_BOARD_H_ */
+#endif /* SOURCES_ES770_PERIPHERAL_BOARD_H_ */
