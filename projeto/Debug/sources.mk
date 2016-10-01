@@ -29,6 +29,7 @@ Sources/Util \
 Sources/Tacometro \
 Sources/Serial \
 Sources/Protocolo \
+Sources/PhotoSensor \
 Sources/PIT \
 Sources/Mcg \
 Sources/Main \

@@ -39,7 +39,7 @@ typedef int E;
 /*                 END OF General uC definitions         */
 
 
-/*                 BUZZER Definitions                    */
+/*                 Infrared LED Definitions                    */
 #define BUZZER_PORT_BASE_PNT        PORTD                                   /* peripheral port base pointer */
 #define BUZZER_GPIO_BASE_PNT        PTD                                     /* peripheral gpio base pointer */
 #define BUZZER_PORT_ID				D                                       /* peripheral port identifier*/
@@ -49,7 +49,7 @@ typedef int E;
 #define BUZZER_PIN                  0                                      /* buzzer pin */
 #define BUZZER_DIR                  kGpioDigitalOutput
 #define BUZZER_ALT                  0x01u
-/*                 END OF BUZZER definitions             */
+/*                 END OF Infrared LED definitions             */
 
 
 /*                 LED and SWITCH Definitions                    */
@@ -226,22 +226,88 @@ typedef int E;
 
 /*					END OF TACOMETER DEFINITIONS		*/
 
-/*					ADC DEFINITIONS 					  */
-#define ADC_PORT_ID					E
-#define ADC_PORT_BASE_PNT			PORTE
+/*					PH0TO SENSOR DEFINITIONS 					  */
 #define ADC_NUM_BASE_PNT			ADC0_BASE_PTR
 #define ADC_MUX_IDX					0		//MUX A
-#define ADC_CHANNEL_SEL				0x4
-#define ADC_TEMP_PIN				21
-#define ADC_VOLT_PIN				20
-#define ADC_TEMP_PIN_MUX_ALT		0x0
-#define ADC_VOLT_PIN_MUX_ALT		0x0
 
-#define HEATER_TPM_BASE_PNT			TPM1
-#define HEATER_TPM_CHANNEL_INDEX	0
+#define PH0_PORT_ID					B
+#define PH0_PORT_BASE_PNT			PORTB
+#define PH0_CHANNEL_SEL				0x8
+#define PH0_PIN						0
+#define PH0_PIN_MUX_ALT				0x0
 
+#define PH1_PORT_ID					B
+#define PH1_PORT_BASE_PNT			PORTB
+#define PH1_CHANNEL_SEL				0x9
+#define PH1_PIN						1
+#define PH1_PIN_MUX_ALT				0x0
 
-/*					END OF ADC DEFINITIONS 					  */
+#define PH2_PORT_ID					B
+#define PH2_PORT_BASE_PNT			PORTB
+#define PH2_CHANNEL_SEL				0x12
+#define PH2_PIN						2
+#define PH2_PIN_MUX_ALT				0x0
+
+#define PH3_PORT_ID					C
+#define PH3_PORT_BASE_PNT			PORTC
+#define PH3_CHANNEL_SEL				0x0
+#define PH3_PIN						20
+#define PH3_PIN_MUX_ALT				0x0
+
+#define PH4_PORT_ID					C
+#define PH4_PORT_BASE_PNT			PORTC
+#define PH4_CHANNEL_SEL				0x4
+#define PH4_PIN						21
+#define PH4_PIN_MUX_ALT				0x0
+
+#define PH5_PORT_ID					C
+#define PH5_PORT_BASE_PNT			PORTC
+#define PH5_CHANNEL_SEL				0x3
+#define PH5_PIN						22
+#define PH5_PIN_MUX_ALT				0x0
+
+#define LD0_PORT_ID					E
+#define LD0_PORT_BASE_PNT      		PORTE
+#define LD0_GPIO_BASE_PNT      		PTE
+#define LD0_PIN                     31
+#define LD0_DIR		               (GPIO_OUTPUT << LD0_PIN)
+#define LD0_ALT                     GPIO_OUTPUT
+
+#define LD1_PORT_ID					A
+#define LD1_PORT_BASE_PNT      		PORTA
+#define LD1_GPIO_BASE_PNT      		PTA
+#define LD1_PIN                     17
+#define LD1_DIR		                (GPIO_OUTPUT << LD1_PIN)
+#define LD1_ALT                     GPIO_OUTPUT
+
+#define LD2_PORT_ID					A
+#define LD2_PORT_BASE_PNT      		PORTA
+#define LD2_GPIO_BASE_PNT      		PTA
+#define LD2_PIN                     16
+#define LD2_DIR		                (GPIO_OUTPUT << LD2_PIN)
+#define LD2_ALT                     GPIO_OUTPUT
+
+#define LD3_PORT_ID					C
+#define LD3_PORT_BASE_PNT      		PORTC
+#define LD3_GPIO_BASE_PNT      		PTC
+#define LD3_PIN                     17
+#define LD3_DIR		                (GPIO_OUTPUT << LD3_PIN)
+#define LD3_ALT                     GPIO_OUTPUT
+
+#define LD4_PORT_ID					C
+#define LD4_PORT_BASE_PNT      		PORTC
+#define LD4_GPIO_BASE_PNT      		PTC
+#define LD4_PIN                     16
+#define LD4_DIR			            (GPIO_OUTPUT << LD4_PIN)
+#define LD4_ALT                     GPIO_OUTPUT
+
+#define LD5_PORT_ID					C
+#define LD5_PORT_BASE_PNT      		PORTC
+#define LD5_GPIO_BASE_PNT      		PTC
+#define LD5_PIN                     13
+#define LD5_DIR		                (GPIO_OUTPUT << LD5_PIN)
+#define LD5_ALT                     GPIO_OUTPUT
+/*					END OF PH0TO SENSOR DEFINITIONS 					  */
 
 
 #endif /* SOURCES_ES770_PERIPHERAL_BOARD_H_ */

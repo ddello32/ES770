@@ -49,7 +49,7 @@ int main(void)
 
 		//TODO
 		while(!uiFlagNextPeriod){
-			main_protocolCheck();
+//			main_protocolCheck();
 		}
 		uiFlagNextPeriod = 0;
 
