@@ -212,8 +212,6 @@ typedef int E;
 
 #define HEATER_TPM_BASE_PNT			TPM1
 #define HEATER_TPM_CHANNEL_INDEX	0
-
-
 /*					END OF HEATER DEFINITIONS 					  */
 
 /*					TACOMETER DEFINITIONS				*/
@@ -309,5 +307,30 @@ typedef int E;
 #define LD5_ALT                     GPIO_OUTPUT
 /*					END OF PH0TO SENSOR DEFINITIONS 					  */
 
+/*					RGBLED DEFINITIONS 					  */
+#define RGBLED_R_PORT_ID				B
+#define RGBLED_R_PORT_BASE_PNT			PORTB
+#define RGBLED_R_PIN					18
+#define RGBLED_R_PIN_MUX_ALT			0x3
+
+#define RGBLED_G_PORT_ID				B
+#define RGBLED_G_PORT_BASE_PNT			PORTB
+#define RGBLED_G_PIN					19
+#define RGBLED_G_PIN_MUX_ALT			0x3
+
+#define RGBLED_B_PORT_ID				D
+#define RGBLED_B_PORT_BASE_PNT			PORTD
+#define RGBLED_B_PIN					1
+#define RGBLED_B_PIN_MUX_ALT			0x4
+
+#define RGBLED_R_TPM_BASE_PNT			TPM2
+#define RGBLED_R_TPM_CHANNEL_INDEX		0
+
+#define RGBLED_G_TPM_BASE_PNT			TPM2
+#define RGBLED_G_TPM_CHANNEL_INDEX		1
+
+#define RGBLED_B_TPM_BASE_PNT			TPM0
+#define RGBLED_B_TPM_CHANNEL_INDEX		1
+/*					END OF RGBLED DEFINITIONS 					  */
 
 #endif /* SOURCES_ES770_PERIPHERAL_BOARD_H_ */

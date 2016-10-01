@@ -28,11 +28,11 @@ Sources \
 Sources/Util \
 Sources/Tacometro \
 Sources/Serial \
+Sources/RGBLed \
 Sources/Protocolo \
 Sources/PhotoSensor \
 Sources/PIT \
 Sources/Mcg \
 Sources/Main \
-Sources/Cooler \
 Project_Settings/Startup_Code \
 

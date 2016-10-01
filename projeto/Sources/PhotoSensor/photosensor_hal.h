@@ -5,6 +5,8 @@
  *      Author: ddello32
  */
 
+#ifndef SOURCES_PHOTOSENSOR_HAL_H_
+#define SOURCES_PHOTOSENSOR_HAL_H_
 /**
  *  Configure PhotoSensor module
  */
@@ -24,3 +26,4 @@ unsigned int photoSensor_measure(unsigned short usSensorNumber);
  * @param uiDarkVal - value when measuring black
  */
 //void photoSensor_calibrate(unsigned short usSensorNumber, unsigned int uiLightVal, unsigned int darkVal);
+#endif /* SOURCES_PHOTOSENSOR_HAL_H_ */

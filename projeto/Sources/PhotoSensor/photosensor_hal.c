@@ -9,7 +9,7 @@
 #include <stdint.h>
 #include "GPIO/gpio_hal.h"
 #include <fsl_gpio_hal.h>
-#include "PhotoSensor/photosensor.h"
+#include "PhotoSensor/photosensor_hal.h"
 
 #define ADC0_SC1A_COCO (ADC0_SC1A >> 7)
 
