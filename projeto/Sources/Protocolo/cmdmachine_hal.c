@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include "cmdmachine_hal.h"
 #include "Util/util.h"
-#include "Cooler/cooler_hal.h"
 
 #define ERR_STR "ERR\n"
 #define ACK_STR "ACK\n"
@@ -37,9 +36,6 @@ unsigned int handleIdle(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes){
 	unsigned int uiCounter = 0;
 	while(uiCounter < uiSize && iState == STATE_IDLE){
 		switch(cpCmdBuffer[uiCounter++]){
-			case 'C':
-				iState = STATE_COOLER_CMD;
-				break;
 			case ' ':
 			case '\t':
 			case '\r':
@@ -49,54 +45,6 @@ unsigned int handleIdle(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes){
 			default:
 				iState = STATE_ERR;
 		}
-	}
-	return uiCounter;
-}
-
-//==========================================================================
-// Cooler CMD STATE MACHINE
-//==========================================================================
-/**
- * Parses Cooler command hexadecimal input into integer
- *
- * @param cpCmdBuffer The start of the Buzzer command hexadecimal input string
- *
- * @return The parsed number contained in the start of the command
- * 				string or -1 in case of parsing failure
- */
-int getCoolerHex(char *cpCmdBuffer){
-	int iCommand = -1;
-	if(!sscanf(cpCmdBuffer, "%4x", &iCommand)){
-		iCommand = -1;
-	}
-	return iCommand;
-}
-
-/**
- * Handles parsing while in COOLER_CMD state and checks for transitions
- *
- * @param cpCmdBuffer The start of the command string to parse
- * @param uiSize The size of the command string
- * @param cpCmdRes Buffer for concatenating the command response
- *
- * @return The number of characters parsed while in the COOLER_COMMAND state
- */
-int handleCooler(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes){
-	unsigned int uiCounter = 0;
-	int iHex = -1;
-	if(uiCounter < uiSize){
-		iHex = getCoolerHex(cpCmdBuffer);
-	}
-	if(iHex >= 0){
-		strcat(cpCmdRes, ACK_STR);
-		cooler_setVelocity(iHex);
-		iState = STATE_IDLE;
-		//Exactly how many characters where read.
-		while(uiCounter < 4 && uiCounter < uiSize && ((cpCmdBuffer[uiCounter] >= '0' && cpCmdBuffer[uiCounter] <= '9') || (cpCmdBuffer[uiCounter] >= 'A' && cpCmdBuffer[uiCounter] <= 'F')) ){
-			uiCounter++;
-		}
-	}else{
-		iState = STATE_ERR;
 	}
 	return uiCounter;
 }

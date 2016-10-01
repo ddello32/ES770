@@ -248,8 +248,8 @@ typedef int E;
 
 #define PH3_PORT_ID					C
 #define PH3_PORT_BASE_PNT			PORTC
-#define PH3_CHANNEL_SEL				0x0
-#define PH3_PIN						20
+#define PH3_CHANNEL_SEL				0x3
+#define PH3_PIN						22
 #define PH3_PIN_MUX_ALT				0x0
 
 #define PH4_PORT_ID					C
@@ -260,8 +260,8 @@ typedef int E;
 
 #define PH5_PORT_ID					C
 #define PH5_PORT_BASE_PNT			PORTC
-#define PH5_CHANNEL_SEL				0x3
-#define PH5_PIN						22
+#define PH5_CHANNEL_SEL				0x0
+#define PH5_PIN						20
 #define PH5_PIN_MUX_ALT				0x0
 
 #define LD0_PORT_ID					E
