@@ -1,5 +1,5 @@
 /*
- * File name: photoSensor.c
+ * File name: photosensor_hal.c
  *
  *  Created on: 01/10/2016
  *      Author: ddello32
@@ -10,6 +10,7 @@
 #include "GPIO/gpio_hal.h"
 #include <fsl_gpio_hal.h>
 #include "PhotoSensor/photosensor_hal.h"
+#include "Util/util.h"
 
 #define ADC0_SC1A_COCO (ADC0_SC1A >> 7)
 
@@ -77,7 +78,7 @@ void photoSensor_initADCModule(void) {
 			)
 	);
 
-    //Enable maximum average mode and star calibration
+    //Enable maximum average mode and start calibration
     ADC_WR_SC3(ADC_NUM_BASE_PNT,
      		(
      				ADC_SC3_AVGE(0x1) 				//Enable average
@@ -112,12 +113,14 @@ void photoSensor_initADCModule(void) {
 			)
 	);
 
-    ADC_WR_SC3(ADC_NUM_BASE_PNT,
-     		(
-     				ADC_SC3_AVGE(0x0) 				//Enable average
- 					| ADC_SC3_AVGS(0x0) 			//32 averages
- 			)
- 	);
+    //TODO Check if measuring without hardware avg is precise enough and recalculate
+    //measuring time to take into account multiple measures
+//    ADC_WR_SC3(ADC_NUM_BASE_PNT,
+//     		(
+//     				ADC_SC3_AVGE(0x0) 				//Disable average
+// 					| ADC_SC3_AVGS(0x0)
+// 			)
+// 	);
 }
 
 /**
@@ -149,7 +152,7 @@ void photoSensor_getDCValues() {
 	for(unsigned int i = 0; i < 6; i++){
 		photoSensor_initAdcConversion(i);
 		while(!photoSensor_isAdcDone());
-		ui16aOFFSETS[i] = photoSensor_getAdcConversionValue();
+		ui16aOFFSETS[i] += photoSensor_getAdcConversionValue();
 	}
 }
 
@@ -158,23 +161,23 @@ void photoSensor_getDCValues() {
  */
 void photoSensor_initLEDS() {
 	GPIO_UNGATE_PORT(LD0_PORT_ID);
-	GPIO_INIT_PIN(LD0_PORT_ID, LD0_PIN, LD0_DIR);
-	GPIO_WRITE_PIN(LD0_PORT_ID, LD0_PIN, GPIO_LOW);
+	GPIO_INIT_PIN(LD0_PORT_ID, LD0_PIN, GPIO_OUTPUT);
+	GPIO_WRITE_PIN(LD0_PORT_ID, LD0_PIN, GPIO_HIGH);
 	GPIO_UNGATE_PORT(LD1_PORT_ID);
-	GPIO_INIT_PIN(LD1_PORT_ID, LD1_PIN, LD1_DIR);
-	GPIO_WRITE_PIN(LD1_PORT_ID, LD1_PIN, GPIO_LOW);
+	GPIO_INIT_PIN(LD1_PORT_ID, LD1_PIN, GPIO_OUTPUT);
+	GPIO_WRITE_PIN(LD1_PORT_ID, LD1_PIN, GPIO_HIGH);
 	GPIO_UNGATE_PORT(LD2_PORT_ID);
-	GPIO_INIT_PIN(LD2_PORT_ID, LD2_PIN, LD2_DIR);
-	GPIO_WRITE_PIN(LD2_PORT_ID, LD2_PIN, GPIO_LOW);
+	GPIO_INIT_PIN(LD2_PORT_ID, LD2_PIN, GPIO_OUTPUT);
+	GPIO_WRITE_PIN(LD2_PORT_ID, LD2_PIN, GPIO_HIGH);
 	GPIO_UNGATE_PORT(LD3_PORT_ID);
-	GPIO_INIT_PIN(LD3_PORT_ID, LD3_PIN, LD3_DIR);
-	GPIO_WRITE_PIN(LD3_PORT_ID, LD3_PIN, GPIO_LOW);
+	GPIO_INIT_PIN(LD3_PORT_ID, LD3_PIN, GPIO_OUTPUT);
+	GPIO_WRITE_PIN(LD3_PORT_ID, LD3_PIN, GPIO_HIGH);
 	GPIO_UNGATE_PORT(LD4_PORT_ID);
-	GPIO_INIT_PIN(LD4_PORT_ID, LD4_PIN, LD4_DIR);
-	GPIO_WRITE_PIN(LD4_PORT_ID, LD4_PIN, GPIO_LOW);
+	GPIO_INIT_PIN(LD4_PORT_ID, LD4_PIN, GPIO_OUTPUT);
+	GPIO_WRITE_PIN(LD4_PORT_ID, LD4_PIN, GPIO_HIGH);
 	GPIO_UNGATE_PORT(LD5_PORT_ID);
-	GPIO_INIT_PIN(LD5_PORT_ID, LD5_PIN, LD5_DIR);
-	GPIO_WRITE_PIN(LD5_PORT_ID, LD5_PIN, GPIO_LOW);
+	GPIO_INIT_PIN(LD5_PORT_ID, LD5_PIN, GPIO_OUTPUT);
+	GPIO_WRITE_PIN(LD5_PORT_ID, LD5_PIN, GPIO_HIGH);
 }
 
 /**
@@ -191,12 +194,12 @@ void photoSensor_init(void){
  * @param usSensorNumber - from 0 to 5
  * @return The conversion result
  */
-unsigned int photoSensor_measure(unsigned short usSensorNumber) {
-	GPIO_HAL_SetPinOutput(gtpLEDPORTS[usSensorNumber], usaLEDPINS[usSensorNumber]);
+int photoSensor_measure(unsigned short usSensorNumber) {
+	GPIO_HAL_ClearPinOutput(gtpLEDPORTS[usSensorNumber], usaLEDPINS[usSensorNumber]);
 	photoSensor_initAdcConversion(usSensorNumber);
 	while(!photoSensor_isAdcDone());
-	unsigned int measure = (unsigned int) photoSensor_getAdcConversionValue();
+	int measure = (int) photoSensor_getAdcConversionValue();
 	measure -= ui16aOFFSETS[usSensorNumber];
-	GPIO_HAL_ClearPinOutput(gtpLEDPORTS[usSensorNumber], usaLEDPINS[usSensorNumber]);
+	GPIO_HAL_SetPinOutput(gtpLEDPORTS[usSensorNumber], usaLEDPINS[usSensorNumber]);
 	return measure;
 }

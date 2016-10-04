@@ -33,7 +33,7 @@ void rgbled_init(void){
 	TPM_WR_SC_CPWMS(RGBLED_G_TPM_BASE_PNT, 0x0);	//Edge Aligned
 	TPM_WR_SC_CPWMS(RGBLED_B_TPM_BASE_PNT, 0x0);	//Edge Aligned
 
-	// Config R
+	// Config R Channel mode
 	/* Channel mode configuration should be done with the channel disabled and need acknowledge*/
 	TPM_WR_CnSC(RGBLED_R_TPM_BASE_PNT, RGBLED_R_TPM_CHANNEL_INDEX, TPM_CnSC_ELSB(1) | TPM_CnSC_MSB(1));
     /* Wait till mode change is acknowledged */
@@ -43,17 +43,7 @@ void rgbled_init(void){
 				& (TPM_CnSC_ELSB(1) | TPM_CnSC_MSB(1))
 			)
 		  );
-	//Same period as OSCRCLK
-	TPM_WR_MOD(RGBLED_R_TPM_BASE_PNT, 0xFFFE);
-	//Duty cycle
-	TPM_WR_CnV_VAL(RGBLED_R_TPM_BASE_PNT, RGBLED_R_TPM_CHANNEL_INDEX, 0);
-	//Prescale 1:1
-	TPM_WR_SC_PS(RGBLED_R_TPM_BASE_PNT, 0x0);
-	//Select LTPM Clock Source for TPM module
-	TPM_WR_SC_CMOD(RGBLED_R_TPM_BASE_PNT, 0x1);
-
-	//Config G
-	/* Channel mode configuration should be done with the channel disabled and need acknowledge*/
+	//Config G Channel mode
 	TPM_WR_CnSC(RGBLED_G_TPM_BASE_PNT, RGBLED_G_TPM_CHANNEL_INDEX, TPM_CnSC_ELSB(1) | TPM_CnSC_MSB(1));
     /* Wait till mode change is acknowledged */
     while (!
@@ -62,17 +52,8 @@ void rgbled_init(void){
 				& (TPM_CnSC_ELSB(1) | TPM_CnSC_MSB(1))
 			)
 		  );
-	//Same period as OSCRCLK
-	TPM_WR_MOD(RGBLED_G_TPM_BASE_PNT, 0xFFFE);
-	//Duty cycle
-	TPM_WR_CnV_VAL(RGBLED_G_TPM_BASE_PNT, RGBLED_G_TPM_CHANNEL_INDEX, 0);
-	//Prescale 1:1
-	TPM_WR_SC_PS(RGBLED_G_TPM_BASE_PNT, 0x0);
-	//Select LTPM Clock Source for TPM module
-	TPM_WR_SC_CMOD(RGBLED_G_TPM_BASE_PNT, 0x1);
 
-	//Config B
-	/* Channel mode configuration should be done with the channel disabled and need acknowledge*/
+	//Config B Channel mode
 	TPM_WR_CnSC(RGBLED_B_TPM_BASE_PNT, RGBLED_B_TPM_CHANNEL_INDEX, TPM_CnSC_ELSB(1) | TPM_CnSC_MSB(1));
     /* Wait till mode change is acknowledged */
     while (!
@@ -82,12 +63,20 @@ void rgbled_init(void){
 			)
 		  );
 	//Same period as OSCRCLK
+	TPM_WR_MOD(RGBLED_R_TPM_BASE_PNT, 0xFFFE);
+	TPM_WR_MOD(RGBLED_G_TPM_BASE_PNT, 0xFFFE);
 	TPM_WR_MOD(RGBLED_B_TPM_BASE_PNT, 0xFFFE);
 	//Duty cycle
+	TPM_WR_CnV_VAL(RGBLED_R_TPM_BASE_PNT, RGBLED_R_TPM_CHANNEL_INDEX, 0);
+	TPM_WR_CnV_VAL(RGBLED_G_TPM_BASE_PNT, RGBLED_G_TPM_CHANNEL_INDEX, 0);
 	TPM_WR_CnV_VAL(RGBLED_B_TPM_BASE_PNT, RGBLED_B_TPM_CHANNEL_INDEX, 0);
 	//Prescale 1:1
+	TPM_WR_SC_PS(RGBLED_R_TPM_BASE_PNT, 0x0);
+	TPM_WR_SC_PS(RGBLED_G_TPM_BASE_PNT, 0x0);
 	TPM_WR_SC_PS(RGBLED_B_TPM_BASE_PNT, 0x0);
 	//Select LTPM Clock Source for TPM module
+	TPM_WR_SC_CMOD(RGBLED_R_TPM_BASE_PNT, 0x1);
+	TPM_WR_SC_CMOD(RGBLED_G_TPM_BASE_PNT, 0x1);
 	TPM_WR_SC_CMOD(RGBLED_B_TPM_BASE_PNT, 0x1);
 }
 

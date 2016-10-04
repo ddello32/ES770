@@ -1,5 +1,5 @@
 /*
- * File name: photoSensor.h
+ * File name: photosensor_hal.h
  *
  *  Created on: 01/10/2016
  *      Author: ddello32
@@ -17,7 +17,7 @@ void photoSensor_init(void);
  * @param usSensorNumber - from 0 to 5
  * @return The conversion result
  */
-unsigned int photoSensor_measure(unsigned short usSensorNumber);
+int photoSensor_measure(unsigned short usSensorNumber);
 
 /**
  * Save photo sensor calibration

@@ -34,5 +34,6 @@ Sources/PhotoSensor \
 Sources/PIT \
 Sources/Mcg \
 Sources/Main \
+Sources/AutoTest \
 Project_Settings/Startup_Code \
 

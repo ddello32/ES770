@@ -8,11 +8,12 @@
 #include "RGBLed/rgbled_hal.h"
 #include "PhotoSensor/photosensor_hal.h"
 #include "Tacometro/tacometro_hal.h"
+#include "AutoTest/autotest.h"
 #include <string.h>
 #include <stdio.h>
 
 /* defines */
-#define CYCLIC_EXECUTIVE_PERIOD         50*1000 /* in micro seconds */
+#define CYCLIC_EXECUTIVE_PERIOD         30*1000 /* in micro seconds */
 
 /* globals */
 volatile unsigned int uiFlagNextPeriod = 0;         /* cyclic executive flag */
@@ -44,15 +45,17 @@ void main_boardInit(){
 int main(void) {
 	char charBuff[100];
 	main_boardInit();
+	autotest_testAndCalibrate();
 
     /* configure cyclic executive interruption */
     tc_installLptmr0(CYCLIC_EXECUTIVE_PERIOD, main_cyclicExecuteIsr);
     /* cooperative cyclic executive main loop */
 	while(1){
-		//TODO
 		while(!uiFlagNextPeriod){
+			//Export data for calibration
+			//TODO Clear this and put actual control loop
 			for(unsigned short i = 0; i < 6; i++){
-				sprintf(charBuff, "PH%d: %d", i, photoSensor_measure(i));
+				sprintf(charBuff, "PH%d: %d\n", i, photoSensor_measure(i));
 				serial_sendBuffer(charBuff, strlen(charBuff));
 			}
 		}
