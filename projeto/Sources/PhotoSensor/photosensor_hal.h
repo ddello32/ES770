@@ -13,7 +13,7 @@
 void photoSensor_init(void);
 
 /**
- * Measure light level for the given sensor
+ * Measure light level for the given sensor (already without DC offset)
  * @param usSensorNumber - from 0 to 5
  * @return The conversion result
  */

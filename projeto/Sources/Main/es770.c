@@ -44,6 +44,7 @@ void main_boardInit(){
  */
 int main(void) {
 	char charBuff[100];
+	char flag = 0;
 	main_boardInit();
 	autotest_testAndCalibrate();
 
