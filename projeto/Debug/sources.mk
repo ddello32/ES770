@@ -32,6 +32,7 @@ Sources/RGBLed \
 Sources/Protocolo \
 Sources/PhotoSensor \
 Sources/PIT \
+Sources/Motor \
 Sources/Mcg \
 Sources/Main \
 Sources/AutoTest \

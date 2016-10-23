@@ -22,6 +22,26 @@ void autotest_testPhotoSensors(void) {
 		if(abs(measure) < 1000){
 			sprintf(buff, "LED %d FAILED\n", i);
 			serial_sendBuffer(buff, strlen(buff));
+			switch (i) {
+				case 0:
+					rgbled_setColor(0,0,0xFF);
+					break;
+				case 1:
+					rgbled_setColor(0xFF,0,0xFF);
+					break;
+				case 2:
+					rgbled_setColor(0,0xFF,0);
+					break;
+				case 3:
+					rgbled_setColor(0,0xFF,0);
+					break;
+				case 4:
+					rgbled_setColor(0x5A,0x27,0x29);
+					break;
+				case 5:
+					rgbled_setColor(0xFF,0xFF,0xFF);
+					break;
+			}
 		}else {
 			sprintf(buff, "LED %d SUCCESS\n", i);
 			serial_sendBuffer(buff, strlen(buff));

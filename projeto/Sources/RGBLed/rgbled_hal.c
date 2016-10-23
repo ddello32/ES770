@@ -1,7 +1,7 @@
 /* ***************************************************************** */
-/* File name:        cooler_hal.c                                    */
+/* File name:        rgbled_hal.c                                    */
 /* File description: File containing the functions/methods   		 */
-/*                   for cooler control	  						     */
+/*                   for rgbled control	  						     */
 /* Author name:      ddello		                                     */
 /* Creation date:    13maio2016                                      */
 /* Revision date:    13maio2016                                      */

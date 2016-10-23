@@ -12,8 +12,6 @@
 #include "PhotoSensor/photosensor_hal.h"
 #include "Util/util.h"
 
-#define ADC0_SC1A_COCO (ADC0_SC1A >> 7)
-
 static GPIO_Type* gtpLEDPORTS[6] = {LD0_GPIO_BASE_PNT, LD1_GPIO_BASE_PNT, LD2_GPIO_BASE_PNT, LD3_GPIO_BASE_PNT, LD4_GPIO_BASE_PNT, LD5_GPIO_BASE_PNT};
 static unsigned short usaLEDPINS[6] = {LD0_PIN, LD1_PIN, LD2_PIN, LD3_PIN, LD4_PIN, LD5_PIN};
 static unsigned short usaCHANNELS[6] = {PH0_CHANNEL_SEL, PH1_CHANNEL_SEL, PH2_CHANNEL_SEL, PH3_CHANNEL_SEL, PH4_CHANNEL_SEL, PH5_CHANNEL_SEL};

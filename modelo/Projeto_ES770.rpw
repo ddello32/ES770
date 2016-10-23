@@ -58,7 +58,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _id = GUID 7390bf04-37d1-48a4-b37a-86163fc3e89e;
 			}
 			- _UpLeft = 0 0 ;
-			- _DownRight = 553 290 ;
+			- _DownRight = 558 292 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 7;
 		}
@@ -142,7 +142,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _id = GUID 28d8b7d8-84bc-40a2-938c-6fed0ec90c03;
 			}
 			- _UpLeft = 0 0 ;
-			- _DownRight = 1145 600 ;
+			- _DownRight = 1166 610 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 3;
 		}
@@ -197,8 +197,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "StatechartDiagram";
 				- _id = GUID 2d7919ad-da59-4f65-a00b-d2041bb542d5;
 			}
-			- _UpLeft = 0 30 ;
-			- _DownRight = 599 344 ;
+			- _UpLeft = 0 29 ;
+			- _DownRight = 604 345 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 5;
 		}
@@ -206,7 +206,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _placement = { CCommon_WINDOWPLACEMENT 
 				- m_nLength = 44;
 				- m_nFlags = 0;
-				- m_showCmd = 1;
+				- m_showCmd = 3;
 				- m_ptMinPositionX = -1;
 				- m_ptMinPositionY = -1;
 				- m_ptMaxPositionX = -4;
@@ -225,8 +225,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "diag_definicao_blocos";
 				- _id = GUID f53d507c-79b1-4f7f-850a-0c96a124e9bd;
 			}
-			- _UpLeft = 481 14 ;
-			- _DownRight = 1860 702 ;
+			- _UpLeft = 774 100 ;
+			- _DownRight = 1840 774 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 10;
 		}
@@ -234,7 +234,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _placement = { CCommon_WINDOWPLACEMENT 
 				- m_nLength = 44;
 				- m_nFlags = 0;
-				- m_showCmd = 3;
+				- m_showCmd = 1;
 				- m_ptMinPositionX = -1;
 				- m_ptMinPositionY = -1;
 				- m_ptMaxPositionX = -4;
@@ -253,8 +253,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "diag_pacotes";
 				- _id = GUID 604328de-2202-48b3-9d1a-353bbeb75331;
 			}
-			- _UpLeft = 0 339 ;
-			- _DownRight = 878 894 ;
+			- _UpLeft = 0 323 ;
+			- _DownRight = 1148 896 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 11;
 		}

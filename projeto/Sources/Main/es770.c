@@ -9,6 +9,7 @@
 #include "PhotoSensor/photosensor_hal.h"
 #include "Tacometro/tacometro_hal.h"
 #include "AutoTest/autotest.h"
+#include "Motor/motor_hal.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -36,6 +37,7 @@ void main_boardInit(){
 	serial_initUart();
 	rgbled_init();
 	photoSensor_init();
+	motor_init();
 	//TODO
 }
 
@@ -44,7 +46,6 @@ void main_boardInit(){
  */
 int main(void) {
 	char charBuff[100];
-	char flag = 0;
 	main_boardInit();
 	autotest_testAndCalibrate();
 
@@ -55,8 +56,8 @@ int main(void) {
 		while(!uiFlagNextPeriod){
 			//Export data for calibration
 			//TODO Clear this and put actual control loop
-			for(unsigned short i = 0; i < 6; i++){
-				sprintf(charBuff, "PH%d: %d\n", i, photoSensor_measure(i));
+			for(unsigned short i = 0; i < 2; i++){
+				sprintf(charBuff, "MOTOR%d: %d\n", i, photoSensor_measure(i));
 				serial_sendBuffer(charBuff, strlen(charBuff));
 			}
 		}

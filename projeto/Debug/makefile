@@ -15,6 +15,7 @@ RM := rm -rf
 -include Sources/Protocolo/subdir.mk
 -include Sources/PhotoSensor/subdir.mk
 -include Sources/PIT/subdir.mk
+-include Sources/Motor/subdir.mk
 -include Sources/Mcg/subdir.mk
 -include Sources/Main/subdir.mk
 -include Sources/AutoTest/subdir.mk

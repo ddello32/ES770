@@ -81,7 +81,7 @@ typedef int E;
 
 #define PH2_PORT_ID					B
 #define PH2_PORT_BASE_PNT			PORTB
-#define PH2_CHANNEL_SEL				0x12
+#define PH2_CHANNEL_SEL				12
 #define PH2_PIN						2
 #define PH2_PIN_MUX_ALT				0x0
 
@@ -170,6 +170,35 @@ typedef int E;
 
 #define RGBLED_B_TPM_BASE_PNT			TPM0
 #define RGBLED_B_TPM_CHANNEL_INDEX		1
+/*					END OF RGBLED DEFINITIONS 					  */
+
+/*					MOTOR DEFINITIONS 					  */
+#define MOTOR_0_PORT_ID					A
+#define MOTOR_0_PORT_BASE_PNT			PORTA
+#define MOTOR_0_PIN						13
+#define MOTOR_0_PIN_MUX_ALT				0x3
+
+#define MOTOR_1_PORT_ID					A
+#define MOTOR_1_PORT_BASE_PNT			PORTA
+#define MOTOR_1_PIN						12
+#define MOTOR_1_PIN_MUX_ALT				0x3
+
+#define MOTOR_TPM_BASE_PNT				TPM1
+#define MOTOR_0_TPM_CHANNEL_INDEX		1
+#define MOTOR_1_TPM_CHANNEL_INDEX		0
+
+#define MOTOR_HBRIDGE_PORT_ID			C
+#define MOTOR_HBRIDGE_BASE_PNT      	PORTC
+#define MOTOR_HBRIDGE_BASE_PNT      	PTC
+#define MOTOR_0_A_PIN                   4
+#define MOTOR_0_A_DIR		            GPIO_OUTPUT
+#define MOTOR_0_B_PIN                   7
+#define MOTOR_0_B_DIR		            GPIO_OUTPUT
+#define MOTOR_1_A_PIN                   0
+#define MOTOR_1_A_DIR		            GPIO_OUTPUT
+#define MOTOR_1_B_PIN                   3
+#define MOTOR_1_B_DIR		            GPIO_OUTPUT
+
 /*					END OF RGBLED DEFINITIONS 					  */
 
 #endif /* SOURCES_ES770_PERIPHERAL_BOARD_H_ */
