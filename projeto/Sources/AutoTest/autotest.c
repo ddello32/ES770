@@ -36,7 +36,7 @@ void autotest_testPhotoSensors(void) {
 					rgbled_setColor(0,0x0FF,0);
 					break;
 				case 4:
-					rgbled_setColor(0x05A,0x027,0x029);
+					rgbled_setColor(0x05A,0x027,0);
 					break;
 				case 5:
 					rgbled_setColor(0x0FF,0x0FF,0x0FF);

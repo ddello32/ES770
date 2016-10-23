@@ -37,5 +37,4 @@ Sources/Main \
 Sources/Encoder \
 Sources/AutoTest \
 Project_Settings/Startup_Code \
-Sources/Tacometro \
 
