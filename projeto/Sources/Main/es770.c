@@ -9,11 +9,12 @@
 #include "PhotoSensor/photosensor_hal.h"
 #include "AutoTest/autotest.h"
 #include "Motor/motor_hal.h"
+#include "Encoder/encoder_hal.h"
 #include <string.h>
 #include <stdio.h>
 
 /* defines */
-#define CYCLIC_EXECUTIVE_PERIOD         30*1000 /* in micro seconds */
+#define CYCLIC_EXECUTIVE_PERIOD         3000*1000 /* in micro seconds */
 
 /* globals */
 volatile unsigned int uiFlagNextPeriod = 0;         /* cyclic executive flag */
@@ -37,6 +38,7 @@ void main_boardInit(){
 	rgbled_init();
 	photoSensor_init();
 	motor_init();
+	encoder_init();
 	//TODO
 }
 
@@ -44,22 +46,47 @@ void main_boardInit(){
  * Main function
  */
 int main(void) {
+	int count = 0;
 	char charBuff[100];
 	main_boardInit();
 	autotest_testAndCalibrate();
-	motor_setSpeed(1, 0xFFFF);
 
     /* configure cyclic executive interruption */
     tc_installLptmr0(CYCLIC_EXECUTIVE_PERIOD, main_cyclicExecuteIsr);
     /* cooperative cyclic executive main loop */
 	while(1){
+		switch(count){
+		case 0:
+			motor_setSpeed(0, 0x7777);
+			motor_setSpeed(1, 0x0);
+			count++;
+			break;
+		case 1:
+			motor_setSpeed(0, 0x0);
+			motor_setSpeed(1, 0x7777);
+			count++;
+			break;
+		case 2:
+			motor_setSpeed(0, -0x7777);
+			motor_setSpeed(1, 0x0);
+			count++;
+			break;
+		case 3:
+			motor_setSpeed(0, 0);
+			motor_setSpeed(1, -0x7777);
+			count = 0;
+			break;
+		default:
+			count = 0;
+		}
+
+		for(unsigned short i = 0; i < 2; i++){
+			sprintf(charBuff, "MOTOR%d: %d\n", i, encoder_getSpeed(i, CYCLIC_EXECUTIVE_PERIOD));
+			serial_sendBuffer(charBuff, strlen(charBuff));
+		}
 		while(!uiFlagNextPeriod){
 			//Export data for calibration
 			//TODO Clear this and put actual control loop
-			for(unsigned short i = 0; i < 2; i++){
-				sprintf(charBuff, "MOTOR%d: %d\n", i, photoSensor_measure(i));
-				serial_sendBuffer(charBuff, strlen(charBuff));
-			}
 		}
 		uiFlagNextPeriod = 0;
 	}

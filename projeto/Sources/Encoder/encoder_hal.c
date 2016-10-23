@@ -51,10 +51,10 @@ void encoder_init(void){
 unsigned int encoder_getSpeed(unsigned short usEncoderNumber, unsigned int uiPeriod){
 	unsigned int ret;
 	if(usEncoderNumber == 0){
-		ret = TPM_RD_CNT(ENCODER_0_TPM_BASE)/ENCODER_SCALER*1000/uiPeriod;
+		ret = TPM_RD_CNT(ENCODER_0_TPM_BASE);
 		TPM_WR_CNT(ENCODER_0_TPM_BASE, 0x0);	/*Reset counter */
 	}else {
-		ret = TPM_RD_CNT(ENCODER_1_TPM_BASE)/ENCODER_SCALER*1000/uiPeriod;
+		ret = TPM_RD_CNT(ENCODER_1_TPM_BASE);;
 		TPM_WR_CNT(ENCODER_1_TPM_BASE, 0x0);	/*Reset counter */
 	}
 	return ret;

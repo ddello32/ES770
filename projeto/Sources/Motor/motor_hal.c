@@ -12,13 +12,19 @@
 #include "GPIO/gpio_hal.h"
 #include <stdint.h>
 
+/**
+ * Convert given speed value into DC speed value
+ * @param iDesiredSpeed desired speed (from -0xFFFF to 0xFFFF)
+ */
 uint16_t motor_speedToDc(int iDesiredSpeed) {
 	uint16_t uiOutSpeed = 0;
 	if(iDesiredSpeed < -0xFFFF) {
 		uiOutSpeed = 0xFFFF;
 	}else if(iDesiredSpeed > 0xFFFF) {
 		uiOutSpeed = 0xFFFF;
-	}else {
+	}else if(iDesiredSpeed < 0){
+		uiOutSpeed = (uint16_t) ((-1*iDesiredSpeed) & 0xFFFF);
+	}else{
 		uiOutSpeed = (uint16_t) (iDesiredSpeed & 0xFFFF);
 	}
 	return uiOutSpeed;
@@ -90,17 +96,22 @@ void motor_initHBridge(void){
  * Initialize the motor module
  */
 void motor_init(void){
-	motor_initTpm();
 	motor_initHBridge();
+	motor_initTpm();
 }
 
 
-void motor_setDir(unsigned short usMotorNumber, unsigned short dir){
+/**
+ * Sets the direction for the given motor
+ * @param usMotorNumber motor identifier (0, 1)
+ * @paramm usDir the direction (0 for reverse, 1 for direct)
+ */
+void motor_setDir(unsigned short usMotorNumber, unsigned short usDir){
 	if(usMotorNumber == 0){
-		GPIO_WRITE_PIN(MOTOR_HBRIDGE_PORT_ID, MOTOR_0_A_PIN, dir ? GPIO_HIGH : GPIO_LOW);
-		GPIO_WRITE_PIN(MOTOR_HBRIDGE_PORT_ID, MOTOR_0_B_PIN, dir ? GPIO_LOW : GPIO_HIGH);
+		GPIO_WRITE_PIN(MOTOR_HBRIDGE_PORT_ID, MOTOR_0_A_PIN, usDir ? GPIO_HIGH : GPIO_LOW);
+		GPIO_WRITE_PIN(MOTOR_HBRIDGE_PORT_ID, MOTOR_0_B_PIN, usDir ? GPIO_LOW : GPIO_HIGH);
 	}else {
-		GPIO_WRITE_PIN(MOTOR_HBRIDGE_PORT_ID, MOTOR_1_A_PIN, dir ? GPIO_HIGH : GPIO_LOW);
+		GPIO_WRITE_PIN(MOTOR_HBRIDGE_PORT_ID, MOTOR_1_A_PIN, usDir ? GPIO_HIGH : GPIO_LOW);
 		GPIO_WRITE_PIN(MOTOR_HBRIDGE_PORT_ID, MOTOR_1_B_PIN, dir ? GPIO_LOW : GPIO_HIGH);
 	}
 }
@@ -111,7 +122,7 @@ void motor_setDir(unsigned short usMotorNumber, unsigned short dir){
  * @param iSpeed the desired speed for this motor (from -0xFFFF to 0xFFFF)
  */
 void motor_setSpeed(unsigned short usMotorNumber, int iSpeed){
-	motor_setDir(usMotorNumber, iSpeed < 0 ? 1:0);
+	motor_setDir(usMotorNumber, iSpeed < 0 ? 0:1);
 	if(usMotorNumber == 0) {
 		TPM_WR_CnV_VAL(MOTOR_TPM_BASE_PNT, MOTOR_0_TPM_CHANNEL_INDEX, motor_speedToDc(iSpeed));
 	}else {

@@ -7,8 +7,8 @@
 /* Revision date:    01out2016                                       */
 /* ***************************************************************** */
 
-#ifndef SOURCES_RGBLED_HAL_H_
-#define SOURCES_RGBLED_HAL_H_
+#ifndef SOURCES_MOTOR_HAL_H_
+#define SOURCES_MOTOR_HAL_H_
 
 /**
  * Initialize the motor module
@@ -23,4 +23,4 @@ void motor_init(void);
  */
 void motor_setSpeed(unsigned short usMotorNumber, int iSpeed);
 
-#endif /* SOURCES_RGBLED_HAL_H_ */
+#endif /* SOURCES_MOTOR_HAL_H_ */

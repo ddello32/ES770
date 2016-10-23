@@ -50,9 +50,14 @@ void autotest_testPhotoSensors(void) {
 
 }
 
+void autotest_testMotors(){
+
+}
+
 /**
  *  Test and calibrate all modules
  */
 void autotest_testAndCalibrate(void) {
 	autotest_testPhotoSensors();
+	autotest_testMotors();
 }
