@@ -24,22 +24,22 @@ void autotest_testPhotoSensors(void) {
 			serial_sendBuffer(buff, strlen(buff));
 			switch (i) {
 				case 0:
-					rgbled_setColor(0,0,0xFF);
+					rgbled_setColor(0,0,0x0FF);
 					break;
 				case 1:
-					rgbled_setColor(0xFF,0,0xFF);
+					rgbled_setColor(0x0FF,0,0x0FF);
 					break;
 				case 2:
-					rgbled_setColor(0,0xFF,0);
+					rgbled_setColor(0,0x0FF,0);
 					break;
 				case 3:
-					rgbled_setColor(0,0xFF,0);
+					rgbled_setColor(0,0x0FF,0);
 					break;
 				case 4:
-					rgbled_setColor(0x5A,0x27,0x29);
+					rgbled_setColor(0x05A,0x027,0x029);
 					break;
 				case 5:
-					rgbled_setColor(0xFF,0xFF,0xFF);
+					rgbled_setColor(0x0FF,0x0FF,0x0FF);
 					break;
 			}
 		}else {

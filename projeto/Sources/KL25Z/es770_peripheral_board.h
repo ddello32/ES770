@@ -38,28 +38,17 @@ typedef int E;
 
 /*                 END OF General uC definitions         */
 
-/*					MOTOR DEFINITIONS 					  */
+/*					ENCODER DEFINITIONS				*/
 //TODO
-#define SERVO_PORT_ID				D
-#define SERVO_PORT_BASE_PNT			PORTD
-#define SERVO_PIN					5
-#define SERVO_PIN_MUX_ALT			0x4
+#define ENCODER_PORT_ID				E
+#define ENCODER_PORT_BASE_PNT		PORTE
+#define ENCODER_0_PIN				29
+#define ENCODER_0_PIN_ALT			0x4		/*ALT4 FTM_CLOCKIN0*/
+#define ENCODER_1_PIN				30
+#define ENCODER_1_PIN_ALT			0x4		/*ALT4 FTM_CLOCKIN1*/
 
-#define SERVO_TPM_BASE_PNT			TPM0
-#define SERVO_TPM_CHANNEL_INDEX		5
-
-
-/*					END OF SERVO DEFINITIONS 					  */
-
-
-/*					TACOMETER DEFINITIONS				*/
-//TODO
-#define TACOMETRO_PORT_ID			E
-#define TACOMETRO_PORT_BASE_PNT		PORTE
-#define TACOMETRO_PIN				29
-#define TACOMETRO_PIN_ALT			0x4		/*ALT4 FTM_CLOCKIN0*/
-
-#define TACOMETRO_TPM_BASE			TPM0
+#define ENCODER_0_TPM_BASE			TPM0
+#define ENCODER_1_TPM_BASE			TPM2
 
 /*					END OF TACOMETER DEFINITIONS		*/
 

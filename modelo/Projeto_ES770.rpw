@@ -225,8 +225,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "diag_definicao_blocos";
 				- _id = GUID f53d507c-79b1-4f7f-850a-0c96a124e9bd;
 			}
-			- _UpLeft = 774 100 ;
-			- _DownRight = 1840 774 ;
+			- _UpLeft = 701 63 ;
+			- _DownRight = 1767 773 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 10;
 		}
@@ -253,8 +253,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "diag_pacotes";
 				- _id = GUID 604328de-2202-48b3-9d1a-353bbeb75331;
 			}
-			- _UpLeft = 0 323 ;
-			- _DownRight = 1148 896 ;
+			- _UpLeft = 0 320 ;
+			- _DownRight = 1160 899 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 11;
 		}

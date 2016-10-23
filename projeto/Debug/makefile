@@ -18,6 +18,7 @@ RM := rm -rf
 -include Sources/Motor/subdir.mk
 -include Sources/Mcg/subdir.mk
 -include Sources/Main/subdir.mk
+-include Sources/Encoder/subdir.mk
 -include Sources/AutoTest/subdir.mk
 -include Sources/subdir.mk
 -include Project_Settings/Startup_Code/subdir.mk

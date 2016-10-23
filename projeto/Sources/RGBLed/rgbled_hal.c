@@ -8,12 +8,14 @@
 /* ***************************************************************** */
 
 #include "rgbled_hal.h"
+#include "GPIO/gpio_hal.h"
 #include "KL25Z/es770_peripheral_board.h"
 
 /**
  * Initialize the cooler module
  */
 void rgbled_init(void){
+#ifdef USERGBPWM
 	/* Init cooler pin */
 	SIM_SCGC5 |= SIM_SCGC5_PORTB(1u);
 	SIM_SCGC5 |= SIM_SCGC5_PORTD(1u);
@@ -78,6 +80,17 @@ void rgbled_init(void){
 	TPM_WR_SC_CMOD(RGBLED_R_TPM_BASE_PNT, 0x1);
 	TPM_WR_SC_CMOD(RGBLED_G_TPM_BASE_PNT, 0x1);
 	TPM_WR_SC_CMOD(RGBLED_B_TPM_BASE_PNT, 0x1);
+#else
+	GPIO_UNGATE_PORT(RGBLED_R_PORT_ID);
+	GPIO_INIT_PIN(RGBLED_R_PORT_ID, RGBLED_R_PIN, GPIO_OUTPUT);
+	GPIO_WRITE_PIN(RGBLED_R_PORT_ID, RGBLED_R_PIN, GPIO_HIGH);
+	GPIO_UNGATE_PORT(RGBLED_G_PORT_ID);
+	GPIO_INIT_PIN(RGBLED_G_PORT_ID, RGBLED_G_PIN, GPIO_OUTPUT);
+	GPIO_WRITE_PIN(RGBLED_G_PORT_ID, RGBLED_G_PIN, GPIO_HIGH);
+	GPIO_UNGATE_PORT(RGBLED_B_PORT_ID);
+	GPIO_INIT_PIN(RGBLED_B_PORT_ID, RGBLED_B_PIN, GPIO_OUTPUT);
+	GPIO_WRITE_PIN(RGBLED_B_PORT_ID, RGBLED_B_PIN, GPIO_HIGH);
+#endif
 }
 
 
@@ -88,7 +101,13 @@ void rgbled_init(void){
  * @param uiB blue intensity from 0 (black) to 0xFFFF (blue)
  */
 void rgbled_setColor(uint16_t uiR, uint16_t uiG, uint16_t uiB){
+#ifdef USERGBPWM
 	TPM_WR_CnV_VAL(RGBLED_R_TPM_BASE_PNT, RGBLED_R_TPM_CHANNEL_INDEX, 0xFFFF - uiR);
 	TPM_WR_CnV_VAL(RGBLED_G_TPM_BASE_PNT, RGBLED_G_TPM_CHANNEL_INDEX, 0xFFFF - uiG);
 	TPM_WR_CnV_VAL(RGBLED_B_TPM_BASE_PNT, RGBLED_B_TPM_CHANNEL_INDEX, 0xFFFF - uiB);
+#else
+	GPIO_WRITE_PIN(RGBLED_R_PORT_ID, RGBLED_R_PIN, uiR > 0? GPIO_LOW: GPIO_HIGH);
+	GPIO_WRITE_PIN(RGBLED_G_PORT_ID, RGBLED_G_PIN, uiG > 0? GPIO_LOW: GPIO_HIGH);
+	GPIO_WRITE_PIN(RGBLED_B_PORT_ID, RGBLED_B_PIN, uiB > 0? GPIO_LOW: GPIO_HIGH);
+#endif
 }

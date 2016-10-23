@@ -7,20 +7,21 @@
 /* Revision date:    13maio2016                                      */
 /* ***************************************************************** */
 
-#ifndef SOURCES_TACOMETRO_HAL_H_
-#define SOURCES_TACOMETRO_HAL_H_
+#ifndef SOURCES_ENCODER_HAL_H_
+#define SOURCES_ENCODER_HAL_H_
 
 /**
- * Initialize the tacometer module
+ * Initialize the encoder module
  */
-void tacometro_init(void);
+void encoder_init(void);
 
 
 /**
+ * @param usEncoderNumber encoder identifier
  * @param uiPeriod Time ellapsed since last getSpeedCall in ms
  *
- * @return current tacometer speed in rps
+ * @return current encoder speed in rps for given encoder number
  */
-unsigned int tacometro_getSpeed(unsigned int uiPeriod);
+unsigned int encoder_getSpeed(unsigned short usEncoderNumber, unsigned int uiPeriod);
 
-#endif /* SOURCES_TACOMETRO_HAL_H_ */
+#endif /* SOURCES_ENCODER_HAL_H_ */

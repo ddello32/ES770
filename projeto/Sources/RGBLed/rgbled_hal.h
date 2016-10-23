@@ -10,6 +10,8 @@
 #ifndef SOURCES_RGBLED_HAL_H_
 #define SOURCES_RGBLED_HAL_H_
 
+#define USERGBPWM
+
 #include <stdint.h>
 
 /**

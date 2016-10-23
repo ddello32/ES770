@@ -7,7 +7,6 @@
 #include "Util/tc_hal.h"
 #include "RGBLed/rgbled_hal.h"
 #include "PhotoSensor/photosensor_hal.h"
-#include "Tacometro/tacometro_hal.h"
 #include "AutoTest/autotest.h"
 #include "Motor/motor_hal.h"
 #include <string.h>
@@ -48,6 +47,7 @@ int main(void) {
 	char charBuff[100];
 	main_boardInit();
 	autotest_testAndCalibrate();
+	motor_setSpeed(1, 0xFFFF);
 
     /* configure cyclic executive interruption */
     tc_installLptmr0(CYCLIC_EXECUTIVE_PERIOD, main_cyclicExecuteIsr);
