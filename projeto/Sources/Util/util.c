@@ -95,3 +95,38 @@ void util_genDelay10ms(void)
     util_genDelay1ms();
     util_genDelay1ms();
 }
+
+/**
+ * generates ~   100 mili sec
+ */
+void util_genDelay100ms(void)
+{
+    util_genDelay10ms();
+    util_genDelay10ms();
+    util_genDelay10ms();
+    util_genDelay10ms();
+    util_genDelay10ms();
+    util_genDelay10ms();
+    util_genDelay10ms();
+    util_genDelay10ms();
+    util_genDelay10ms();
+    util_genDelay10ms();
+}
+
+/**
+ * generates ~   1 sec
+ */
+void util_genDelay1s(void)
+{
+    util_genDelay100ms();
+    util_genDelay100ms();
+    util_genDelay100ms();
+    util_genDelay100ms();
+    util_genDelay100ms();
+    util_genDelay100ms();
+    util_genDelay100ms();
+    util_genDelay100ms();
+    util_genDelay100ms();
+    util_genDelay100ms();
+}
+

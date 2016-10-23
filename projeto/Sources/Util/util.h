@@ -36,5 +36,15 @@ void util_genDelay1ms(void);
  */
 void util_genDelay10ms(void);
 
+/**
+ * generates ~   10 mili sec
+ */
+void util_genDelay100ms(void);
+
+/**
+ * generates ~   10 mili sec
+ */
+void util_genDelay1s(void);
+
 
 #endif /* UTIL_H */
