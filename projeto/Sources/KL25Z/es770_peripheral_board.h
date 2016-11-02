@@ -42,13 +42,13 @@ typedef int E;
 //TODO
 #define ENCODER_PORT_ID				E
 #define ENCODER_PORT_BASE_PNT		PORTE
-#define ENCODER_0_PIN				29
-#define ENCODER_0_PIN_ALT			0x4		/*ALT4 FTM_CLOCKIN0*/
-#define ENCODER_1_PIN				30
-#define ENCODER_1_PIN_ALT			0x4		/*ALT4 FTM_CLOCKIN1*/
+#define ENCODER_1_PIN				29
+#define ENCODER_1_PIN_ALT			0x4		/*ALT4 FTM_CLOCKIN0*/
+#define ENCODER_0_PIN				30
+#define ENCODER_0_PIN_ALT			0x4		/*ALT4 FTM_CLOCKIN1*/
 
-#define ENCODER_0_TPM_BASE			TPM0
-#define ENCODER_1_TPM_BASE			TPM2
+#define ENCODER_1_TPM_BASE			TPM0
+#define ENCODER_0_TPM_BASE			TPM2
 
 /*					END OF TACOMETER DEFINITIONS		*/
 
@@ -177,7 +177,6 @@ typedef int E;
 #define MOTOR_1_TPM_CHANNEL_INDEX		0
 
 #define MOTOR_HBRIDGE_PORT_ID			C
-#define MOTOR_HBRIDGE_BASE_PNT      	PORTC
 #define MOTOR_HBRIDGE_BASE_PNT      	PTC
 #define MOTOR_0_A_PIN                   4
 #define MOTOR_0_A_DIR		            GPIO_OUTPUT

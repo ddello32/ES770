@@ -17,6 +17,10 @@ static unsigned short usaLEDPINS[6] = {LD0_PIN, LD1_PIN, LD2_PIN, LD3_PIN, LD4_P
 static unsigned short usaCHANNELS[6] = {PH0_CHANNEL_SEL, PH1_CHANNEL_SEL, PH2_CHANNEL_SEL, PH3_CHANNEL_SEL, PH4_CHANNEL_SEL, PH5_CHANNEL_SEL};
 //DC Value offsets (Not adjusting ADC_OFS register to avoid having to handle integer overflow problems)
 static uint16_t ui16aOFFSETS[6] = {0,0,0,0,0,0};
+//Min values (calibration results)
+static int iaMINS[6] = {0,0,0,0,0,0};
+//Max values (calibration results)
+static int iaMAX[6] = {0,0,0,0,0,0};
 
 //Bus Clock should be 20MHz and Core clock 40Mhz
 
@@ -188,11 +192,11 @@ void photoSensor_init(void){
 }
 
 /**
- * Measure light level for the given sensor (already without DC offset)
+ * Measure raw light level for the given sensor (already without DC offset)
  * @param usSensorNumber - from 0 to 5
  * @return The conversion result
  */
-int photoSensor_measure(unsigned short usSensorNumber) {
+int photoSensor_measure_raw(unsigned short usSensorNumber) {
 	GPIO_HAL_ClearPinOutput(gtpLEDPORTS[usSensorNumber], usaLEDPINS[usSensorNumber]);
 	photoSensor_initAdcConversion(usSensorNumber);
 	while(!photoSensor_isAdcDone());
@@ -200,4 +204,34 @@ int photoSensor_measure(unsigned short usSensorNumber) {
 	measure -= ui16aOFFSETS[usSensorNumber];
 	GPIO_HAL_SetPinOutput(gtpLEDPORTS[usSensorNumber], usaLEDPINS[usSensorNumber]);
 	return measure;
+}
+
+/**
+ * Measure light level for the given sensor in a scale from 0 to 100.
+ * Should only be called after calibration
+ * @param usSensorNumber - from 0 to 5
+ * @return The scaled conversion result
+ */
+unsigned short photoSensor_measure(unsigned short usSensorNumber) {
+	int iRawMeasure = photoSensor_measure_raw(usSensorNumber);
+	int min = iaMINS[usSensorNumber];
+	int max = iaMAX[usSensorNumber];
+	if(iRawMeasure < min){
+		return 0;
+	}
+	if(iRawMeasure > max){
+		return 100;
+	}
+	return 100*(iRawMeasure - min)/(max - min);
+}
+
+/**
+ * Save photo sensor calibration
+ * @param usSensorNumber - from 0 to 5
+ * @param iLightVal - value when measuring white
+ * @param iDarkVal - value when measuring black
+ */
+void photoSensor_calibrate(unsigned short usSensorNumber, int iLightVal, int iDarkVal){
+	iaMINS[usSensorNumber] = iDarkVal;
+	iaMAX[usSensorNumber] = iLightVal;
 }

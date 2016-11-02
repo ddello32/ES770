@@ -55,38 +55,8 @@ int main(void) {
     tc_installLptmr0(CYCLIC_EXECUTIVE_PERIOD, main_cyclicExecuteIsr);
     /* cooperative cyclic executive main loop */
 	while(1){
-//		switch(count){
-//		case 0:
-//			motor_setSpeed(0, 0x7777);
-//			motor_setSpeed(1, 0x0);
-//			count++;
-//			break;
-//		case 1:
-//			motor_setSpeed(0, 0x0);
-//			motor_setSpeed(1, 0x7777);
-//			count++;
-//			break;
-//		case 2:
-//			motor_setSpeed(0, -0x7777);
-//			motor_setSpeed(1, 0x0);
-//			count++;
-//			break;
-//		case 3:
-//			motor_setSpeed(0, 0);
-//			motor_setSpeed(1, -0x7777);
-//			count = 0;
-//			break;
-//		default:
-//			count = 0;
-//		}
-//
-//		for(unsigned short i = 0; i < 2; i++){
-//			sprintf(charBuff, "MOTOR%d: %d\n", i, encoder_getSpeed(i, CYCLIC_EXECUTIVE_PERIOD));
-//			serial_sendBuffer(charBuff, strlen(charBuff));
-//		}
+		//TODO control loop
 		while(!uiFlagNextPeriod){
-			//Export data for calibration
-			//TODO Clear this and put actual control loop
 		}
 		uiFlagNextPeriod = 0;
 	}

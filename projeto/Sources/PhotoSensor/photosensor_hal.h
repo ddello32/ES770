@@ -13,17 +13,26 @@
 void photoSensor_init(void);
 
 /**
- * Measure light level for the given sensor (already without DC offset)
+ * Measure raw light level for the given sensor (already without DC offset)
  * @param usSensorNumber - from 0 to 5
  * @return The conversion result
  */
-int photoSensor_measure(unsigned short usSensorNumber);
+int photoSensor_measure_raw(unsigned short usSensorNumber);
+
+/**
+ * Measure light level for the given sensor in a scale from 0 to 100.
+ * Should only be called after calibration
+ * @param usSensorNumber - from 0 to 5
+ * @return The conversion result
+ */
+unsigned short photoSensor_measure(unsigned short usSensorNumber);
 
 /**
  * Save photo sensor calibration
  * @param usSensorNumber - from 0 to 5
- * @param uiLightVal - value when measuring white
- * @param uiDarkVal - value when measuring black
+ * @param iLightVal - value when measuring white
+ * @param iDarkVal - value when measuring black
  */
-//void photoSensor_calibrate(unsigned short usSensorNumber, unsigned int uiLightVal, unsigned int darkVal);
+void photoSensor_calibrate(unsigned short usSensorNumber, int iLightVal, int iDarkVal);
+
 #endif /* SOURCES_PHOTOSENSOR_HAL_H_ */

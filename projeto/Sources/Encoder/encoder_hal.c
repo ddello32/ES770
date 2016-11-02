@@ -44,9 +44,9 @@ void encoder_init(void){
 
 /**
  * @param usEncoderNumber encoder identifier
- * @param uiPeriod Time ellapsed since last getSpeedCall in ms
+ * @param uiPeriod Time ellapsed since last getSpeedCall in us
  *
- * @return current encoder speed in rps for given encoder number
+ * @return current encoder speed in pulses by sec for given encoder number
  */
 unsigned int encoder_getSpeed(unsigned short usEncoderNumber, unsigned int uiPeriod){
 	unsigned int ret;
