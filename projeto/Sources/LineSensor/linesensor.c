@@ -9,8 +9,12 @@
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
+#include "RGBLed/rgbled_hal.h"
 
 #define PHOTOSENSORDISTANCE 10
+#define DARK_THRESSHOLD 50
+#define LINE_MIN 2
+#define COMMAND_MIN 5
 static unsigned short usaPoints[8] = {100, 0, 0, 0, 0, 0, 0, 100};
 
 float linesensor_spline(unsigned short i, float u){
@@ -80,17 +84,20 @@ int lineSensor_measure(){
 	unsigned short darkCount = 0;
 	for(unsigned short usSensorNumb = 0; usSensorNumb < 6; usSensorNumb++){
 		usaPoints[usSensorNumb+1] = photoSensor_measure(usSensorNumb);
-		if(usaPoints[usSensorNumb+1] < 50){
+		if(usaPoints[usSensorNumb+1] < DARK_THRESSHOLD){
 			darkCount++;
 		}
 	}
 	usaPoints[0] = usaPoints[1];
 	usaPoints[7] = usaPoints[6];
-	if(darkCount == 0){
+	if(darkCount < LINE_MIN){
+		rgbled_setColor(0x0FF,0,0);
 		sprintf(buff, "LOST LINE\n");
 		serial_sendBuffer(buff, strlen(buff));
 	}else{
-		if(darkCount > 3){
+		rgbled_setColor(0,0,0);
+		if(darkCount >= COMMAND_MIN){
+			rgbled_setColor(0x0, 0x0FF, 0);
 			sprintf(buff, "FOUND COMMAND\n");
 			serial_sendBuffer(buff, strlen(buff));
 		}

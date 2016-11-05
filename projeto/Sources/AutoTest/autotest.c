@@ -190,6 +190,7 @@ void autotest_calibrateMotors(){
 		serial_sendBuffer(buff, strlen(buff));
 		motor_setSpeed(usMotorNumb, 0);
 		motor_calibrate(usMotorNumb, iMinDSpeed, uiMaxDValue, iMinISpeed, uiMaxIValue);
+		util_genDelay1s();
 	}
 }
 
@@ -202,6 +203,15 @@ void autotest_calibratePhotoSensors(){
 	int iaMAXS[6] = {INT_MIN, INT_MIN, INT_MIN, INT_MIN, INT_MIN, INT_MIN};
 	motor_setSpeed(0, 0x7777);
 	motor_setSpeed(1, -0x8000);
+	for(unsigned int i = 0; i < 10000; i++){
+		for(unsigned short usSensorNumb = 0; usSensorNumb < 6; usSensorNumb++){
+			int iRawMeasure = photoSensor_measure_raw(usSensorNumb);
+			iaMINS[usSensorNumb] = MIN(iRawMeasure, iaMINS[usSensorNumb]);
+			iaMAXS[usSensorNumb] = MAX(iRawMeasure, iaMAXS[usSensorNumb]);
+		}
+	}
+	motor_setSpeed(0, -0x7777);
+	motor_setSpeed(1, 0x8000);
 	for(unsigned int i = 0; i < 10000; i++){
 		for(unsigned short usSensorNumb = 0; usSensorNumb < 6; usSensorNumb++){
 			int iRawMeasure = photoSensor_measure_raw(usSensorNumb);
@@ -245,7 +255,16 @@ void autotest_calibratePhotoSensors(){
  */
 void autotest_testAndCalibrate(void) {
 	autotest_testPhotoSensors();
-//	autotest_testMotors();
-//	autotest_calibrateMotors();
+	autotest_testMotors();
+	autotest_calibrateMotors();
+	//Wait 5s for positioning
+	rgbled_setColor(0x0FF, 0x0FF, 0);
+	util_genDelay1s();
+	util_genDelay1s();
+	util_genDelay1s();
+	util_genDelay1s();
+	util_genDelay1s();
+	rgbled_setColor(0, 0x0FF,0);
 	autotest_calibratePhotoSensors();
+	rgbled_setColor(0,0,0);
 }

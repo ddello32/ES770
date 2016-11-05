@@ -49,6 +49,7 @@ void main_boardInit(){
  */
 int main(void) {
 	int count = 0;
+	int distance;
 	char buff[100];
 	main_boardInit();
 	autotest_testAndCalibrate();
@@ -57,7 +58,18 @@ int main(void) {
     tc_installLptmr0(CYCLIC_EXECUTIVE_PERIOD, main_cyclicExecuteIsr);
     /* cooperative cyclic executive main loop */
 	while(1){
-		sprintf(buff, "Distance: %d\n", lineSensor_measure());
+		distance = lineSensor_measure();
+		if(distance < -15){
+			motor_setSpeed(0, 0x9999);
+			motor_setSpeed(1, -0x7777);
+		}else if(distance > 15){
+			motor_setSpeed(1, 0x9999);
+			motor_setSpeed(0, -0x7777);
+		}else{
+			motor_setSpeed(0, 0x7777);
+			motor_setSpeed(1, 0x7777);
+		}
+		sprintf(buff, "Distance: %d\n", distance);
 		serial_sendBuffer(buff, strlen(buff));
 		//TODO control loop
 		while(!uiFlagNextPeriod){
