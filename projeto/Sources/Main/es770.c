@@ -10,11 +10,12 @@
 #include "AutoTest/autotest.h"
 #include "Motor/motor_hal.h"
 #include "Encoder/encoder_hal.h"
+#include "LineSensor/linesensor.h"
 #include <string.h>
 #include <stdio.h>
 
 /* defines */
-#define CYCLIC_EXECUTIVE_PERIOD         3000*1000 /* in micro seconds */
+#define CYCLIC_EXECUTIVE_PERIOD         30*1000 /* in micro seconds */
 
 /* globals */
 volatile unsigned int uiFlagNextPeriod = 0;         /* cyclic executive flag */
@@ -39,6 +40,7 @@ void main_boardInit(){
 	photoSensor_init();
 	motor_init();
 	encoder_init();
+	lineSensor_init();
 	//TODO
 }
 
@@ -47,7 +49,7 @@ void main_boardInit(){
  */
 int main(void) {
 	int count = 0;
-	char charBuff[100];
+	char buff[100];
 	main_boardInit();
 	autotest_testAndCalibrate();
 
@@ -55,6 +57,8 @@ int main(void) {
     tc_installLptmr0(CYCLIC_EXECUTIVE_PERIOD, main_cyclicExecuteIsr);
     /* cooperative cyclic executive main loop */
 	while(1){
+		sprintf(buff, "Distance: %d\n", lineSensor_measure());
+		serial_sendBuffer(buff, strlen(buff));
 		//TODO control loop
 		while(!uiFlagNextPeriod){
 		}

@@ -3,8 +3,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 	- _id = GUID e14ce091-916b-4815-a195-80fd08820901;
 	- _myState = 8192;
 	- _name = "LineSensor";
-	- _objectCreation = "7685611020161510870107";
-	- _umlDependencyID = "2510";
+	- _objectCreation = "31074225120161110351113";
+	- _umlDependencyID = "2536";
 	- _theMainDiagram = { IHandle 
 		- _m2Class = "IDiagram";
 		- _filename = "";
@@ -14,7 +14,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 		- _id = GUID 604328de-2202-48b3-9d1a-353bbeb75331;
 	}
 	- _lastID = 3;
-	- weakCGTime = 10.1.2016::18:10:7;
+	- weakCGTime = 11.2.2016::14:49:32;
 	- strongCGTime = 9.10.2016::17:37:35;
 	- _defaultComposite = GUID dbb015e6-36ef-47f1-b9ed-8f3f3ecada7b;
 	- _eventsBaseID = -1;
@@ -25,9 +25,9 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 			- _id = GUID dbb015e6-36ef-47f1-b9ed-8f3f3ecada7b;
 			- _myState = 40960;
 			- _name = "TopLevel";
-			- _objectCreation = "7685811020161510868107";
-			- _umlDependencyID = "2304";
-			- weakCGTime = 9.13.2016::20:12:29;
+			- _objectCreation = "31074425120161110349113";
+			- _umlDependencyID = "2330";
+			- weakCGTime = 10.1.2016::18:10:7;
 			- strongCGTime = 9.10.2016::17:37:35;
 			- _multiplicity = "";
 			- _itsStateChart = { IHandle 
@@ -39,8 +39,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 			- _id = GUID eb6a6854-3948-4df9-bc7a-15d11210f055;
 			- _myState = 8192;
 			- _name = "Line_PhotoSensor_hal";
-			- _objectCreation = "7686011020161510866107";
-			- _umlDependencyID = "3531";
+			- _objectCreation = "31074625120161110347113";
+			- _umlDependencyID = "3566";
 			- Dependencies = { IRPYRawContainer 
 				- size = 1;
 				- value = 
@@ -48,8 +48,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 					- _id = GUID 0a1d6b98-e934-41dc-b9d3-91ba239a5450;
 					- _myState = 2048;
 					- _name = "es770_peripheral_board";
-					- _objectCreation = "7686211020161510864107";
-					- _umlDependencyID = "3636";
+					- _objectCreation = "31074825120161110345113";
+					- _umlDependencyID = "3671";
 					- Stereotypes = { IRPYRawContainer 
 						- size = 1;
 						- value = 
@@ -80,18 +80,18 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 				- _name = "diag_definicao_blocos";
 				- _id = GUID f53d507c-79b1-4f7f-850a-0c96a124e9bd;
 			}
-			- _lastID = 4;
-			- weakCGTime = 10.1.2016::18:10:7;
+			- _lastID = 5;
+			- weakCGTime = 11.2.2016::14:50:58;
 			- strongCGTime = 10.1.2016::18:10:7;
 			- Operations = { IRPYRawContainer 
-				- size = 3;
+				- size = 4;
 				- value = 
 				{ IPrimitiveOperation 
 					- _id = GUID b71f849a-4684-4818-a097-0034798c5ac9;
 					- _myState = 8192;
 					- _name = "init";
-					- _objectCreation = "7686411020161510862107";
-					- _umlDependencyID = "1920";
+					- _objectCreation = "31075025120161110343113";
+					- _umlDependencyID = "1946";
 					- _virtual = 0;
 					- Args = { IRPYRawContainer 
 						- size = 0;
@@ -115,8 +115,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 					- _id = GUID a9acf611-a321-4c2b-b6af-3391bf345f3f;
 					- _myState = 8192;
 					- _name = "measure";
-					- _objectCreation = "7686611020161510860107";
-					- _umlDependencyID = "2238";
+					- _objectCreation = "31075225120161110341113";
+					- _umlDependencyID = "2264";
 					- _lastID = 2;
 					- _virtual = 0;
 					- Args = { IRPYRawContainer 
@@ -125,8 +125,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						{ IArgument 
 							- _id = GUID 111113d4-6b28-4e5e-b54f-2d00d87e4b51;
 							- _name = "usSensorNumber";
-							- _objectCreation = "7686811020161510858107";
-							- _umlDependencyID = "2976";
+							- _objectCreation = "31075425120161110339113";
+							- _umlDependencyID = "3002";
 							- _typeOf = { IHandle 
 								- _m2Class = "IType";
 								- _filename = "PredefinedTypesC++.sbs";
@@ -144,8 +144,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						- _filename = "PredefinedTypesC++.sbs";
 						- _subsystem = "PredefinedTypesCpp";
 						- _class = "";
-						- _name = "unsigned int";
-						- _id = GUID 7688bde5-e3a0-4b4d-bcd7-cbfa35c3b811;
+						- _name = "int";
+						- _id = GUID 6024c6ab-fe9e-402e-954f-27aca6d3b5e4;
 					}
 					- _abstract = 0;
 					- _final = 0;
@@ -158,8 +158,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 					- _id = GUID f2d020ef-ac00-4a33-aeb6-07d0441f0f5c;
 					- _myState = 8192;
 					- _name = "calibrate";
-					- _objectCreation = "7687011020161510856107";
-					- _umlDependencyID = "2419";
+					- _objectCreation = "31075625120161110337113";
+					- _umlDependencyID = "2454";
 					- _lastID = 4;
 					- _virtual = 0;
 					- Args = { IRPYRawContainer 
@@ -168,8 +168,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						{ IArgument 
 							- _id = GUID a75fed6d-2343-4a4f-9194-e05cb8f85c64;
 							- _name = "usSensorNumber";
-							- _objectCreation = "7687211020161510854107";
-							- _umlDependencyID = "2967";
+							- _objectCreation = "31075825120161110335113";
+							- _umlDependencyID = "3002";
 							- _typeOf = { IHandle 
 								- _m2Class = "IType";
 								- _filename = "PredefinedTypesC++.sbs";
@@ -184,8 +184,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						{ IArgument 
 							- _id = GUID fabb3d3e-b110-4b52-b902-e679ba294df6;
 							- _name = "uiLightVal";
-							- _objectCreation = "7687411020161510852107";
-							- _umlDependencyID = "2501";
+							- _objectCreation = "31076025120161110333113";
+							- _umlDependencyID = "2527";
 							- _typeOf = { IHandle 
 								- _m2Class = "IType";
 								- _filename = "PredefinedTypesC++.sbs";
@@ -200,8 +200,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						{ IArgument 
 							- _id = GUID 34eb4acb-65c7-42c1-9bd0-a8aaef371b19;
 							- _name = "uiDarkVal";
-							- _objectCreation = "7687611020161510850107";
-							- _umlDependencyID = "2383";
+							- _objectCreation = "31076225120161110331113";
+							- _umlDependencyID = "2409";
 							- _typeOf = { IHandle 
 								- _m2Class = "IType";
 								- _filename = "PredefinedTypesC++.sbs";
@@ -229,6 +229,49 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 					- _static = 0;
 					- _constant = 0;
 				}
+				{ IPrimitiveOperation 
+					- _id = GUID 902a6686-97ec-49bb-a6b2-cfb023a8d8f4;
+					- _myState = 8192;
+					- _name = "measure_raw";
+					- _objectCreation = "31076425120161110329113";
+					- _umlDependencyID = "2698";
+					- _lastID = 2;
+					- _virtual = 0;
+					- Args = { IRPYRawContainer 
+						- size = 1;
+						- value = 
+						{ IArgument 
+							- _id = GUID 56ae5d17-1f24-4b6c-9544-078b01114d97;
+							- _name = "usSensorNumber";
+							- _objectCreation = "31076625120161110327113";
+							- _umlDependencyID = "3002";
+							- _typeOf = { IHandle 
+								- _m2Class = "IType";
+								- _filename = "PredefinedTypesC++.sbs";
+								- _subsystem = "PredefinedTypesCpp";
+								- _class = "";
+								- _name = "unsigned short";
+								- _id = GUID 77bfd7dd-107e-4af2-a566-2d076f08e5c1;
+							}
+							- _isOrdered = 0;
+							- _argumentDirection = In;
+						}
+					}
+					- _returnType = { IHandle 
+						- _m2Class = "IType";
+						- _filename = "PredefinedTypesC++.sbs";
+						- _subsystem = "PredefinedTypesCpp";
+						- _class = "";
+						- _name = "unsigned short";
+						- _id = GUID 77bfd7dd-107e-4af2-a566-2d076f08e5c1;
+					}
+					- _abstract = 0;
+					- _final = 0;
+					- _concurrency = Sequential;
+					- _protection = iPublic;
+					- _static = 0;
+					- _constant = 0;
+				}
 			}
 			- _multiplicity = "";
 			- _itsStateChart = { IHandle 
@@ -240,8 +283,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 			- _id = GUID 1a5314d6-2361-4e56-bf0c-a9be6ab80649;
 			- _myState = 8192;
 			- _name = "Line_Sensor";
-			- _objectCreation = "7687811020161510848107";
-			- _umlDependencyID = "2614";
+			- _objectCreation = "31076825120161110325113";
+			- _umlDependencyID = "2640";
 			- _theMainDiagram = { IHandle 
 				- _m2Class = "IDiagram";
 				- _filename = "";
@@ -250,8 +293,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 				- _name = "diag_definicao_blocos";
 				- _id = GUID f53d507c-79b1-4f7f-850a-0c96a124e9bd;
 			}
-			- _lastID = 2;
-			- weakCGTime = 10.1.2016::18:10:7;
+			- _lastID = 3;
+			- weakCGTime = 11.2.2016::14:49:55;
 			- strongCGTime = 9.10.2016::17:44:28;
 			- Operations = { IRPYRawContainer 
 				- size = 2;
@@ -260,8 +303,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 					- _id = GUID 5f48142f-35b8-4ad0-b5ca-f5b5b5925d87;
 					- _myState = 8192;
 					- _name = "init";
-					- _objectCreation = "7688011020161510846107";
-					- _umlDependencyID = "1920";
+					- _objectCreation = "31077025120161110323113";
+					- _umlDependencyID = "1946";
 					- _virtual = 0;
 					- Args = { IRPYRawContainer 
 						- size = 0;
@@ -285,8 +328,9 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 					- _id = GUID 669f2568-a7de-43e0-89f0-c5ac9ddf84a2;
 					- _myState = 8192;
 					- _name = "measure";
-					- _objectCreation = "7688211020161510844107";
-					- _umlDependencyID = "2238";
+					- _objectCreation = "31077225120161110321113";
+					- _umlDependencyID = "2264";
+					- _lastID = 1;
 					- _virtual = 0;
 					- Args = { IRPYRawContainer 
 						- size = 0;
@@ -318,8 +362,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 					- _id = GUID 061f2633-7a16-4dd5-9126-514cfea7998b;
 					- _myState = 10240;
 					- _name = "itsLine_PhotoSensor_hal";
-					- _objectCreation = "7688411020161510842107";
-					- _umlDependencyID = "3867";
+					- _objectCreation = "31077425120161110319113";
+					- _umlDependencyID = "3902";
 					- _multiplicity = "1";
 					- _otherClass = { IClassifierHandle 
 						- _m2Class = "IClass";

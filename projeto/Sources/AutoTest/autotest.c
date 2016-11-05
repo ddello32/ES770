@@ -245,7 +245,7 @@ void autotest_calibratePhotoSensors(){
  */
 void autotest_testAndCalibrate(void) {
 	autotest_testPhotoSensors();
-	autotest_testMotors();
-	autotest_calibrateMotors();
+//	autotest_testMotors();
+//	autotest_calibrateMotors();
 	autotest_calibratePhotoSensors();
 }

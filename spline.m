@@ -1,4 +1,3 @@
-clc, clear all, close all
 %% Catmull-rom init
 s = 0.5; %tension param
 basis = [-s,    2-s,    s-2,    s;
@@ -56,4 +55,5 @@ if(l(2) < min)
 end
 
 %% Plot
- plot(points(:,1), points(:,2), 'o', P(:,1), P(:,2), 'b', minPos, min, 'rx')
+figure
+plot(points(:,1), points(:,2), 'o', P(:,1), P(:,2), 'b', minPos, min, 'rx')

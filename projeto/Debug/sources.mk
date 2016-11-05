@@ -34,6 +34,7 @@ Sources/PIT \
 Sources/Motor \
 Sources/Mcg \
 Sources/Main \
+Sources/LineSensor \
 Sources/Encoder \
 Sources/AutoTest \
 Project_Settings/Startup_Code \
