@@ -10,6 +10,7 @@
 #include "Serial/serial_hal.h"
 #include "Encoder/encoder_hal.h"
 #include "Motor/motor_hal.h"
+#include "SpeedControl/speedController.h"
 #include "Util/util.h"
 #include <stdlib.h>
 #include <string.h>
@@ -73,60 +74,69 @@ void autotest_testPhotoSensors(void) {
  */
 void autotest_testMotors(){
 	char buff[100];
-	if(encoder_getSpeed(0,  1000000)){
+	encoder_measure();
+	if(encoder_getCurrentSpeed(0,  1000000)){
 		sprintf(buff, "GOT READING FROM ENCODER 0 WITH MOTOR 0 OFF\n");
 		serial_sendBuffer(buff, strlen(buff));
 	}
-	if(encoder_getSpeed(1,  1000000)){
+	if(encoder_getCurrentSpeed(1,  1000000)){
 		sprintf(buff, "GOT READING FROM ENCODER 1 WITH MOTOR 1 OFF\n");
 		serial_sendBuffer(buff, strlen(buff));
 	}
-	motor_setSpeed(0, 0x7777);
+	motor_setSpeed(0, 0xAAAA);
 	motor_setSpeed(1, 0);
+	encoder_measure();
 	util_genDelay1s();
-	int reading = encoder_getSpeed(0, 1000000);
+	encoder_measure();
+	int reading = encoder_getCurrentSpeed(0, 1000000);
 	if(!reading){
 		sprintf(buff, "GOT NO READING ENCODER 0 WITH MOTOR 0 ON\n");
 		serial_sendBuffer(buff, strlen(buff));
 		rgbled_setColor(0x0FF, 0, 0);
 	}else {
-		sprintf(buff, "READ %d PULSES FROM ENCODER 0\n", reading);
+		sprintf(buff, "READ %d MM/s FROM ENCODER 0\n", reading);
 		serial_sendBuffer(buff, strlen(buff));
 	}
 	motor_setSpeed(0, 0);
-	motor_setSpeed(1, 0x7777);
+	motor_setSpeed(1, 0xAAAA);
+	encoder_measure();
 	util_genDelay1s();
-	reading = encoder_getSpeed(1, 1000000);
+	encoder_measure();
+	reading = encoder_getCurrentSpeed(1, 1000000);
 	if(!reading){
 		sprintf(buff, "GOT NO READING ENCODER 1 WITH MOTOR 1 ON\n");
 		serial_sendBuffer(buff, strlen(buff));
 		rgbled_setColor(0, 0x0FF, 0);
 	}else {
-		sprintf(buff, "READ %d PULSES FROM ENCODER 1\n", reading);
+		sprintf(buff, "READ %d MM/s FROM ENCODER 1\n", reading);
 		serial_sendBuffer(buff, strlen(buff));
 	}
-	motor_setSpeed(0, -0x7777);
+	motor_setSpeed(0, -0xAAAA);
 	motor_setSpeed(1, 0);
+	encoder_measure();
 	util_genDelay1s();
-	reading = encoder_getSpeed(0, 1000000);
+	encoder_measure();
+	reading = encoder_getCurrentSpeed(0, 1000000);
 	if(!reading){
 		sprintf(buff, "GOT NO READING ENCODER 0 WITH MOTOR 0 ON\n");
 		serial_sendBuffer(buff, strlen(buff));
 		rgbled_setColor(0x0FF, 0, 0);
 	}else {
-		sprintf(buff, "READ %d PULSES FROM ENCODER 0\n", reading);
+		sprintf(buff, "READ %d MM/s FROM ENCODER 0\n", reading);
 		serial_sendBuffer(buff, strlen(buff));
 	}
 	motor_setSpeed(0, 0);
-	motor_setSpeed(1, -0x7777);
+	motor_setSpeed(1, -0xAAAA);
+	encoder_measure();
 	util_genDelay1s();
-	reading = encoder_getSpeed(1, 1000000);
+	encoder_measure();
+	reading = encoder_getCurrentSpeed(1, 1000000);
 	if(!reading){
 		sprintf(buff, "GOT NO READING ENCODER 1 WITH MOTOR 1 ON\n");
 		serial_sendBuffer(buff, strlen(buff));
 		rgbled_setColor(0, 0x0FF, 0);
 	}else {
-		sprintf(buff, "READ %d PULSES FROM ENCODER 1\n", reading);
+		sprintf(buff, "READ %d MM/s FROM ENCODER 1\n", reading);
 		serial_sendBuffer(buff, strlen(buff));
 	}
 	motor_setSpeed(0, 0);
@@ -146,50 +156,65 @@ void autotest_calibrateMotors(){
 		unsigned int uiMaxDValue = 0;
 		int iMinISpeed = 0;
 		unsigned int uiMaxIValue = 0;
+		util_genDelay100ms();
+		encoder_measure(); //Clear residual measures
+		motor_setSpeed(usMotorNumb, 0xFFFF);
+		util_genDelay1s();
+		encoder_measure();
+		uiMaxDValue = encoder_getCurrentSpeed(usMotorNumb, 1000000);
+		sprintf(buff, "MAX DIRECT SPEED VALUE FOR MOTOR %u IS %u MM BY SEC\n", usMotorNumb, uiMaxDValue);
+		serial_sendBuffer(buff, strlen(buff));
 		//Direct Speed
-		for(int iSpeed = 0; iSpeed <= 0xFFFF; iSpeed += 0x0400){
+		for(int iSpeed = 0xAAAA; iSpeed >= 0x0; iSpeed -= 0x0A00){
+			motor_setSpeed(usMotorNumb, 0xFFFF);
+			util_genDelay100ms();
 			motor_setSpeed(usMotorNumb, iSpeed);
-			encoder_getSpeed(usMotorNumb, 100000); 	//Clear any residual measures
 			util_genDelay100ms();
 			util_genDelay100ms();
 			util_genDelay100ms();
-			if(encoder_getSpeed(usMotorNumb,  300000)){
+			encoder_measure(); //Clear counter
+			util_genDelay100ms();
+			util_genDelay100ms();
+			util_genDelay100ms();
+			encoder_measure();
+			if(!encoder_getCurrentSpeed(usMotorNumb,  300000)){
 					sprintf(buff, "MIN DIRECT SPEED FOR MOTOR %u IS %d\n", usMotorNumb, iSpeed);
 					serial_sendBuffer(buff, strlen(buff));
-					iMinDSpeed = iSpeed;
+					iMinDSpeed = iSpeed - 100;
 					break;
 			}
 		}
-		motor_setSpeed(usMotorNumb, 0xFFFF);
-		encoder_getSpeed(usMotorNumb, 100000);	//Clear residual measures
-		util_genDelay1s();
-		uiMaxDValue = encoder_getSpeed(usMotorNumb, 1000000);
-		sprintf(buff, "MAX DIRECT SPEED VALUE FOR MOTOR %u IS %u PULSED BY SEC\n", usMotorNumb, uiMaxDValue);
-		serial_sendBuffer(buff, strlen(buff));
 		motor_setSpeed(usMotorNumb, 0);
 		util_genDelay1s();
-		//Inverse Speed
-		for(int iSpeed = 0; iSpeed >= -0xFFFF; iSpeed -= 0x0400){
-			motor_setSpeed(usMotorNumb, iSpeed);
-			encoder_getSpeed(usMotorNumb, 100000);
-			util_genDelay100ms();
-			util_genDelay100ms();
-			util_genDelay100ms();
-			if(encoder_getSpeed(usMotorNumb,  300000)){
-					sprintf(buff, "MIN INVERSE SPEED FOR MOTOR %u IS %d\n", usMotorNumb, iSpeed);
-					serial_sendBuffer(buff, strlen(buff));
-					iMinISpeed = iSpeed;
-					break;
-			}
-		}
 		motor_setSpeed(usMotorNumb, -0xFFFF);
-		encoder_getSpeed(usMotorNumb, 100000);
+		encoder_measure();
 		util_genDelay1s();
-		uiMaxIValue = encoder_getSpeed(usMotorNumb,  1000000);
+		encoder_measure();
+		uiMaxIValue = encoder_getCurrentSpeed(usMotorNumb,  1000000);
 		sprintf(buff, "MAX INVERSE SPEED VALUE FOR MOTOR %u IS %u PULSED BY SEC\n", usMotorNumb, uiMaxIValue);
 		serial_sendBuffer(buff, strlen(buff));
+		//Inverse Speed
+		for(int iSpeed = -0xAAAA; iSpeed <= 0x0; iSpeed += 0x0A00){
+			motor_setSpeed(usMotorNumb, -0xFFFF);
+			util_genDelay100ms();
+			motor_setSpeed(usMotorNumb, iSpeed);
+			util_genDelay100ms();
+			util_genDelay100ms();
+			util_genDelay100ms();
+			encoder_measure();
+			util_genDelay100ms();
+			util_genDelay100ms();
+			util_genDelay100ms();
+			encoder_measure();
+			if(!encoder_getCurrentSpeed(usMotorNumb,  300000)){
+					sprintf(buff, "MIN INVERSE SPEED FOR MOTOR %u IS %d\n", usMotorNumb, iSpeed);
+					serial_sendBuffer(buff, strlen(buff));
+					iMinISpeed = iSpeed + 100;
+					break;
+			}
+		}
 		motor_setSpeed(usMotorNumb, 0);
-		motor_calibrate(usMotorNumb, iMinDSpeed, uiMaxDValue, iMinISpeed, uiMaxIValue);
+		speedControl_calibrate(usMotorNumb, iMinDSpeed, uiMaxDValue, iMinISpeed, uiMaxIValue);
 		util_genDelay1s();
 	}
 }
@@ -201,18 +226,19 @@ void autotest_calibrateMotors(){
 void autotest_calibratePhotoSensors(){
 	int iaMINS[6] = {INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX};
 	int iaMAXS[6] = {INT_MIN, INT_MIN, INT_MIN, INT_MIN, INT_MIN, INT_MIN};
-	motor_setSpeed(0, 0x7777);
+	motor_setSpeed(0, 0xAAAA);
 	motor_setSpeed(1, -0x8000);
-	for(unsigned int i = 0; i < 10000; i++){
+	//TODO Testar tempo
+	for(unsigned int i = 0; i < 2500; i++){
 		for(unsigned short usSensorNumb = 0; usSensorNumb < 6; usSensorNumb++){
 			int iRawMeasure = photoSensor_measure_raw(usSensorNumb);
 			iaMINS[usSensorNumb] = MIN(iRawMeasure, iaMINS[usSensorNumb]);
 			iaMAXS[usSensorNumb] = MAX(iRawMeasure, iaMAXS[usSensorNumb]);
 		}
 	}
-	motor_setSpeed(0, -0x7777);
+	motor_setSpeed(0, -0xAAAA);
 	motor_setSpeed(1, 0x8000);
-	for(unsigned int i = 0; i < 10000; i++){
+	for(unsigned int i = 0; i < 2500; i++){
 		for(unsigned short usSensorNumb = 0; usSensorNumb < 6; usSensorNumb++){
 			int iRawMeasure = photoSensor_measure_raw(usSensorNumb);
 			iaMINS[usSensorNumb] = MIN(iRawMeasure, iaMINS[usSensorNumb]);

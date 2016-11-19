@@ -6,6 +6,8 @@ basis = [-s,    2-s,    s-2,    s;
          0,     1,      0,      0];
 %% Generate points and pseudo points
  points = [0:1:7; 100, randi(100, 1, 6), 100]';
+ points(1,2) = points(2,2);
+ points(end, 2) = points(end-1,2);
 %% Compute curve
 j = 1;
 C = @(i,u) [u^3, u^2, u, 1]*basis*points(i-1:i+2, :)

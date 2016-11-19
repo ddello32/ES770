@@ -26,6 +26,7 @@ S_UPPER_DEPS :=
 SUBDIRS := \
 Sources \
 Sources/Util \
+Sources/SpeedControl \
 Sources/Serial \
 Sources/RGBLed \
 Sources/Protocolo \

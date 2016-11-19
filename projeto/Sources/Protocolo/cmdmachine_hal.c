@@ -10,12 +10,14 @@
 #include <stdio.h>
 #include "cmdmachine_hal.h"
 #include "Util/util.h"
+#include "Main/es770.h"
 
 #define ERR_STR "ERR\n"
 #define ACK_STR "ACK\n"
 
 #define STATE_IDLE 0
-#define STATE_COOLER_CMD 6
+#define STATE_MOTOR_CMD 6
+#define STATE_SC_CMD 1
 #define STATE_ERR 99
 
 static int iState = STATE_IDLE;
@@ -42,6 +44,12 @@ unsigned int handleIdle(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes){
 			case '\n':
 			case '\0':
 				break;
+			case 'M':
+				iState = STATE_MOTOR_CMD;
+				break;
+			case 'K':
+				iState = STATE_SC_CMD;
+				break;
 			default:
 				iState = STATE_ERR;
 		}
@@ -49,6 +57,65 @@ unsigned int handleIdle(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes){
 	return uiCounter;
 }
 
+//============================================================================
+// MOTOR STATE MACHINE
+//============================================================================
+/**
+ * Handles parsing while in COOLER_CMD state and checks for transitions
+ *
+ * @param cpCmdBuffer The start of the command string to parse
+ * @param uiSize The size of the command string
+ * @param cpCmdRes Buffer for concatenating the command response
+ *
+ * @return The number of characters parsed while in the COOLER_COMMAND state
+ */
+int handleMotor(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes){
+	unsigned int uiCounter = 0;
+	int iLinSpeed;
+	int iAngSpeed;
+	if(!sscanf(cpCmdBuffer, " %d %d", &iLinSpeed, &iAngSpeed)){
+		iState = STATE_ERR;
+		return 0;
+	}
+	strcat(cpCmdRes, ACK_STR);
+	while(uiCounter < uiSize && ((cpCmdBuffer[uiCounter] >= '0' && cpCmdBuffer[uiCounter] <= '9') || (cpCmdBuffer[uiCounter] == ' '))){
+				uiCounter++;
+	}
+	main_setSpeeds(iLinSpeed, iAngSpeed);
+	iState = STATE_IDLE;
+	return uiCounter;
+}
+
+//============================================================================
+// SPEED CONTROL STATE MACHINE
+//============================================================================
+/**
+ * Handles parsing while in COOLER_CMD state and checks for transitions
+ *
+ * @param cpCmdBuffer The start of the command string to parse
+ * @param uiSize The size of the command string
+ * @param cpCmdRes Buffer for concatenating the command response
+ *
+ * @return The number of characters parsed while in the COOLER_COMMAND state
+ */
+int handleSC(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes){
+	unsigned int uiCounter = 0;
+	unsigned int motor;
+	int ikp;
+	int iki;
+	int ikd;
+	if(!sscanf(cpCmdBuffer, " %u %d %d %d", &motor, &ikp, &iki, &ikd)){
+		iState = STATE_ERR;
+		return 0;
+	}
+	strcat(cpCmdRes, ACK_STR);
+	while(uiCounter < uiSize && ((cpCmdBuffer[uiCounter] >= '0' && cpCmdBuffer[uiCounter] <= '9') || (cpCmdBuffer[uiCounter] == ' '))){
+				uiCounter++;
+	}
+	main_setControler(motor, ikp, iki, ikd);
+	iState = STATE_IDLE;
+	return uiCounter;
+}
 //============================================================================
 // ERROR STATE MACHINE
 //============================================================================
@@ -112,9 +179,11 @@ void cmdmachine_interpretCmdBuffer(char *cpCmdBuffer, unsigned int uiSize, char*
 			case STATE_IDLE:
 				uiCounter += handleIdle(&cpCmdBuffer[uiCounter], uiSize - uiCounter, cpCmdRes);
 				break;
-			case STATE_COOLER_CMD:
-				uiCounter += handleCooler(&cpCmdBuffer[uiCounter], uiSize - uiCounter, cpCmdRes);
+			case STATE_MOTOR_CMD:
+				uiCounter += handleMotor(&cpCmdBuffer[uiCounter], uiSize - uiCounter, cpCmdRes);
 				break;
+			case STATE_SC_CMD:
+				uiCounter += handleSC(&cpCmdBuffer[uiCounter], uiSize - uiCounter, cpCmdRes);
 			case STATE_ERR:
 				uiCounter += handleError(&cpCmdBuffer[uiCounter], uiSize - uiCounter, cpCmdRes);
 				break;

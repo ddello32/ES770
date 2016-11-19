@@ -15,13 +15,26 @@
  */
 void encoder_init(void);
 
+/**
+ * Triggers a measurement
+ */
+void encoder_measure();
+
 
 /**
  * @param usEncoderNumber encoder identifier
- * @param uiPeriod Time ellapsed since last getSpeedCall in ms
+ * @param uiPeriod Time ellapsed between measure calls in us
  *
  * @return current encoder speed in rps for given encoder number
  */
-unsigned int encoder_getSpeed(unsigned short usEncoderNumber, unsigned int uiPeriod);
+unsigned int encoder_getCurrentSpeed(unsigned short usEncoderNumber, unsigned int uiPeriod);
+
+/**
+ * @param usEncoderNumber encoder identifier
+ * @param uiPeriod Time ellapsed between measure calls in us
+ *
+ * @return mean encoder speed (for last MEASURE_BUFFER_SIZE measures) in mm/sec for given encoder number
+ */
+unsigned int encoder_getMeanSpeed(unsigned short usEncoderNumber, unsigned int uiPeriod);
 
 #endif /* SOURCES_ENCODER_HAL_H_ */

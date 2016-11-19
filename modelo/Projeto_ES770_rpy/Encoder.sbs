@@ -3,8 +3,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 	- _id = GUID 289d5afe-0e62-433c-9dc4-551d2814174f;
 	- _myState = 8192;
 	- _name = "Encoder";
-	- _objectCreation = "3176511243201621245693";
-	- _umlDependencyID = "2189";
+	- _objectCreation = "7629081320161617769117";
+	- _umlDependencyID = "2206";
 	- _theMainDiagram = { IHandle 
 		- _m2Class = "IDiagram";
 		- _filename = "";
@@ -14,7 +14,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 		- _id = GUID 604328de-2202-48b3-9d1a-353bbeb75331;
 	}
 	- _lastID = 1;
-	- weakCGTime = 9.13.2016::0:33:51;
+	- weakCGTime = 11.8.2016::18:57:26;
 	- strongCGTime = 9.10.2016::17:36:33;
 	- _defaultComposite = GUID af8c7fcf-857e-4730-ae93-6885bbc34ef2;
 	- _eventsBaseID = -1;
@@ -25,9 +25,9 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 			- _id = GUID af8c7fcf-857e-4730-ae93-6885bbc34ef2;
 			- _myState = 40960;
 			- _name = "TopLevel";
-			- _objectCreation = "3176531243201621245493";
-			- _umlDependencyID = "2296";
-			- weakCGTime = 9.10.2016::20:16:27;
+			- _objectCreation = "7629281320161617767117";
+			- _umlDependencyID = "2313";
+			- weakCGTime = 9.13.2016::0:33:51;
 			- strongCGTime = 9.10.2016::17:36:33;
 			- _multiplicity = "";
 			- _itsStateChart = { IHandle 
@@ -39,8 +39,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 			- _id = GUID 91378c9c-bf74-4402-8c4a-70997d7232dd;
 			- _myState = 8192;
 			- _name = "Encoder_hal";
-			- _objectCreation = "3176551243201621245293";
-			- _umlDependencyID = "2593";
+			- _objectCreation = "7629481320161617765117";
+			- _umlDependencyID = "2610";
 			- Dependencies = { IRPYRawContainer 
 				- size = 1;
 				- value = 
@@ -48,8 +48,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 					- _id = GUID 5b7d3bbe-54b0-478e-9134-7be2454c93fe;
 					- _myState = 2048;
 					- _name = "es770_peripheral_board";
-					- _objectCreation = "3176571243201621245093";
-					- _umlDependencyID = "3637";
+					- _objectCreation = "7629681320161617763117";
+					- _umlDependencyID = "3654";
 					- Stereotypes = { IRPYRawContainer 
 						- size = 1;
 						- value = 
@@ -81,7 +81,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 				- _id = GUID f53d507c-79b1-4f7f-850a-0c96a124e9bd;
 			}
 			- _lastID = 4;
-			- weakCGTime = 9.13.2016::0:34:7;
+			- weakCGTime = 11.8.2016::18:57:31;
 			- strongCGTime = 9.10.2016::17:51:52;
 			- Operations = { IRPYRawContainer 
 				- size = 2;
@@ -90,8 +90,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 					- _id = GUID 7775c7c6-04ea-473c-aa24-496a1518bd7f;
 					- _myState = 8192;
 					- _name = "init";
-					- _objectCreation = "3176591243201621244893";
-					- _umlDependencyID = "1930";
+					- _objectCreation = "7629881320161617761117";
+					- _umlDependencyID = "1938";
 					- _virtual = 0;
 					- Args = { IRPYRawContainer 
 						- size = 0;
@@ -115,8 +115,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 					- _id = GUID de934271-a67b-4418-9cc4-9fdebbbb580c;
 					- _myState = 8192;
 					- _name = "getMeasure";
-					- _objectCreation = "3176611243201621244693";
-					- _umlDependencyID = "2527";
+					- _objectCreation = "7630081320161617759117";
+					- _umlDependencyID = "2535";
 					- _lastID = 2;
 					- _virtual = 0;
 					- Args = { IRPYRawContainer 
@@ -125,8 +125,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						{ IArgument 
 							- _id = GUID a1ce2eed-67a0-4bf8-8f25-e6669397e0d9;
 							- _name = "usEncoderNumber";
-							- _objectCreation = "3176631243201621244493";
-							- _umlDependencyID = "3038";
+							- _objectCreation = "7630281320161617757117";
+							- _umlDependencyID = "3046";
 							- _typeOf = { IHandle 
 								- _m2Class = "IType";
 								- _filename = "PredefinedTypesC++.sbs";
@@ -141,8 +141,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler C++ 1159120
 						{ IArgument 
 							- _id = GUID 3f85eec7-6780-4ae9-bc85-af9d1093fa4f;
 							- _name = "uiPeriod";
-							- _objectCreation = "3176651243201621244293";
-							- _umlDependencyID = "2318";
+							- _objectCreation = "7630481320161617755117";
+							- _umlDependencyID = "2326";
 							- _description = { IDescription 
 								- _text = "Time elapsed since last time this function was called (task period)";
 							}

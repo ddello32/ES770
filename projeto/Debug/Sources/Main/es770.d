@@ -21,7 +21,8 @@ Sources/Main/es770.o: ../Sources/Main/es770.c \
  /mnt/9A68FEAD68FE8773/ksdk/platform/hal/inc/../src/sim/MKL25Z4/fsl_sim_hal_MKL25Z4.h \
  ../Sources/RGBLed/rgbled_hal.h ../Sources/PhotoSensor/photosensor_hal.h \
  ../Sources/AutoTest/autotest.h ../Sources/Motor/motor_hal.h \
- ../Sources/Encoder/encoder_hal.h ../Sources/LineSensor/linesensor.h
+ ../Sources/Encoder/encoder_hal.h ../Sources/LineSensor/linesensor.h \
+ ../Sources/SpeedControl/speedController.h
 
 ../Sources/KL25Z/es770_peripheral_board.h:
 
@@ -80,3 +81,5 @@ Sources/Main/es770.o: ../Sources/Main/es770.c \
 ../Sources/Encoder/encoder_hal.h:
 
 ../Sources/LineSensor/linesensor.h:
+
+../Sources/SpeedControl/speedController.h:

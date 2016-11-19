@@ -129,15 +129,3 @@ void motor_setSpeed(unsigned short usMotorNumber, int iSpeed){
 		TPM_WR_CnV_VAL(MOTOR_TPM_BASE_PNT, MOTOR_1_TPM_CHANNEL_INDEX, motor_speedToDc(iSpeed));
 	}
 }
-
-/**
- * Saves the motor calibration params
- * @param usMotorNumber motor identifier (0, 1)
- * @param iMinDirectSpeedRef the minimum speed ref to get the motor running in direct speed
- * @param uiMaxDirectMeasuredSpeed the speed measured when the motor was in maximum direct speed (in pulses by sec)
- * @param iMinInverseSpeedRef the minimum speed ref to get the motor running in inverse speed
- * @param uiMaxInverseMeasuredSpeed the speed measured when the motor was in maximum inverse speed (in pulses by sec)
- */
-void motor_calibrate(unsigned short usMotorNumber, int iMinDirectSpeedRef, unsigned int uiMaxDirectMeasuredSpeed, int iMinInverseSpeedRef, unsigned int uiMaxInverseMeasuredSpeed){
-
-}

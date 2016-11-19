@@ -225,8 +225,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "diag_definicao_blocos";
 				- _id = GUID f53d507c-79b1-4f7f-850a-0c96a124e9bd;
 			}
-			- _UpLeft = 0 326 ;
-			- _DownRight = 1066 1000 ;
+			- _UpLeft = 701 87 ;
+			- _DownRight = 1767 797 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 10;
 		}
