@@ -10,7 +10,7 @@
 #include "Motor/motor_hal.h"
 #include <stdlib.h>
 
-#define OVERFLOW_AVOIDMENT_THRESSHOLD 250
+#define OVERFLOW_AVOIDMENT_THRESSHOLD 1000
 #define CAR_RADIUS 71
 
 #define MIN(A, B) A<B?A:B
@@ -66,17 +66,21 @@ void speedControl_calibrate(unsigned short usMotorNumb, int iMin, unsigned int u
  * Runs speed controller adjusting motor speed
  */
 void speedControl_execute(int iLinSpeed, int iAngSpeed){
-	refSpeed[0] = (iLinSpeed*uiMaxSpeed)/100 + (iAngSpeed<0?-1*iAngSpeed*CAR_RADIUS:0);
-	refSpeed[1] = (iLinSpeed*uiMaxSpeed)/100 + (iAngSpeed>0?iAngSpeed*CAR_RADIUS:0);
+	int halfSpeed = (iAngSpeed*((int)uiMaxSpeed))/200;
+	refSpeed[0] = (iLinSpeed*((int)uiMaxSpeed))/100 - halfSpeed;
+	refSpeed[1] = (iLinSpeed*((int)uiMaxSpeed))/100 + halfSpeed;
 	uiCounter++;
 	if(uiCounter > OVERFLOW_AVOIDMENT_THRESSHOLD){
 		uiCounter = 0;
-		sum[0] /= 2;
-		sum[1] /= 2;
+		sum[0] /= 10;
+		sum[1] /= 10;
 	}
 	for(unsigned short usMotorNum = 0; usMotorNum < 2; usMotorNum++){
 		int iRef = abs(refSpeed[usMotorNum]);
 		short sSign = refSpeed[usMotorNum] < 0? -1:1;
+		if(iRef > uiMaxSpeed){
+			iRef = uiMaxSpeed;
+		}
 		//Error (we keep it in an auxiliary variable in order not to lose last measure before calculating der)
 		int iAux = iRef - encoder_getMeanSpeed(usMotorNum, dt);
 		der[usMotorNum] = iAux - err[usMotorNum];

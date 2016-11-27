@@ -227,9 +227,9 @@ void autotest_calibratePhotoSensors(){
 	int iaMINS[6] = {INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX};
 	int iaMAXS[6] = {INT_MIN, INT_MIN, INT_MIN, INT_MIN, INT_MIN, INT_MIN};
 	motor_setSpeed(0, 0xAAAA);
-	motor_setSpeed(1, -0x8000);
+	motor_setSpeed(1, -0xBBBB);
 	//TODO Testar tempo
-	for(unsigned int i = 0; i < 2500; i++){
+	for(unsigned int i = 0; i < 7500; i++){
 		for(unsigned short usSensorNumb = 0; usSensorNumb < 6; usSensorNumb++){
 			int iRawMeasure = photoSensor_measure_raw(usSensorNumb);
 			iaMINS[usSensorNumb] = MIN(iRawMeasure, iaMINS[usSensorNumb]);
@@ -237,8 +237,8 @@ void autotest_calibratePhotoSensors(){
 		}
 	}
 	motor_setSpeed(0, -0xAAAA);
-	motor_setSpeed(1, 0x8000);
-	for(unsigned int i = 0; i < 2500; i++){
+	motor_setSpeed(1, 0xBBBB);
+	for(unsigned int i = 0; i < 7500; i++){
 		for(unsigned short usSensorNumb = 0; usSensorNumb < 6; usSensorNumb++){
 			int iRawMeasure = photoSensor_measure_raw(usSensorNumb);
 			iaMINS[usSensorNumb] = MIN(iRawMeasure, iaMINS[usSensorNumb]);

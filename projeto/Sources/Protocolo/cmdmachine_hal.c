@@ -10,7 +10,8 @@
 #include <stdio.h>
 #include "cmdmachine_hal.h"
 #include "Util/util.h"
-#include "Main/es770.h"
+#include "LineControl/lineControl.h"
+//#include "Main/es770.h"
 
 #define ERR_STR "ERR\n"
 #define ACK_STR "ACK\n"
@@ -18,6 +19,7 @@
 #define STATE_IDLE 0
 #define STATE_MOTOR_CMD 6
 #define STATE_SC_CMD 1
+#define STATE_LC_CMD 2
 #define STATE_ERR 99
 
 static int iState = STATE_IDLE;
@@ -50,6 +52,8 @@ unsigned int handleIdle(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes){
 			case 'K':
 				iState = STATE_SC_CMD;
 				break;
+			case 'L':
+				iState = STATE_LC_CMD;
 			default:
 				iState = STATE_ERR;
 		}
@@ -81,7 +85,7 @@ int handleMotor(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes){
 	while(uiCounter < uiSize && ((cpCmdBuffer[uiCounter] >= '0' && cpCmdBuffer[uiCounter] <= '9') || (cpCmdBuffer[uiCounter] == ' '))){
 				uiCounter++;
 	}
-	main_setSpeeds(iLinSpeed, iAngSpeed);
+//	main_setSpeeds(iLinSpeed, iAngSpeed);
 	iState = STATE_IDLE;
 	return uiCounter;
 }
@@ -112,7 +116,37 @@ int handleSC(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes){
 	while(uiCounter < uiSize && ((cpCmdBuffer[uiCounter] >= '0' && cpCmdBuffer[uiCounter] <= '9') || (cpCmdBuffer[uiCounter] == ' '))){
 				uiCounter++;
 	}
-	main_setControler(motor, ikp, iki, ikd);
+//	main_setControler(motor, ikp, iki, ikd);
+	iState = STATE_IDLE;
+	return uiCounter;
+}
+
+//============================================================================
+// LINE CONTROL STATE MACHINE
+//============================================================================
+/**
+ * Handles parsing while in COOLER_CMD state and checks for transitions
+ *
+ * @param cpCmdBuffer The start of the command string to parse
+ * @param uiSize The size of the command string
+ * @param cpCmdRes Buffer for concatenating the command response
+ *
+ * @return The number of characters parsed while in the COOLER_COMMAND state
+ */
+int handleLC(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes){
+	unsigned int uiCounter = 0;
+	int ikp;
+	int iki;
+	int ikd;
+	if(!sscanf(cpCmdBuffer, " %d %d %d", &ikp, &iki, &ikd)){
+		iState = STATE_ERR;
+		return 0;
+	}
+	strcat(cpCmdRes, ACK_STR);
+	while(uiCounter < uiSize && ((cpCmdBuffer[uiCounter] >= '0' && cpCmdBuffer[uiCounter] <= '9') || (cpCmdBuffer[uiCounter] == ' '))){
+				uiCounter++;
+	}
+	lineControl_init(ikp, iki, ikd, 100*1000);
 	iState = STATE_IDLE;
 	return uiCounter;
 }
@@ -184,6 +218,10 @@ void cmdmachine_interpretCmdBuffer(char *cpCmdBuffer, unsigned int uiSize, char*
 				break;
 			case STATE_SC_CMD:
 				uiCounter += handleSC(&cpCmdBuffer[uiCounter], uiSize - uiCounter, cpCmdRes);
+				break;
+			case STATE_LC_CMD:
+				uiCounter += handleLC(&cpCmdBuffer[uiCounter], uiSize - uiCounter, cpCmdRes);
+				break;
 			case STATE_ERR:
 				uiCounter += handleError(&cpCmdBuffer[uiCounter], uiSize - uiCounter, cpCmdRes);
 				break;

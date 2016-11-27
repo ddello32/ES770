@@ -9,6 +9,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
+#include <StateMachine/stateMachine.h>
 #include "RGBLed/rgbled_hal.h"
 
 #define PHOTOSENSORDISTANCE 10
@@ -92,14 +93,18 @@ int lineSensor_measure(){
 	usaPoints[7] = usaPoints[6];
 	if(darkCount < LINE_MIN){
 		rgbled_setColor(0x0FF,0,0);
-		sprintf(buff, "LOST LINE\n");
-		serial_sendBuffer(buff, strlen(buff));
+		stateMachine_foundCommand(0);
+//		sprintf(buff, "LOST LINE\n");
+//		serial_sendBuffer(buff, strlen(buff));
 	}else{
 		rgbled_setColor(0,0,0);
 		if(darkCount >= COMMAND_MIN){
 			rgbled_setColor(0x0, 0x0FF, 0);
-			sprintf(buff, "FOUND COMMAND\n");
-			serial_sendBuffer(buff, strlen(buff));
+			stateMachine_foundCommand(1);
+//			sprintf(buff, "FOUND COMMAND\n");
+//			serial_sendBuffer(buff, strlen(buff));
+		}else {
+			stateMachine_foundCommand(0);
 		}
 		lastMeasure = (linesensor_findMin() - 2.5)*PHOTOSENSORDISTANCE;
 	}

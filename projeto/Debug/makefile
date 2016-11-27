@@ -9,6 +9,7 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include Sources/Util/subdir.mk
+-include Sources/StateMachine/subdir.mk
 -include Sources/SpeedControl/subdir.mk
 -include Sources/Serial/subdir.mk
 -include Sources/RGBLed/subdir.mk
@@ -19,6 +20,7 @@ RM := rm -rf
 -include Sources/Mcg/subdir.mk
 -include Sources/Main/subdir.mk
 -include Sources/LineSensor/subdir.mk
+-include Sources/LineControl/subdir.mk
 -include Sources/Encoder/subdir.mk
 -include Sources/AutoTest/subdir.mk
 -include Sources/subdir.mk

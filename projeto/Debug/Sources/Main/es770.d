@@ -22,7 +22,9 @@ Sources/Main/es770.o: ../Sources/Main/es770.c \
  ../Sources/RGBLed/rgbled_hal.h ../Sources/PhotoSensor/photosensor_hal.h \
  ../Sources/AutoTest/autotest.h ../Sources/Motor/motor_hal.h \
  ../Sources/Encoder/encoder_hal.h ../Sources/LineSensor/linesensor.h \
- ../Sources/SpeedControl/speedController.h
+ ../Sources/SpeedControl/speedController.h \
+ ../Sources/LineControl/lineControl.h \
+ ../Sources/StateMachine/stateMachine.h
 
 ../Sources/KL25Z/es770_peripheral_board.h:
 
@@ -83,3 +85,7 @@ Sources/Main/es770.o: ../Sources/Main/es770.c \
 ../Sources/LineSensor/linesensor.h:
 
 ../Sources/SpeedControl/speedController.h:
+
+../Sources/LineControl/lineControl.h:
+
+../Sources/StateMachine/stateMachine.h:

@@ -11,7 +11,7 @@
 
 #define ENCODER_SCALER 4
 #define WHEEL_RADIUS 34 //in mm
-#define ENC_PRECISION 8 //pulses per turn
+#define ENC_PRECISION 10 //pulses per turn
 #define MEASURE_BUFFER_SIZE 4
 #define PI 3.141598
 static unsigned int uiaMEASURES[2] = {0,0};
@@ -73,6 +73,14 @@ void encoder_measure(){
 unsigned int encoder_getCurrentSpeed(unsigned short usEncoderNumber, unsigned int uiPeriod){
 	return (uiaMEASURES[usEncoderNumber]*2*PI*WHEEL_RADIUS/ENC_PRECISION)*1000000/uiPeriod;
 }
+
+/**
+ * @return linear distance walked by the CG (from last measure)
+ */
+unsigned int encoder_getLinDistance(){
+	return (uiaMEASURES[0] + uiaMEASURES[1])*PI*WHEEL_RADIUS/ENC_PRECISION;
+}
+
 
 /**
  * @param usEncoderNumber encoder identifier

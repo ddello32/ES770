@@ -30,6 +30,11 @@ void encoder_measure();
 unsigned int encoder_getCurrentSpeed(unsigned short usEncoderNumber, unsigned int uiPeriod);
 
 /**
+ * @return linear distance walked by the CG (from last measure)
+ */
+unsigned int encoder_getLinDistance();
+
+/**
  * @param usEncoderNumber encoder identifier
  * @param uiPeriod Time ellapsed between measure calls in us
  *

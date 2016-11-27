@@ -26,6 +26,7 @@ S_UPPER_DEPS :=
 SUBDIRS := \
 Sources \
 Sources/Util \
+Sources/StateMachine \
 Sources/SpeedControl \
 Sources/Serial \
 Sources/RGBLed \
@@ -36,6 +37,7 @@ Sources/Motor \
 Sources/Mcg \
 Sources/Main \
 Sources/LineSensor \
+Sources/LineControl \
 Sources/Encoder \
 Sources/AutoTest \
 Project_Settings/Startup_Code \

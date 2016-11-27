@@ -12,18 +12,23 @@
 #include "Encoder/encoder_hal.h"
 #include "LineSensor/linesensor.h"
 #include "SpeedControl/speedController.h"
+#include "LineControl/lineControl.h"
+#include "StateMachine/stateMachine.h"
 #include "Protocolo/cmdmachine_hal.h"
 #include <string.h>
 #include <stdio.h>
 
 /* defines */
-#define CYCLIC_EXECUTIVE_PERIOD         100*1000 /* in micro seconds */
+#define CYCLIC_EXECUTIVE_PERIOD         50*1000 /* in micro seconds */
 /* globals */
 volatile unsigned int uiFlagNextPeriod = 0;         /* cyclic executive flag */
-static unsigned int kp[2] = {50,50};
-static unsigned int ki[2] = {2,2};
+static unsigned int kp[2] = {100,100};
+static unsigned int ki[2] = {1,1};
 static unsigned int kd[2] = {0,0};
-static int ls = 50;
+static unsigned int lkp = 9;
+static unsigned int lki = 0;
+static unsigned int lkd = 0;
+static int ls = 60;
 static int as = 0;
 
 #define RCV_BUF_SIZE 40
@@ -51,20 +56,9 @@ void main_boardInit(){
 	encoder_init();
 	lineSensor_init();
 	speedControl_init(kp, ki, kd, CYCLIC_EXECUTIVE_PERIOD);
-	//TODO
+	lineControl_init(lkp, lki, lkd, CYCLIC_EXECUTIVE_PERIOD);
 }
 
-void main_setSpeeds(int iLinSpeed, int iAngSpeed){
-	ls = iLinSpeed;
-	as = iAngSpeed;
-}
-
-void main_setControler(unsigned short motor, int ikp, int iki, int ikd){
-	kp[motor] = ikp;
-	ki[motor] = iki;
-	kd[motor] = ikd;
-	speedControl_init(kp, ki, kd, CYCLIC_EXECUTIVE_PERIOD);
-}
 
 /**
  * Reads serial comm, interprets received commands and prints output
@@ -105,24 +99,8 @@ int main(void) {
     /* cooperative cyclic executive main loop */
 	while(1){
 		encoder_measure();
-		speedControl_execute(ls, as);
-		sprintf(buff, "Motor 0: %u MOTOR 1: %u\n", encoder_getMeanSpeed(0, CYCLIC_EXECUTIVE_PERIOD), encoder_getMeanSpeed(1, CYCLIC_EXECUTIVE_PERIOD));
-		serial_sendBuffer(buff, strlen(buff));
-//		distance = lineSensor_measure();
-//		if(distance < -15){
-//			motor_setSpeed(0, 0x9999);
-//			motor_setSpeed(1, -0x7777);
-//		}else if(distance > 15){
-//			motor_setSpeed(1, 0x9999);
-//			motor_setSpeed(0, -0x7777);
-//		}else{
-//			motor_setSpeed(0, 0x7777);
-//			motor_setSpeed(1, 0x7777);
-//		}
-//		sprintf(buff, "Distance: %d\n", distance);
-//		serial_sendBuffer(buff, strlen(buff));
+		stateMachine_execute(encoder_getLinDistance(), CYCLIC_EXECUTIVE_PERIOD);
 		while(!uiFlagNextPeriod){
-			main_protocolCheck();
 		}
 		uiFlagNextPeriod = 0;
 	}

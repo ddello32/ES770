@@ -85,8 +85,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "ActivityDiagram";
 				- _id = GUID 9b26ce95-86b0-492d-8de1-0bce906b1268;
 			}
-			- _UpLeft = 0 0 ;
-			- _DownRight = 679 369 ;
+			- _UpLeft = 0 80 ;
+			- _DownRight = 679 449 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 2;
 		}
@@ -107,14 +107,14 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _wasOpenedOnCloseProject = 1;
 			- _theDiagram = { IHandle 
 				- _m2Class = "IStateChartDiagram";
-				- _filename = "Protocol.sbs";
-				- _subsystem = "Protocol";
-				- _class = "Protocol_Interpreter";
+				- _filename = "StateMachine.sbs";
+				- _subsystem = "StateMachine";
+				- _class = "stateMachine";
 				- _name = "StatechartDiagram";
 				- _id = GUID 9dedc648-356e-46f3-9a13-25d8351a9b6f;
 			}
-			- _UpLeft = -5 0 ;
-			- _DownRight = 534 282 ;
+			- _UpLeft = -8 0 ;
+			- _DownRight = 531 282 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 8;
 		}
@@ -122,7 +122,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _placement = { CCommon_WINDOWPLACEMENT 
 				- m_nLength = 44;
 				- m_nFlags = 0;
-				- m_showCmd = 1;
+				- m_showCmd = 3;
 				- m_ptMinPositionX = -1;
 				- m_ptMinPositionY = -1;
 				- m_ptMaxPositionX = -4;
@@ -142,7 +142,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _id = GUID 28d8b7d8-84bc-40a2-938c-6fed0ec90c03;
 			}
 			- _UpLeft = 0 0 ;
-			- _DownRight = 1166 610 ;
+			- _DownRight = 1505 1001 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 3;
 		}
@@ -197,8 +197,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "StatechartDiagram";
 				- _id = GUID 2d7919ad-da59-4f65-a00b-d2041bb542d5;
 			}
-			- _UpLeft = 0 29 ;
-			- _DownRight = 604 345 ;
+			- _UpLeft = 0 0 ;
+			- _DownRight = 604 316 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 5;
 		}
@@ -206,7 +206,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _placement = { CCommon_WINDOWPLACEMENT 
 				- m_nLength = 44;
 				- m_nFlags = 0;
-				- m_showCmd = 3;
+				- m_showCmd = 1;
 				- m_ptMinPositionX = -1;
 				- m_ptMinPositionY = -1;
 				- m_ptMaxPositionX = -4;
@@ -225,8 +225,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "diag_definicao_blocos";
 				- _id = GUID f53d507c-79b1-4f7f-850a-0c96a124e9bd;
 			}
-			- _UpLeft = 701 87 ;
-			- _DownRight = 1767 797 ;
+			- _UpLeft = 218 234 ;
+			- _DownRight = 1613 930 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 10;
 		}
@@ -253,8 +253,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "diag_pacotes";
 				- _id = GUID 604328de-2202-48b3-9d1a-353bbeb75331;
 			}
-			- _UpLeft = 0 317 ;
-			- _DownRight = 1172 902 ;
+			- _UpLeft = 0 147 ;
+			- _DownRight = 1172 732 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 11;
 		}
@@ -310,7 +310,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _id = GUID 0092132b-7ab2-43e9-a131-0226d6d3e2aa;
 			}
 			- _UpLeft = 0 0 ;
-			- _DownRight = 716 367 ;
+			- _DownRight = 757 388 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 1;
 		}
@@ -338,7 +338,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _id = GUID 80f949c1-0d06-478c-8003-d638f74b9942;
 			}
 			- _UpLeft = 0 0 ;
-			- _DownRight = 599 307 ;
+			- _DownRight = 604 310 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 0;
 		}
