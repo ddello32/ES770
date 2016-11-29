@@ -58,4 +58,4 @@ end
 
 %% Plot
 figure
-plot(points(:,1), points(:,2), 'o', P(:,1), P(:,2), 'b', minPos, min, 'rx')
+plot(points(:,1), points(:,2), 'o', P(:,1), P(:,2), 'b', minPos, min, 'ro')

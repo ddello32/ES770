@@ -90,15 +90,16 @@ void stateMachine_execute(int iMeasuredDistance, unsigned int uiTime){
 		case STATE_CMD_WALKANDSTOP:
 			rgbled_setColor(0x0FF, 0, 0x0FF);
 			iCurrState = STATE_CMD_WALKANDSTOP;
-			if(iDistanceSinceLastCommand > DISTANCE_WALK){
+			if(iDistanceSinceLastCommand >= DISTANCE_WALK){
 				uiTimeStopped += uiTime;
 				motor_setSpeed(0, 0);
 				motor_setSpeed(1, 0);
-				if(uiTimeStopped > TIME_STOP){
+				if(uiTimeStopped >= TIME_STOP){
 					iCurrState = STATE_NORMAL;
 					uiTimeStopped = 0;
 					iDistanceSinceLastCommand = 0;
 					rgbled_setColor(0, 0, 0);
+					lineControl_execute(SPEED_WHEN_NORMAL);
 				}
 			}else {
 				lineControl_execute(SPEED_WHEN_NORMAL);

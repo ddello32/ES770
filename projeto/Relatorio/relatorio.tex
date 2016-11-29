@@ -18,6 +18,8 @@
 \usepackage{tikz}
 \usepackage{listings}
 \usepackage{xcolor} 
+\usepackage{multirow}
+\usepackage{longtable}
 
 \patchcmd{\thebibliography}{\section*}{\section}{}{}
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
@@ -84,19 +86,21 @@
 
 \onehalfspacing
 \section{Objetivo} 
-O objetivo do projeto é, de maneira incremental, implementar no \textit{target} os requisitos apresentados no roteiro\cite{bb:roteiro} inicialmente desenvolvendo o modelo e depois implementando cada requisito. Estes requisitos são referentes à configuração e implementação de entradas de teclado, acionamento de LEDs, \textit{display} de sete segmentos, protocolo de comunicação, \textit{display LCD}, medição de velocidade de rotação, \textit{PWM}, \textit{ADC} e Controlador. 
-	
-\section{Modelagem}
-% Diagramas requisitos implementados, digrama de blocos, etc
-Utilizando o Rational Rhapsody Modeler e tomando como base os requisitos propostos mostrados na figura \ref{fig:requisitos}, complementamos o modelo inicial\cite{bb:modelo} (requisitos de teclado e LEDs) adicionando um bloco ao modelo referente aos \textit{displays} de sete segmentos (REQ1C), conforme mostrado na figura \ref{fig:blocos}. Adicionamos também alguns blocos auxiliares relacionados ao gerenciamento de pinos \textit{GPIO} e a interrupções periódicas, que foram utilizados para nossa implementação do \textit{display} de sete segmentos e do \textit{buzzer}. Ao tratar o gerenciamento do \textit{display} e do \textit{buzzer} através de interrupções, livramos a \textit{thread} principal para que essa lide com outros problemas sem precisar se preocupar com a atualização periódica dos \textit{displays}.
-
-Continuamos a complementar nosso diagrama adicionando um bloco responsável pela comunicação serial e um pela interpretação dos comandos referentes ao protocolo do requisito REQ2, adicionamos também um bloco responsável pelo controle do display LCD referente ao REQ3. Blocos responsáveis pelo controle do ventilador e pela medição da velocidade do mesmo, referentes aos requisitos REQ4 e REQ5 foram acrescentados ao diagrama.
-
-Integramos também o padrão executivo ciclíco cooperativo ao nosso projeto, tornando nosso código mais determinístico.
+O objetivo do projeto é, de maneira incremental, planejar, montar e implementar um veículo robótico seguidor de linha \ref{fig:robo}. Inicialmente planejar todo o projeto através do Rational Rhapsody Modeler, em seguida, construir as placas eletrônicas e unificar os componentes mecânicos, por fim, implementar o controlador do sistema através do \textit{target}. 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\linewidth]{requisitos}
+	\includegraphics[width=0.9\linewidth]{carrinho.JPG}
+	\caption{Veículo robótico seguidor de linha}
+	\label{fig:robo}
+\end{figure}
+	
+\section{Modelagem}
+% Diagramas requisitos implementados, digrama de blocos, etc
+Utilizando o Rational Rhapsody Modeler e tomando como base os requisitos propostos mostrados na figura \ref{fig:requisitos}, modelamos nossos sistema. Nessa etapa inicial nos preocupamos em detalhar como funcionaria cada componente do software e como estes interagem entre si, as figuras \ref{fig:pacotes} e \ref{fig:blocos} nos permitem ter uma visão geral dos módulos do sistema.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.3\linewidth, center]{requisitos}
 	\caption{Diagrama de requisitos}
 	\label{fig:requisitos}
 \end{figure}
@@ -113,259 +117,348 @@ Integramos também o padrão executivo ciclíco cooperativo ao nosso projeto, to
 	\label{fig:blocos}
 \end{figure}
 
-O bloco de \textit{GPIO\_hal} tem operações para desbloquear o \textit{clock} para uma porta, inicializar um pino em uma dada direção, escrever em um pino, escrever em um conjunto de pinos da mesma porta, ler a entrada em um pino e ler o valor de saída que está sendo controlado em um pino.
+Os blocos \textit{Line\_PhotoSensor\_hal}, \textit{encoder\_hal}, \textit{motor\_hal} e \textit{rgb\_led\_hal} fazem a interface entre o hardware e o software, possuindo funções para o controle dos atuadores ou a medição dos sensores. No bloco \textit{encoder\_hal} encontramos mais operações que nos outros devido à algumas particularidades do sistema. Escolhemos separar a requisição de leitura dos encoders da obtenção dos resultados para facilitar o reaproveitamento da mesma leitura em mais de um local do ciclo executivo cooperativo, fizemos issso através das funções \textit{measure} e \textit{getCurrentSpeed}/\textit{getLinDistance}. Notamos que a precisão de nossos encoders não é alta o suficiente para obter uma medida de velocidade razoável dentro do período do nosso ciclo executivo padrão, para resolver essa dificuldade utilizamos a função \textit{getMeanSpeed} que nos retorna uma média das últimas medidas (mantidas em um buffer circular), essa solução, embora introduza um atraso no sistema, nos permite manter o período do ciclo executivo relativamente baixo.
 
-O bloco \textit{pit\_hal} tem operações para inicializar o \textit{PIT}, criar interrupções periódicas em um dos dois \textit{timers} disponíveis, desativar as interrupções em um \textit{timer}, marcar uma interrupção como tratada (deve ser feito pelos tratamentos de interrupção), mascarar as interrupções de PIT e desmascarar essas interrupções. Além disso esse bloco tem mais uma operação chamada \textit{PIT\_IRQHandler }que trata as interrupções do \textit{PIT}, essa operação precisa ser visível para o \textit{linker}, mas não deve ser chamada pelo usuário. É importante ressaltar que o \textit{clock} do \textit{PIT} é o \textit{bus\_clock} que no nosso caso é de $20MHz$
-
-As operações do bloco \textit{sevenseg\_hal} cobrem a inicialização dos \textit{displays}, seleção manual de quais segmentos estarão ativos (feita através da passagem de um vetor com os segmentos desejados), ativação manual de um dos \textit{displays} (desativando todos os outros), conversão de dígito hexadecimal ou decimal em vetor de segmentos (para ser passado para a função de seleção de segmentos) e impressão automática de um valor hexadecimal ou decimal através das interrupções de \textit{timer}.
-
-O bloco do \textit{buzzer\_hal} também ganhou duas novas operações, uma para criar uma onda quadrada no \textit{buzzer} com um certo período (e \textit{duty cycle} de $50\%$), através de interrupções de \textit{timer}, e outra para remover essa onda.
-
-O bloco \textit{ledswi\_hal} foi alterado para lidar melhor com a inicialização separada dos pinos como Led e Switch e também foi adicionada uma função para ler o estado atual de um pino configurado como LED.
-
-O bloco \textit{serial\_hal} é responsável pela configuração da UART para comunicação serial e pelo envio de recebimento de dados através desse protocolo.
-
-O bloco \textit{lcd\_hal} é responsável pelo controle do display LCD, ele segue a implementação passada pelo professor, porém as chamadas as bibliotecas padrão foram substituídas por chamadas ao bloco \textit{GPIO\_hal} e manipulações de registradores. Uma função que imprime um texto ao display, após limpar a exibição e resetar a posição do cursor, foi acrescentada.
-
-O bloco \textit{cmdMachine\_hal} lida com a interpretação dos comandos e geração da string de resposta. Em nossa implementação, escolhemos tratar uma string já bufferada de commandos ao invés de trabalhar caractere a caractere. A máquina de estados do tratamento dos comandos pode ser vista na figura \ref{fig:estados}.
-
-O bloco \textit{tacometro\_hal} é responsável pela medição da velocidade do ventilador ligado à placa e sua função getCurrentSpeed deve ser chamada de maneira periódica a fim de resetar o contador usado para medir a velocidade. 
-
-O bloco \textit{cooler\_hal} é responsável pelo controle do ventilador ligado à placa. Ele conta com uma função de inicialização, uma que controla a velocidade do mesmo, através do módulo PWM, e uma que nos retorna o duty cicle atual do PWM.
+O bloco \textit{Line\_Sensor} é responsável por obter as medidas de luminosidade dos foto-sensores e converte-las na posição do centro da linha, isto é feito através do algoritmo spline, detalhes do seu funcionamento são apresentados nas figura \ref{fig:lineMeasure}. Ele também avisa nossa máquina de estados quando um sinal de comando de linha é encontrado. O bloco \textit{SpeedController} é responsável pelo controle de velocidade do carrinho, ele recebe uma velocidade linear e angular de referência e executa o controle dos motores em malha fechada utilizando a medida dos encoders. Já o bloco \textit{Line\_Controller} é responsável por seguir a linha, este requisita medições do centro de linha do \textit{Line\_Sensor} e calcula as velocidades de referência que deverão ser passadas para o \textit{SpeedController}, um esquema geral do seu funcionamento pode ser visto nas figuras \ref{fig:stateLine}, \ref{fig:lineMeasure} e \ref{fig:line}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1.5\linewidth, center]{estados}
+	\includegraphics[width=0.9\linewidth]{stateLine}
+	\caption{Diagrama de Máquina de Estados do controlador de linha}
+	\label{fig:stateLine}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{stateLineMeasure}
+	\caption{Diagrama de Sub Máquina de Estados - Sensor de linha}
+	\label{fig:lineMeasure}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{line}
+	\caption{Diagrama de Sequência - Controlador de Linha}
+	\label{fig:line}
+\end{figure}
+
+O bloco \textit{AutoTest} tem como função o teste e calibração do sistema, testando primeiramente se os motores e foto-sensores estão funcionando para em seguida calibrá-los. Seu funcionamento encontra-se detalhado nas figuras \ref{fig:stateAutoTeste}, \ref{fig:testIR}, \ref{fig:testMotor} e \ref{fig:testes}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{stateAutoTeste}
+	\caption{Diagrama de Máquina de Estados do módulo de Auto-Teste}
+	\label{fig:stateAutoTeste}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{testIR}
+	\caption{Diagrama de Sub Máquina de Estados - Teste dos Sensores infra-vermelhos}
+	\label{fig:testIR}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{testMotor}
+	\caption{Diagrama de Sub Máquina de Estados - Teste dos Motores e Encoders}
+	\label{fig:testMotor}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{testes}
+	\caption{Diagrama de Sequência - Módulo de Auto-Teste e calibração}
+	\label{fig:testes}
+\end{figure}
+
+O bloco \textit{stateMachine} lida com a interpretação dos comandos e ativação dos outros módulos do sistema (Acertando a velocidade linear de referência que será passada ao nosso controlador de lina). A máquina de estados do tratamento dos comandos pode ser vista na figura \ref{fig:estados}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{stateMachine}
 	\caption{Diagrama de máquina de estados para interpretação dos comandos}
 	\label{fig:estados}
 \end{figure}
 
-A máquina de estados recebe um buffer de caracteres por vez, e avalia caracter a caracter percorrendo o buffer. Após cada ação a máquina retorna para o estado "state\_idle" para a avaliação da próxima ação do buffer de dados. Sempre que a máquina de estados encontra um caractere inesperado ou sem significado, ela entra no estado "state\_err", retornando um erro e descartando todos caracteres até encontrar o próximo espaço em branco. Os outros estados são acionados através dos seguintes caracteres: 'B' para buzzer, 'S' para switch, 'L' para led, 'D' para o display sete segmentos, 'P' para imprimir no LCD.\\
-No caso do buzzer,  após interpretar o caracter 'B', a máquina espera ler até três caracteres numéricos que correspondem ao tempo em que o buzzer permanecerá ativo, retornando para o estado 'statez\_idle' após, para avaliar a próxima ação do buffer de entrada.\\
-Para o switch, após a leitura de 'S', a máquina de estados espera a leitura de um caractere numérico, de 1 a 4, que corresponde de qual switch faremos a leitura. Recebemos como retorno 'O' caso o switch esteje acionado, e 'C' caso contrário.\\
-No caso do led, após a leitura de 'L' a máquina de estado espera mais um caractere indicando a ação desejada. Este caractere pode ser 'S' no caso de set, 'R' para read e 'C' para clear. Para todos estes casos, a máquina de estados esperará um caractere numérico indicando em qual dos leds a ação deverá ser executada.\\
-Para o display sete segmentos, após leitura de um 'D' a máquina de estados espera ler até quatro caracteres hexadecimais que serão mostrados no display, retornando para o estado 'state\_idle'.
-No caso do display LCD, após a leitura de um caractere 'P' a máquina de estados lê uma string de até 30 caracteres (sem espaços em branco) e a imprime no display LCD, retornando para o estado 'state\_idle'.\\
-O controle do ventilador também foi acrescentado à máquina de estados, ao receber um comando 'C' ela espera ler até quatro caracteres hexadecimais que determinarão o duty-cicle do PWM, retornando para o estado 'state\_idle'.\\
-Após cada ação executada com sucesso, o sistema responderá com 'ACK'.
+Nos estados normal e walk o nosso controlador de linha receberá uma velocidade linear de referência relativamente baixa (em torno de 50\% da velocidade máxima do sistema), quando estamos no estado maxSpeed essa referência será maior (95\%) e em stop ela será nula.
 
-\section{Diagramas Esquemáticos}
-% Diagramas esquemáticos do target utilizados
+O diagrama de atividades apresentado na figura \ref{fig:main} sintetiza o sistema como um todo, mostrando sua execução através do modelo cíclico executivo cooperativo.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{esq_ledswi}
-	\caption{Esquema teclado e LEDs}
-	\label{fig:esq_ledswi}
+	\includegraphics[width=0.9\linewidth]{atividades}
+	\caption{Diagrama de atividades do sistema}
+	\label{fig:main}
 \end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.9\linewidth]{esq_7seg}
-	\caption{Esquema sete segmentos}
-	\label{fig:esq_7seg}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.9\linewidth]{esq_lcd}
-	\caption{Esquema display LCD}
-	\label{fig:esq_lcd}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.5\linewidth]{esq_cooler}
-	\caption{Esquema do ventilador}
-	\label{fig:esq_cooler}
-\end{figure}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.9\linewidth]{esq_sensor}
-	\caption{Esquema do tacômetro}
-	\label{fig:esq_sensor}
-\end{figure}
-
-Os pinos apresentados acima, devem ser mapeados para os da placa \textit{FRDM-KL25Z} através do mapeamento apresentado na figura \ref{fig:pinout}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.9\linewidth]{Pinout}
-	\caption{Mapeamento entre pinos dos esquemáticos e da placa FRDM-KL25Z}
-	\label{fig:pinout}
-\end{figure}
-
-Como pode ser visto na figura \ref{fig:esq_7seg}, é necessário fazer um gerenciamento dos pinos PTC0 a PTC7 para selecionar os segmentos que serão ativados e PTC10 a PTC13 para selecionar quais \textit{displays} estarão ativos. Para isso, é preciso alternar qual \textit{display} está ativo e fazer a mudança nos segmentos para que cada \textit{display} esteja mostrando um valor diferente. É importante lembrar que a frequência dessa alternância seja escolhida de modo que o olho humano não perceba que os \textit{displays} estão ligando e desligando. Afim de garantir que essa alternância funcionará apropriadamente nós utilizamos o módulo \textit{PIT} para gerar uma interrupção a cada $3.125 ms$, conforme sugerido na aula 6 \cite{bb:aula6}. 
-
-O controle do LCD é feito escrevendo o dado desejado nos pinos de dados (DB*), sinalizando se o dado enviado é um comando (Low) ou um caractere a ser escrito (HIGH) através do pino RS e enviando um pulso de duração bem definida no pino ENABLE. Algum dos comandos que podem ser enviados são mostrados na tabela \ref{tab:lcd_commands}.
-\begin{table}[H]
-	\centering
-	\caption{Protocolo de comandos para o display LCD}
-	\label{tab:lcd_commands}
-	\begin{tabular}{|c|c|c|}
-		\hline \bfseries{Nome} & \bfseries{Código} & \bfseries{Descrição} \\
-		\hline CMD\_INIT\_LCD & 00001111 & Inicializa o display LCD \\
-		\hline CMD\_CLEAR & 00000001 & Limpa exibição\\
-		\hline CMD\_NO\_CURSOR & 00001100 & Esconde a posição do cursor\\
-		\hline CMD\_CURSOR2R & 00000110 & Cursor a direita do texto\\
-		\hline CMD\_NO\_CUR\_NO\_BLINK & 00111000 & Esconde o cursor e não pisca\\
-		\hline CMD\_MOV\_CUR & 1L00CCCC & Move cursor para posição [L, X].\\
-			& & L = linha (0, 1)\\
-			& & CCCC = coluna(0 a 15)\\
-		\hline
-	\end{tabular}
-\end{table}
-
-Para medir a velocidade do ventilador, ligamos o tacômetro a um contador e contamos o número de pulsos dentro de um período pré determinado de tempo.
 
 \section{Matriz de Rastreabilidade}
-% Matriz de rastreabilidade de requisitos vs implementações
 A matriz de rastreabilidade apresentada na tabela \ref*{tab:rastreabilidade} relaciona cada um dos requisitos com a sua implementação.
-\begin{table}[H]
-	\centering
-	\caption{Matriz de Rastreabilidade}
-	\label{tab:rastreabilidade}
-	\small
-	\scalebox{0.8}{
-	\begin{tabular}{|c|l|}
-		\hline \bfseries{ID do Requisito} & \bfseries{Implementação}\\ 
-		\hline REQ1A 	& \texttt{ledswi\_hal.c}\\ 
-						& \texttt{- void ledswi\_initLedSwitch(char cLedNum, char cSwitchNum)}\\
-						& \texttt{- switch\_status\_type\_e ledswi\_getSwitchStatus(char cSwitchNum)}\\
-						& \texttt{- void ledswi\_initSwich(ledswi\_pin\_type\_e ePin)}\\
-		\hline REQ1B 	& \texttt{ledswi\_hal.c}\\ 
-						& \texttt{- void ledswi\_initLedSwitch(char cLedNum, char cSwitchNum)}\\
-						& \texttt{- void ledswi\_setLed(char cLedNum)}\\ 
-						& \texttt{- void ledswi\_clearLed(char cLedNum)}\\
-						& \texttt{- void ledswi\_initLed(ledswi\_pin\_type\_e ePin)}\\
-						& \texttt{- led\_status\_type\_e ledswi\_getLedStatus(ledswi\_pin\_type\_e eLedPin)}\\
-		\hline REQ1C 	& \texttt{sevenseg\_hal.c}\\ 
-						& \texttt{- void sevenseg\_init(void)}\\
-						& \texttt{- void sevenseg\_setSegs(seven\_segment\_seg\_type\_e* epSet\_segments)}\\
-						& \texttt{- void sevenseg\_setDisp(seven\_segment\_disp\_type\_e eDisplay)}\\
-						& \texttt{- void sevenseg\_printDec(unsigned int uiDec)}\\
-						& \texttt{- void sevenseg\_printHex(unsigned int uiHex)}\\
-		\hline REQ2 	& \texttt{serial\_hal.c}\\ 
-						& \texttt{- void serial\_initUart(void)}\\
-						& \texttt{- void serial\_sendBuffer(char *cpBuffer, unsigned int uiSize)}\\
-						& \texttt{- int serial\_recieveBuffer(char *cpBuffer, unsigned int uiSize)}\\
-						& \texttt{cmdMachine\_hal.c}\\
-						& \texttt{- void cmdmachine\_interpretCmdBuffer(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes)}\\
-						& \texttt{- int handleError(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes)}\\
-						& \texttt{- int handleBuzzer(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes)};\\
-						& \texttt{- int getBuzzMs(char *cpCmdBuffer)}\\
-						& \texttt{- unsigned int handleSwitch(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes)}\\
-						& \texttt{- unsigned int handleLed(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes)}\\
-						& \texttt{- ledswi\_pin\_type\_e parseLedNum(char cLedInput)}\\
-						& \texttt{- unsigned int handleIdle(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes)}\\
-						& \texttt{- unsigned int handleLCD(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes)}\\
-						& \texttt{- unsigned int handleSevenSeg(char *cpCmdBuffer, unsigned int uiSize, char* cpCmdRes)}\\
-						& \texttt{- int getSevenSegHex(char *cpCmdBuffer)}\\
-		\hline REQ3 	& \texttt{lcd\_hal.c}\\ 
-						& \texttt{- void lcd\_initLcd(void)}\\
-						& \texttt{- void lcd\_writeData(unsigned char ucData)}\\
-						& \texttt{- void lcd\_sendCommand(unsigned char ucCmd)}\\
-						& \texttt{- void lcd\_writeString(const char *cBuffer)}\\
-						& \texttt{- void lcd\_printString(const char *cBuffer)}\\
-						& \texttt{- void lcd\_setCursor(unsigned char cLine, unsigned char cColumn)}\\
-						& \texttt{- void lcd\_dummyText(void)}\\
-		\hline REQ4
-						& \texttt{tacometro\_hal.c}\\
-						& \texttt{- void tacometro\_init(void)}\\ 
-						& \texttt{- unsigned int tacometro\_getSpeed(unsigned int uiPeriod)}\\
-		\hline REQ5
-						& \texttt{cooler\_hal.c}\\
-						& \texttt{- void cooler\_initCooler(void)}\\
-						& \texttt{- void cooler\_setVelocity(uint16\_t uiVelocity)}\\
-						& \texttt{- unsigned short cooler\_getDutyCicle()}\\
+\pagebreak
+\small
+\begin{longtable}{|p{0.125\linewidth}|p{0.17\linewidth}|p{0.75\linewidth}|}
+\hline \bfseries{Requisito} & \bfseries{SubRequisito} & \bfseries{Implementação}\\ 
 		\hline 
-	\end{tabular}
-	} 
-	\normalsize
-\end{table}
-\section{Notas}
-% Dificuldades, observações relevantes, correções, ...
-\subsection{Comunicação Serial e Executivo Cíclico}
-Até então quase todo o processamento do nosso sistema estava atrelado à execução de um comando vindo por comunicação serial, logo utilizávamos chamadas que bloqueavam nossa thread principal no aguardo do próximo comando. Agora não podemos fazer mais isso e devemos incluir um pooling da porta serial durante todo o período ocioso do nosso loop principal para garantir que não vamos perder informações vindas por comunicação serial. Uma outra alternativa (que julgamos desnecessária dada a periodicidade do nosso sistema) seria a implementação de interrupções da UART.
+        \multirow{2}{*}{REQ1}
+        & REQ1.A & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_testPhotoSensors(void)}\\
+		\cline{2-3}
+        & REQ1.B & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_testPhotoSensors(void)}\\
+        \cline{2-3}
+        & REQ1.C & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_testPhotoSensors(void)}\\
+		\cline{2-3}
+        & REQ1.D & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_testPhotoSensors(void)}\\
+        \cline{2-3}
+        & REQ1.E & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_testPhotoSensors(void)}\\
+		\cline{2-3}
+        & REQ1.F & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_testPhotoSensors(void)}\\
+		\cline{2-3}
+        & REQ1.G & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_testMotors()}\\
+		\cline{2-3}
+        & REQ1.H & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_testMotors()}\\
+        \hline
+        \multirow{2}{*}{REQ2}
+        & REQ2.A & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_calibratePhotoSensors(void)}\\
+        && \texttt{photosensor\_hal.c}\\
+        && \texttt{- void photoSensor\_calibrate(unsigned short usSensorNumber, int iLightVal, int iDarkVal)}\\
+		\cline{2-3}
+        & REQ2.B & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_calibratePhotoSensors(void)}\\
+        && \texttt{photosensor\_hal.c}\\
+        && \texttt{- void photoSensor\_calibrate(unsigned short usSensorNumber, int iLightVal, int iDarkVal)}\\
+        \cline{2-3}
+        & REQ2.C & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_calibratePhotoSensors(void)}\\
+        && \texttt{photosensor\_hal.c}\\
+        && \texttt{- void photoSensor\_calibrate(unsigned short usSensorNumber, int iLightVal, int iDarkVal)}\\
+		\cline{2-3}
+        & REQ2.D & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_calibratePhotoSensors(void)}\\
+        && \texttt{photosensor\_hal.c}\\
+        && \texttt{- void photoSensor\_calibrate(unsigned short usSensorNumber, int iLightVal, int iDarkVal)}\\
+        \cline{2-3}
+        & REQ2.E & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_calibratePhotoSensors(void)}\\
+        && \texttt{photosensor\_hal.c}\\
+        && \texttt{- void photoSensor\_calibrate(unsigned short usSensorNumber, int iLightVal, int iDarkVal)}\\
+		\cline{2-3}
+        & REQ2.F & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_calibratePhotoSensors(void)}\\
+        && \texttt{photosensor\_hal.c}\\
+        && \texttt{- void photoSensor\_calibrate(unsigned short usSensorNumber, int iLightVal, int iDarkVal)}\\
+		\cline{2-3}
+        & REQ2.G & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_calibrateMotors()}\\
+        && \texttt{speedController.c}\\
+        && \texttt{- void speedControl\_calibrate(unsigned short usMotorNumb, int iMin, unsigned int uiMax, int iInvMin, unsigned int uiInvMax)}\\
+		\cline{2-3}
+        & REQ2.H & \texttt{autotest.c}\\ 
+        && \texttt{- void autotest\_testAndCalibrate(void)}\\
+        && \texttt{- void autotest\_calibrateMotors()}\\
+        && \texttt{speedController.c}\\
+        && \texttt{- void speedControl\_calibrate(unsigned short usMotorNumb, int iMin, unsigned int uiMax, int iInvMin, unsigned int uiInvMax)}\\
+        \hline
+        \multirow{2}{*}{REQ3}
+        & REQ3.A & \texttt{speedController.c}\\ 
+        && \texttt{- void speedControl\_init(unsigned int uiKp[2], unsigned int uiKi[2], unsigned int uiKd[2], unsigned int sampleTime)}\\
+        && \texttt{- void speedControl\_execute(int iLinSpeed, int iAngSpeed)}\\
+		\cline{2-3}
+        & REQ3.B & \texttt{speedController.c}\\ 
+        && \texttt{- void speedControl\_init(unsigned int uiKp[2], unsigned int uiKi[2], unsigned int uiKd[2], unsigned int sampleTime)}\\
+        && \texttt{- void speedControl\_execute(int iLinSpeed, int iAngSpeed)}\\
+        \hline
+         \multirow{2}{*}{REQ4}
+        & REQ4.A & \texttt{encoder\_hal.c}\\ 
+        && \texttt{- void encoder\_init(void)}\\
+        && \texttt{- void encoder\_measure()}\\
+        && \texttt{- unsigned int encoder\_getCurrentSpeed(unsigned short usEncoderNumber, unsigned int uiPeriod)}\\
+        && \texttt{- unsigned int encoder\_getMeanSpeed(unsigned short usEncoderNumber, unsigned int uiPeriod)}\\
+        && \texttt{- unsigned int encoder\_getLinDistance()}\\
+		\cline{2-3}
+        & REQ4.B & \texttt{encoder\_hal.c}\\ 
+        && \texttt{- void encoder\_init(void)}\\
+        && \texttt{- void encoder\_measure()}\\
+        && \texttt{- unsigned int encoder\_getCurrentSpeed(unsigned short usEncoderNumber, unsigned int uiPeriod)}\\
+        && \texttt{- unsigned int encoder\_getMeanSpeed(unsigned short usEncoderNumber, unsigned int uiPeriod)}\\
+        && \texttt{- unsigned int encoder\_getLinDistance()}\\
+        \hline
+         \multirow{2}{*}{REQ5}
+        & REQ5.A & \texttt{motor.c}\\ 
+        && \texttt{- void motor\_init(void)}\\
+        && \texttt{- void motor\_setSpeed(unsigned short usMotorNumber, int iSpeed)}\\
+		\cline{2-3}
+        & REQ5.B & \texttt{motor.c}\\ 
+        && \texttt{- void motor\_init(void)}\\
+        && \texttt{- void motor\_setSpeed(unsigned short usMotorNumber, int iSpeed)}\\
+		\hline
+        REQ6 & - & \texttt{stateMachine.c}\\
+         && \texttt{- void stateMachine\_foundCommand(unsigned short usFoundCommand)}\\
+         && \texttt{lineSensor·c}\\
+         && \texttt{- int lineSensor\_measure()}\\
+         \hline
+         REQ7 & - & \texttt{stateMachine.c}\\
+         && \texttt{- void stateMachine\_execute(int iMeasuredDistance, unsigned int uiTime))}\\
+         \hline
+		 REQ8 & - & \texttt{lineSensor·c}\\
+         && \texttt{- int lineSensor\_measure()}\\
+         && \texttt{photosensor\_hal.c}\\
+         && \texttt{- unsigned short photoSensor\_measure(unsigned short usSensorNumber)}\\
+         \hline
+         REQ9 & - & \texttt{lineControl·c}\\
+         && \texttt{- void lineControl\_init(unsigned int uiKp, unsigned int uiKi, unsigned int uiKd, unsigned int sampleTime)}\\
+         && \texttt{- void lineControl\_execute(int iLinSpeed)}\\
+         \hline
+    \caption{Matriz de Rastreabilidade}
+	\label{tab:rastreabilidade}
+\end{longtable}
+\normalsize
 
-\subsection{PWM}
-Uma coisa que deve ser levada em consideração quando configuramos o PWM é que sempre que executamos uma instrução de escrita para alterar a configuração do módulo de PWM o timer deve estar desabilitado e essa instrução leva um tempo para que a escrita seja efetuada, logo é recomendado escrever no registrador em uma única instrução e bit a bit. 
 
-\subsection{LCD e Interrupções}
-Para escrever no LCD precisamos gerar um pulso no seu pino de enable. Para garantir que esse pulso terá a duração certa, foi preciso mascarar as interrupções durante esse pulso. Como as interrupções do display tem um período de aproximadamente 3ms e o pulso do LCD tem a mesma duração encontramos várias dificuldades ao controlar os dois sem mascarar as interrupções pela duração do pulso, logo adaptamos nosso código. Quando atualizamos as informações do painel LCD de maneira regular, notamos um leve efeito de "flicker" nos displays 7 segmentos.
 
-\subsection{Leitura do Estado dos LEDs}
-Como uma extensão ao protocolo proposto no roteiro \cite{bb:roteiro}, acrescentamos o comando \textit{LRd} onde $d$ é um digito de 1 a 4, que nos retorna o estado atual do LED referenciado. Para recuperar esse estado devemos saber qual valor está sendo controlado para um pino de saída digital, o que é feito lendo o registrador GPIOx\_PDOR.
+\section{Montagem eletrônica e mecânica}
+% montagens
+Seguindo o modelo sugerido pela figura \ref{fig:sensoresEsq} montamos a placa de sensores \ref{fig:led}. A placa de sensores é um componente elétrico que faz as medidas de posição do veículo, através de 6 pares de emissor/receptor de infra-vermelho. Cada par é separado fisicamente em 10mm. Essa distância é selecionada para que cada não haja grande interferência, a distância é interessante também para a computação da posição, já que, o tamanho da linha a ser seguida possui por volta deste valor.
+A placa de sensores de posição foi integrada à placa geral de controle, para isso através de conectores KK. A alimentação do circuito lógico foi realizada através de um Powerbank.
 
-\subsection{Interrupções do Buzzer e mudança de Baud Rate}
-Ao utilizar interrupções para cuidar do acionamento e controle do Buzzer, conseguímos executar essa funcionalidade de maneira assíncrona, garantindo que essa funcionalidade não vai interferir com ou ser interferida pelas outras. Isso é notavelmente importante com a comunicação serial, uma vez que a velocidade de leitura é crítica e se essa for alterada, corremos o risco de perder informações ou alterar o tempo de execução de nosso ciclo.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{sensoresEsq}
+	\caption{Diagrama esquemático da placa de sensores infra-vermelhos}
+	\label{fig:sensoresEsq}
+\end{figure}
 
-\subsection{Bufferização dos comandos}
-Para diminuir a chance de perder informações que são enviadas por serial, escolhemos ler uma série de caracteres e armazená-los em um buffer antes de interpretá-los, ao invés de ler e interpretar caractere a caractere. Interrompemos esse processo de leitura no caso de buffer overflow ou quando encontramos uma quebra de linha. Interpretar uma série de comandos bufferizados introduziu uma dificuldade extra ao projeto, pois agora nossa máquina de estados tem que levar em consideração que um comando pode estar errado e o próximo não, logo o primeiro deve ser ignorado e o segundo executado.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{led.JPG}
+	\caption{Placa de sensores infra-vermelhos}
+	\label{fig:led}
+\end{figure}
+Como os receptores produzem um sinal analógico, for necessária a utilização de ADCs para a leitura dos mesmos, para isso utilizamos as portas as portas PTB0, PTB1, PTB2, PTE20, PTE21 e PTE22 do target, configuradas,respectivamente, como ADC0\_SE8, ADC0\_SE9, ADC0\_SE12, ADC0\_SE0, ADC0\_SE4a, ADC0\_SE3. Já os emissores são acionados por portas GPIO, utilizamos as portas PTA16, PTA17, PTC13, PTC16, PTC17, e PTE31 configuradas como saídas GPIO. Para a aquisição dos sinais de entrada configuramos nosso módulo ADC para trabalhar com conversões de 16-bit, com tempo de amostragem curto e utilizando o recurso de média por hardware, configurada para 32 amostras por leitura. Calculamos o tempo de computação dessas medidas e vimos que estamos dentro do tempo aceitável para nosso ciclo executivo.
 
-\subsection{Gerenciamento de GPIO e macros}
-Detectamos logo no início do projeto um defeito estrutural no código fornecido quando lidando com GPIO: o identificador da porta e o número do pino utilizado eram referenciados em diversos locais diferentes do código dificultando de maneira agravante mudanças na configuração de hardware. Para resolver isso inicialmente pensamos em utilizar o arquivo \textit{fsl\_gpio\_hal.h} da biblioteca da \textit{FRDM-Kl25Z}, mas isso não nos foi permitido. Como calcular as posições na memória de cada registrador seria reimplementar a biblioteca, escolhemos por criar macros que geram o mesmo estilo de código utilizado no exemplo fornecido através do operador de concatenação (\#\#) do pré processador. Esse operador apresenta algumas particularidades, a principal sendo que macros que o utilizam em seu corpo não tem seus argumentos expandidos \cite{bb:preprocessor}. Para circular essa dificuldade criamos uma outras macros que funcionam como uma \textit{wrappers} para essas macros, fazendo assim que seus argumentos sejam expandidos antes da chamada da concatenação. 
+A montagem mecânica compreende a interligação dos encoders com o motor e a placa geral de controle  \ref{fig:motor}. Para isso foi utilizada uma ponte H L293, \ref{fig:l293}, e uma alimentação própria, 4 pilhas AA em série. 
 
-As macros que fazem a concatenação propriamente ditas não devem ser chamadas pelo usuário (sendo identificadas por um \_ no início de seus nomes).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{motor.JPG}
+	\caption{Motores e enconder}
+	\label{fig:motor}
+\end{figure}
 
-Outra dificuldade relacionada a esse módulo é que a expansão dos argumentos das macros não para quando chega em alguma \textit{token} não definida, no caso o identificador das portas (A,B,C,D,E). Para contornar esse problema utilizamos \textit{typedefs} para definir esses identificadores como \textit{tokens} válidas.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{l293.jpg}
+	\caption{Ponte H L293}
+	\label{fig:l293}
+\end{figure}
 
-\subsection{Interrupções por timer}
-Outro problema que enfrentamos foi com a implementação das interrupções por timer através do PIT, notavelmente pela dificuldade de encontrar uma documentação clara sobre o NVIC e pois a documentação fornecida para o PIT inverte a endianness dos registradores em relação aos registradores de GPIO.
-Nota: Documentação disponível no site arm.com, na referência do registrador Arm-M0+ sobre o NVIC \cite{bb:armnvic} encontramos a seguinte frase: "See the ARMv6-M Architecture Reference Manual for more information about the NVIC registers and their addresses, access types, and reset values.". Já na página ARMv6-M Architecture Reference Manual \cite{bb:armarm} somos informados que esse manual só está disponível em formato PDF e para clientes registrados.
+A ponte H permite o usuário controlar a velocidade e a direção de rotação dos motores. Esse controle é feito através de dois pinos GPIO e um sinal de PWM para cada motor. Através dos pinos GPIO, conectados esses aos pinos 1/3A e 2/4A da ponte H, selecionamos a direção de rotação e com o sinal PWM, conectado no pino enable, definimos a velocidade. Desta forma foi selecionado as seguintes portas para o motor 1: PTC4 e PTC7 como GPIO e PTA13 (configurado como FTM1\_CH1) como PWM, já para o motor 2: PTC0 e PTC3 como GPIO e PTA12 (configurado como FTM1\_CH0) como PWM. As saídas 1Y e 2Y da ponte H foram conectadas à alimentação do motor 1 e as saídas 3Y e 4Y à alimentação do motor 2. O diagrama lógico das entradas e saídas do IC pode ser visto na figura \ref{fig:logicPonteH}
 
-\subsection{Leitura de entradas digitais}
-Nesse laboratório tivemos dificuldades relacionadas à leitura do estado dos botões. O problema encontrado ocorreu pois quando o desbloqueamos o \textit{clock} para uma porta do controlador no código fornecido estávamos desabilitando o \textit{clock} para todas as outras portas. Como o \textit{clock} só afeta significativamente os pinos configurados como \textit{input}, se o módulo \textit{ledswi\_hal} fosse inicializado por último (como é feito no código do professor) o problema não seria notado.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\linewidth]{logicPonteH}
+	\caption{Diagrama Lógico da Ponte H L293 \cite{bb:l293}}
+	\label{fig:logicPonteH}
+\end{figure}
 
-\subsection{Estilo de Documentação}
-Não conseguimos nos adaptar ao estilo de comentários sugerido pelo professor, que nos parece introduzir uma quantidade desnecessária de burocracia. Formatar todos os comentários para caber dentro daquele quadrado tomava mais tempo que o planejamento e a implementação do código e muita informação redundante estava sendo inserida (bastava ler a interface da função para saber seu nome e o tipo de seus argumentos). Escolhemos substituir todos os comentários do código pelo padrão \textit{javadoc}, com o qual estamos mais familiarizados, que é capaz de documentar de maneira eficiente o código.
+Para a montagem eletrônica dos encoders utilizamos o esquemático da figura \ref{fig:encoder1} como referência. A tensão de alimentação foi dimínuída para $3.3V$ e as resistências foram dimensionadas de acordo com a datasheet \cite{bb:photo}, assumindo os mesmos valores utilizados na placa de sensores. A saída dos encoders foram conectadas nas portas PTE29 e PTE30, configuradas como FTM\_CLKIN0 e FTM\_CLKIN1 respectivamente, dessa maneira utilizamos essas duas portas como o clock de referência para os módulos TPM2 e TPM0.
 
-\subsection{Rhapsody Modeler e Wine}
-Também tivemos dificuldades com a instalação do \textit{Rhapsody Rational Modeler} no \textit{Linux} (através do \textit{Wine}), pois ele necessita da instalação das seguintes dlls nativas do \textit{Windows}: \textit{mfc42}, \textit{comctl32}, \textit{msvcirt} e \textit{riched20}.\\
-Ainda temos um problema com o Rhapsody quando tentamos editar textos dentro de um estado, por isso nossa máquina de estados só executa sua lógica nas transições.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\linewidth]{encoder1}
+	\caption{Diagrama esquemático para placa de encoder}
+	\label{fig:encoder1}
+\end{figure}
 
-\subsection{Outros}
- É relevante lembrar de utilizar o modificador \textit{volatile} para variáveis que serão modificadas durante o tratamento de interrupções, dessa maneira o otimizador sabe que não deve alterar comandos que envolvem essa variável.
+\section{Teste de funcionalidade}
+
+Uma parte importante do projeto é testar todos os componentes e ligações elétricas. 
+
+Ao iniciar a execução da rotina a primeira etapa do sistema é a análise da funcionalidade dos componentes, sensores e atuadores. Primeiramente é feito o teste dos infra-vermelhos, com o emissor desligado, capta-se alguns valores do receptor, gerando uma gama de dados de comparação com a etapa seguinte de emissor ligado, caso não haja real diferença entre os dois, este sistema está com defeito e deve ser averiguado. Para visualização do usuário, o LED do {target} se acende com uma cor determinada pelo infra-vermelho com falha.
+
+Após este teste há o teste dos motores. O teste dos motores é baseado na medição dos encoders, o motor é ligado e os encoders inicializados, caso não haja medição, ou o encoder está com defeito, ou o motor é que está. Neste caso é mais fácil para o usuário verificar o defeito já que o robô se movimentará ou não. Caso haja falha do encoder, o LED do {target} se acenderá com uma cor definida pelo encoder com falha.
+
  
+\section{Calibração dos sensores}
+
+Feito os testes dos sensores e atuadores, é necessário realizar a calibração dos mesmos. A calibração é a definição dos valores máximos e mínimos que o sistema atuará, gerando dessa forma parâmetros que dependem de situações externas ao do robô, como por exemplo, baixa bateria, diferentes tipos de superfície e baixa ou alta luminosidade.
+
+Como, no nosso caso, a calibração dos sensores dependerá  da funcionalidade dos motores, a calibração começa pelo motor. A calibração do motor é realizado da seguinte forma: Coloca-se o valor máximo de PWM, aguarda alguns segundos e verifica-se o valor do encoder em pulsos por milissegundo. Feito isso reduz-se gradativamente o valor do PWM até a parada do robô, tal PWM é o mínimo necessário para movimentar o robô. Com tais valores podemos realizar o controle de velocidade compatível com o que o motor pode realizar. Esse procedimento é realizado nos dois sentidos para os dois motores.
+
+A calibração dos infra-vermelhos é realizada pelas seguintes etapas: com o emissor desligado, mede-se o valor do receptor em cima da pista clara, esse valor é um offset do sistema e deve ser retirado. Com o robô ainda em cima da pista, liga-se um dos motores, fazendo o robô girar no próprio eixo, o robô passará tanto pela superfície clara, quanto pela escura, basta então armazenar os valores máximos e mínimos para definir o intervalo de operação. Faz-se o mesmo, só que rodando no sentido oposto. O intervalor é único para cada infra-vermelho.
+
+\section{Detecção de linha}
+% falar sobre detecção e determinação da posição - spline (-25 <> 25)
+Para seguir uma linha ou caminho é necessário inicialmente encontrar tal caminho e definir sua posição relativa à este. Pela largura do caminho e pelo distanciamento físico dos infra-vermelhos, haverá sempre 2 infra-vermelhos detectando a linha caso o robô esteja em cima da mesma (a resposta dos sensores varia conforme a sua posição relativa a linha, caso em cima, a resposta será baixa).
+
+Possuindo os valores dos 6 sensores é necessário agora encontrar a real posição relativa do robô, para tal realizamos uma curva de aproximação. A opção de solução foi o algoritmo Catmull-Spline \cite{bb:spline}. Repetimos a primeira e última medida para gerar os pontos inicial e final e, uma vez ajustado o polinômio, resolvemos a equação da derivada para a determinação do ponto mínimo em cada intervalo, encontrando por fim o mínimo global da curva. O algoritmo foi implementado primeiramente em Matlab para testes e alguns de seus resultados podem ser vistos na figura \ref{fig:spline}.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{spline1}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{spline2}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{spline3}
+	\end{subfigure}
+	\caption{Resultados do algoritmo de spline simulado via Matlab}	
+	\label{fig:spline}
+\end{figure}
+
+
+A distância entre o centro do robô até o sensor mais externo é 25mm, desta forma definimos que a posição relativa do robô varia entre -25 e 25, sendo 0 o centro. Caso o robô não esteja em cima da linha o valor de posição relativa permanece constante.
+
+\section{Detecção de comando}
+
+Para a detecção de comandos consideramos que quando mais do que 5 dos foto-sensores estão medindo preto é porque um sinal de comando foi encontrado, para eliminar ruídos, só levamos em consideração sinais de comando se eles foram medidos mais do que duas vezes consecutivas. Quando detectamos o primeiro sinal de comando o robô passa a procurar por um segundo, se ele percorrer uma distância pré definida sem encontrar este ele considera que recebeu o comando de velocidade máxima e aumenta sua velocidade linear de referência até que o próximo comando seja encontrado, caso contrário ele considera que recebeu o comando de parada, nesse caso ele anda uma distância pré definida e depois para por um tempo também pré definido. 
+
+\section{Controle de velocidade}
+
+Com a calibração dos motores e funcionalidade do encoder podemos realizar um controle de malha fechada para os dois motores separadamente afim de definir uma velocidade de cruzeiro.
+
+A calibração nos serve para traçar uma curva de funcionalidade dos motores, verificamos qual é a velocidade máxima de cada motor e em cada direção. Como os motores são diferentes os limites máximos são diferentes, assim como o PWM mínimo para iniciar o movimento, o controlador deve atuar de forma a fornecer 2 PWMs, possivelmente diferentes, que geram a mesma velocidade linear, desta forma, movimentando o robô em linha reta.
+
+O controlador realizado foi baseado em um PI. Os ganhos proporcionais e integrais foram encontrados com base em testes empíricos. Para definir o ganho proporcional foi verificado o tempo de resposta, via comunicação serial entre {host}-{target}, atingido um tempo satisfatório. A próxima etapa é encontrar o valor do ganho integral, para este foi analisado o erro estacionário. 
+
+Os ganhos do controlador de velocidade são iguais para os dois motores. Apesar da diferença dos motores, como o sistema não precisa de uma precisão grande, os controladores iguais são satisfatórios.
+
+\section{Controle de linha}
+
+Com a calibração dos sensores infra-vermelhos e com o Catmull-Spline funcionando corretamente, podemos realizar o controle de posição do robô em relação a linha.
+
+Possuindo a posição relativa do centro do veículo ao centro da linha, nos basta incrementar ou decrementar um dos PWM das rodas, gerando um movimento angular. O controle de posição define o quanto deve ser essa rotação.
+
+Para o controle de posição foi realizado um controlador P. O coeficiente foi encontrado de forma empírica com base na velocidade de resposta dos motores. Neste caso, o tempo de resposta é importante para que o veículo não perca o caminho, desta forma, o proporcional é de grande importância para o sistema.
+
+Caso o veículo perca o caminho, o mesmo buscará o caminho rotacionando para a última posição armazenada.
 
 \begin{thebibliography}{widestlabel}
-	\bibitem{bb:roteiro}{Roteiro de Laboratório - Semanas 04 e 05 (disponibilizado para os alunos)}
-	\bibitem{bb:modelo}{Projeto do Modelo Inicial do Sistema (disponibilizado para os alunos)}
-	\bibitem{bb:codigo}{Código Fonte Inicial em Linguagem C (disponibilizado para os alunos)}
-	\bibitem{bb:aula6}{Notas de Aula - Semanas 06 (disponibilizado para os alunos)}
-	\bibitem{bb:preprocessor}{The C Preprocessor (Concatenation) \url{https://gcc.gnu.org/onlinedocs/cpp/Concatenation.html#Concatenation}}
-	\bibitem{bb:armnvic}{Cortex-M0+ Technical Reference Manual \url{http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0413c/Cihfihfe.html}}
-	\bibitem{bb:armarm}{ARMv6-M Architecture Reference Manual \url{http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0413c/Cihfihfe.html}}
+	\bibitem{bb:l293}{Texas Instruments - Datasheet: L293x Quadruple Half-H Drivers}
+    \bibitem{bb:photo}{Photonic - Datasheet: CHAVES OPTOELETRÔNICAS TRANSMISSIVAS - PHCT102/3/4, PHCT202/3/4}
+    \bibitem{bb:spline}{E. Catmull and R. Rom - A class of local interpolating splines}
 \end{thebibliography}
 \pagebreak
-\section{Apêndice}
-% Colocar como apêndice toda a listagem do código fonte
-Listagem dos códigos fonte:
-\code{../Sources/Buzzer/buzzer_hal.c}
-\code{../Sources/Buzzer/buzzer_hal.h}
-\code{../Sources/Cooler/cooler_hal.c}
-\code{../Sources/Cooler/cooler_hal.h}
-\code{../Sources/fsl_debug_console.c}
-\code{../Sources/GPIO/gpio_hal.h}
-\code{../Sources/KL25Z/es670_peripheral_board.h}
-\code{../Sources/LCD/lcd_hal.c}
-\code{../Sources/LCD/lcd_hal.h}
-\code{../Sources/LedSwi/ledswi_hal.c}
-\code{../Sources/LedSwi/ledswi_hal.h}
-\code{../Sources/Main/es670.c}
-\code{../Sources/Mcg/mcg_hal.c}
-\code{../Sources/Mcg/mcg_hal.h}
-\code{../Sources/PIT/pit_hal.c}
-\code{../Sources/PIT/pit_hal.h}
-\code{../Sources/print_scan.c}
-\code{../Sources/print_scan.h}
-\code{../Sources/Protocolo/cmdmachine_hal.c}
-\code{../Sources/Protocolo/cmdmachine_hal.h}
-\code{../Sources/Serial/serial_hal.c}
-\code{../Sources/Serial/serial_hal.h}
-\code{../Sources/SevenSeg/sevenseg_hal.c}
-\code{../Sources/SevenSeg/sevenseg_hal.h}
-\code{../Sources/Tacometro/tacometro_hal.c}
-\code{../Sources/Tacometro/tacometro_hal.h}
-\code{../Sources/Util/tc_hal.c}
-\code{../Sources/Util/tc_hal.h}
-\code{../Sources/Util/util.c}
-\code{../Sources/Util/util.h}
+
 \end{document}
 
+		

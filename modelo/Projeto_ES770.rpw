@@ -1,3 +1,8 @@
+11, 28, 2016 (09:42:37): 
+Started writing C:\users\dello\Meus Documentos\Workspace\ES770\modelo\Projeto_ES770.rpw on Monday, November 28, 2016 (09:42:37)
+
+11, 28, 2016 (09:42:37): Finished writing C:\users\dello\Meus Documentos\Workspace\ES770\modelo\Projeto_ES770.rpw on Monday, November 28, 2016 (09:42:37)
+
 I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 { CGEMdiWorkspace 
 	- stubList = { IRPYRawContainer 
@@ -66,7 +71,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _placement = { CCommon_WINDOWPLACEMENT 
 				- m_nLength = 44;
 				- m_nFlags = 0;
-				- m_showCmd = 1;
+				- m_showCmd = 3;
 				- m_ptMinPositionX = -1;
 				- m_ptMinPositionY = -1;
 				- m_ptMaxPositionX = -4;
@@ -85,8 +90,8 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _name = "ActivityDiagram";
 				- _id = GUID 9b26ce95-86b0-492d-8de1-0bce906b1268;
 			}
-			- _UpLeft = 0 80 ;
-			- _DownRight = 679 449 ;
+			- _UpLeft = 0 34 ;
+			- _DownRight = 868 612 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 2;
 		}
@@ -122,7 +127,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _placement = { CCommon_WINDOWPLACEMENT 
 				- m_nLength = 44;
 				- m_nFlags = 0;
-				- m_showCmd = 3;
+				- m_showCmd = 1;
 				- m_ptMinPositionX = -1;
 				- m_ptMinPositionY = -1;
 				- m_ptMaxPositionX = -4;
@@ -142,7 +147,7 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 				- _id = GUID 28d8b7d8-84bc-40a2-938c-6fed0ec90c03;
 			}
 			- _UpLeft = 0 0 ;
-			- _DownRight = 1505 1001 ;
+			- _DownRight = 1166 610 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 3;
 		}
@@ -219,10 +224,6 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _wasOpenedOnCloseProject = 1;
 			- _theDiagram = { IHandle 
 				- _m2Class = "IDiagram";
-				- _filename = "";
-				- _subsystem = "";
-				- _class = "";
-				- _name = "diag_definicao_blocos";
 				- _id = GUID f53d507c-79b1-4f7f-850a-0c96a124e9bd;
 			}
 			- _UpLeft = 218 234 ;
@@ -247,10 +248,6 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _wasOpenedOnCloseProject = 1;
 			- _theDiagram = { IHandle 
 				- _m2Class = "IDiagram";
-				- _filename = "";
-				- _subsystem = "";
-				- _class = "";
-				- _name = "diag_pacotes";
 				- _id = GUID 604328de-2202-48b3-9d1a-353bbeb75331;
 			}
 			- _UpLeft = 0 147 ;
@@ -275,10 +272,6 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _wasOpenedOnCloseProject = 1;
 			- _theDiagram = { IHandle 
 				- _m2Class = "IDiagram";
-				- _filename = "";
-				- _subsystem = "";
-				- _class = "";
-				- _name = "diag_requisitos";
 				- _id = GUID b199a12f-d6a2-434c-8c28-e03ad146546a;
 			}
 			- _UpLeft = 0 0 ;
@@ -303,10 +296,6 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _wasOpenedOnCloseProject = 1;
 			- _theDiagram = { IHandle 
 				- _m2Class = "IMSC";
-				- _filename = "";
-				- _subsystem = "";
-				- _class = "";
-				- _name = "diagrama_sequencia_autotest";
 				- _id = GUID 0092132b-7ab2-43e9-a131-0226d6d3e2aa;
 			}
 			- _UpLeft = 0 0 ;
@@ -331,10 +320,6 @@ I-Logix-RPY-Archive version 8.5.2 Modeler * 1159120
 			- _wasOpenedOnCloseProject = 1;
 			- _theDiagram = { IHandle 
 				- _m2Class = "IMSC";
-				- _filename = "";
-				- _subsystem = "";
-				- _class = "";
-				- _name = "diagrama_sequencia_linecontrol";
 				- _id = GUID 80f949c1-0d06-478c-8003-d638f74b9942;
 			}
 			- _UpLeft = 0 0 ;
